@@ -1,0 +1,13 @@
+current directory: /Users/ameerhamza/Desktop/React_Native/Bremod/vendor/bundle/ruby/2.6.0/gems/json-2.7.1/ext/json
+/Users/ameerhamza/.rbenv/versions/2.6.10/bin/ruby -I /Users/ameerhamza/.rbenv/versions/2.6.10/lib/ruby/2.6.0 -r ./siteconf20240220-51655-y9w9kv.rb extconf.rb
+creating Makefile
+
+current directory: /Users/ameerhamza/Desktop/React_Native/Bremod/vendor/bundle/ruby/2.6.0/gems/json-2.7.1/ext/json
+make "DESTDIR=" clean
+
+current directory: /Users/ameerhamza/Desktop/React_Native/Bremod/vendor/bundle/ruby/2.6.0/gems/json-2.7.1/ext/json
+make "DESTDIR="
+make: Nothing to be done for `all'.
+
+current directory: /Users/ameerhamza/Desktop/React_Native/Bremod/vendor/bundle/ruby/2.6.0/gems/json-2.7.1/ext/json
+make "DESTDIR=" install

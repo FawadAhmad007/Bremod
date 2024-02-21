@@ -1,0 +1,15 @@
+current directory: /Users/ameerhamza/Desktop/React_Native/Bremod/vendor/bundle/ruby/2.6.0/gems/nkf-0.2.0/ext/nkf
+/Users/ameerhamza/.rbenv/versions/2.6.10/bin/ruby -I /Users/ameerhamza/.rbenv/versions/2.6.10/lib/ruby/2.6.0 -r ./siteconf20240220-51655-8higuo.rb extconf.rb
+creating Makefile
+
+current directory: /Users/ameerhamza/Desktop/React_Native/Bremod/vendor/bundle/ruby/2.6.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR=" clean
+
+current directory: /Users/ameerhamza/Desktop/React_Native/Bremod/vendor/bundle/ruby/2.6.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR="
+compiling nkf.c
+linking shared-object nkf.bundle
+
+current directory: /Users/ameerhamza/Desktop/React_Native/Bremod/vendor/bundle/ruby/2.6.0/gems/nkf-0.2.0/ext/nkf
+make "DESTDIR=" install
+/usr/local/bin/ginstall -c -m 0755 nkf.bundle ./.gem.20240220-51655-xt6ffe
