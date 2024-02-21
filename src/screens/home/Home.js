@@ -1,11 +1,103 @@
-import {View, Text} from 'react-native';
-import React from 'react';
-import {MyView} from '../../shared/themes/style/common';
+import {
+  View,
+  TextInput,
+  Text,
+  Image,
+  TouchableOpacity,
+  FlatList,
+  Keyboard,
+} from "react-native";
+import React from "react";
+import { MyView } from "../../shared/themes/style/common";
+import { useTheme } from "@react-navigation/native";
+import { style } from "./styles";
+import {
+  SEARCH,
+  CATEGORY,
+  OUR_PRODUCTS,
+  CATEGORY_ENUM,
+  DETAIL_ENUM,
+} from "../../shared/constants";
+import { SEARCH_ICON, PLACEHOLDER_IMAGE, CATEGORY_ICON } from "../../assets";
+import { navigate } from "../../shared/services";
+import Items from "./components/Items";
 
 export default function Home() {
+  const myTheme = useTheme();
+  const myStyle = style(myTheme);
+
+  const navigateHandler = () => {
+    navigate(CATEGORY_ENUM);
+  };
+
+  const data = [
+    { name: "Name", category: "Category1, Category2, Category3 " },
+    { name: "Name", category: "Category1, Category2, Category3 " },
+    { name: "Name", category: "Category1, Category2, Category3 " },
+    { name: "Name", category: "Category1, Category2, Category3 " },
+    { name: "Name", category: "Category1, Category2, Category3 " },
+    { name: "Name", category: "Category1, Category2, Category3 " },
+    { name: "Name", category: "Category1, Category2, Category3 " },
+  ];
+
+  const renderItem = ({ item }) => {
+    return (
+      <Items
+        name={item?.name}
+        category={item?.category}
+        onPress={() => navigate(DETAIL_ENUM)}
+      />
+    );
+  };
+
   return (
     <MyView>
-      <Text>Home</Text>
+      <View style={myStyle?.headerStyle}>
+        <View style={myStyle?.headerInnerStyle}>
+          <View style={myStyle?.inputViewStyle}>
+            <TextInput
+              selectionColor={myTheme?.colors?.secondary}
+              placeholder={SEARCH}
+              placeholderTextColor={myTheme?.colors?.gray}
+              style={myStyle?.inputStyle}
+            />
+            <Image
+              style={myStyle?.searchIconStyle}
+              source={SEARCH_ICON}
+              resizeMode="contain"
+            />
+          </View>
+        </View>
+      </View>
+
+      <Image
+        style={myStyle?.coverImageStyle}
+        source={PLACEHOLDER_IMAGE}
+        resizeMode="cover"
+      />
+
+      <Text numberOfLines={1} style={myStyle?.headingTextStyle}>
+        {OUR_PRODUCTS}
+      </Text>
+
+      <FlatList
+        columnWrapperStyle={myStyle?.flatListStyle}
+        numColumns={3}
+        keyExtractor={(item, index) => index.toString()}
+        data={data}
+        renderItem={renderItem}
+      />
+
+      <TouchableOpacity style={myStyle?.buttonStyle} onPress={navigateHandler}>
+        <Image
+          style={myStyle?.categoryIconStyle}
+          source={CATEGORY_ICON}
+          resizeMode="contain"
+        />
+        <Text numberOfLines={1} style={myStyle?.buttonTextStyle}>
+          {CATEGORY}
+        </Text>
+      </TouchableOpacity>
     </MyView>
   );
 }

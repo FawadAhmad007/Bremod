@@ -104,6 +104,7 @@ animator mtrl_fab_hide_motion_spec
 animator mtrl_fab_show_motion_spec
 animator mtrl_fab_transformation_sheet_collapse_spec
 animator mtrl_fab_transformation_sheet_expand_spec
+array androidcolors
 attr actionBarDivider
 attr actionBarItemBackground
 attr actionBarPopupTheme
@@ -1316,6 +1317,7 @@ color background_floating_material_dark
 color background_floating_material_light
 color background_material_dark
 color background_material_light
+color blue
 color bright_foreground_disabled_material_dark
 color bright_foreground_disabled_material_light
 color bright_foreground_inverse_material_dark
@@ -2003,6 +2005,7 @@ color mtrl_textinput_focused_box_stroke_color
 color mtrl_textinput_hovered_box_stroke_color
 color notification_action_color_filter
 color notification_icon_bg_color
+color primary_dark
 color primary_dark_material_dark
 color primary_dark_material_light
 color primary_material_dark
@@ -2017,6 +2020,7 @@ color secondary_text_default_material_dark
 color secondary_text_default_material_light
 color secondary_text_disabled_material_dark
 color secondary_text_disabled_material_light
+color status_bar_color
 color switch_thumb_disabled_material_dark
 color switch_thumb_disabled_material_light
 color switch_thumb_material_dark
@@ -2908,6 +2912,7 @@ drawable ic_mtrl_chip_checked_black
 drawable ic_mtrl_chip_checked_circle
 drawable ic_mtrl_chip_close_circle
 drawable ic_search_black_24
+drawable launch_screen
 drawable m3_appbar_background
 drawable m3_avd_hide_password
 drawable m3_avd_show_password
@@ -3602,6 +3607,7 @@ layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout dev_loading_view
 layout fps_view
+layout launch_screen
 layout m3_alert_dialog
 layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
@@ -4283,6 +4289,10 @@ style ShapeAppearanceOverlay_MaterialComponents_MaterialCalendar_Year
 style ShapeAppearanceOverlay_MaterialComponents_TextInputLayout_FilledBox
 style SpinnerDatePickerDialog
 style SpinnerDatePickerStyle
+style SplashScreenTheme
+style SplashScreen_Fullscreen
+style SplashScreen_SplashAnimation
+style SplashScreen_SplashTheme
 style TextAppearance_AppCompat
 style TextAppearance_AppCompat_Body1
 style TextAppearance_AppCompat_Body2

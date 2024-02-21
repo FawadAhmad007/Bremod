@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:ns1="http://schemas.android.com/tools" xmlns:ns2="urn:oasis:names:tc:xliff:document:1.2">
+    <integer-array name="androidcolors">
+    <item>@color/blue</item>
+    </integer-array>
     <attr format="reference" name="animate_relativeTo"/>
     <attr format="reference" name="appBarLayoutStyle"/>
     <attr format="enum" name="arcMode">
@@ -556,6 +559,8 @@
     <color name="background_floating_material_light">@android:color/white</color>
     <color name="background_material_dark">@color/material_grey_850</color>
     <color name="background_material_light">@color/material_grey_50</color>
+    <item name="blue" type="color">#00C4D1
+    </item>
     <color name="bright_foreground_disabled_material_dark">#80ffffff</color>
     <color name="bright_foreground_disabled_material_light">#80000000</color>
     <color name="bright_foreground_inverse_material_dark">@color/bright_foreground_material_light</color>
@@ -854,6 +859,7 @@
     <color name="mtrl_textinput_hovered_box_stroke_color">#DE000000</color>
     <color name="notification_action_color_filter">#ffffffff</color>
     <color name="notification_icon_bg_color">#ff9e9e9e</color>
+    <color name="primary_dark">#000000</color>
     <color name="primary_dark_material_dark">@android:color/black</color>
     <color name="primary_dark_material_light">@color/material_grey_600</color>
     <color name="primary_material_dark">@color/material_grey_900</color>
@@ -868,6 +874,7 @@
     <color name="secondary_text_default_material_light">#8a000000</color>
     <color name="secondary_text_disabled_material_dark">#36ffffff</color>
     <color name="secondary_text_disabled_material_light">#24000000</color>
+    <color name="status_bar_color">#F5F5F5</color>
     <color name="switch_thumb_disabled_material_dark">#ff616161</color>
     <color name="switch_thumb_disabled_material_light">#ffbdbdbd</color>
     <color name="switch_thumb_normal_material_dark">#ffbdbdbd</color>
@@ -2107,6 +2114,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         
         <item name="android:editTextBackground">@drawable/rn_edit_text_material</item>
+        <item name="android:windowIsTranslucent">true</item>
     </style>
     <style name="Base.AlertDialog.AppCompat" parent="android:Widget">
         <item name="android:layout">@layout/abc_alert_dialog_material</item>
@@ -5927,6 +5935,18 @@
     </style>
     <style name="SpinnerDatePickerStyle" ns1:targetApi="lollipop" parent="android:Widget.Material.Light.DatePicker">
         <item name="android:datePickerMode">spinner</item>
+    </style>
+    <style name="SplashScreenTheme" parent="SplashScreen_SplashTheme">
+        <item name="colorPrimaryDark">@color/status_bar_color</item>
+    </style>
+    <style name="SplashScreen_Fullscreen" parent="SplashScreen_SplashTheme">
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    <style name="SplashScreen_SplashAnimation">
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+    <style name="SplashScreen_SplashTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowAnimationStyle">@style/SplashScreen_SplashAnimation</item>
     </style>
     <style name="TextAppearance.AppCompat" parent="Base.TextAppearance.AppCompat"/>
     <style name="TextAppearance.AppCompat.Body1" parent="Base.TextAppearance.AppCompat.Body1"/>
