@@ -1,10 +1,11 @@
-import {View, Text} from 'react-native';
-import React from 'react';
+import { View, Text } from "react-native";
+import React from "react";
+import { MyView } from "../../shared/themes/style/common";
 
 export default function Category() {
   return (
-    <View>
+    <MyView>
       <Text>Category</Text>
-    </View>
+    </MyView>
   );
 }
