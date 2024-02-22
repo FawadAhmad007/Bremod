@@ -4,7 +4,7 @@ const DEFAULT_THEME = {
     statusbar_light: "light-content",
     primary: "#ffffff",
     secondary: "#19B95C",
-    lightGray: "#EDE4E3",
+    lightGray: "#eff1f3",
     black: "#000000",
     gray: "#818181",
   },

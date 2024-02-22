@@ -5,9 +5,8 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
-  Keyboard,
 } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { MyView } from "../../shared/themes/style/common";
 import { useTheme } from "@react-navigation/native";
 import { style } from "./styles";
@@ -18,13 +17,21 @@ import {
   CATEGORY_ENUM,
   DETAIL_ENUM,
 } from "../../shared/constants";
-import { SEARCH_ICON, PLACEHOLDER_IMAGE, CATEGORY_ICON } from "../../assets";
+import {
+  SEARCH_ICON,
+  PLACEHOLDER_IMAGE,
+  CATEGORY_ICON,
+  CROSS_ICON,
+} from "../../assets";
 import { navigate } from "../../shared/services";
 import Items from "./components/Items";
 
 export default function Home() {
   const myTheme = useTheme();
   const myStyle = style(myTheme);
+
+  const [searchText, setSearchText] = React.useState(null);
+  const [showCross, setShowCross] = React.useState(false);
 
   const navigateHandler = () => {
     navigate(CATEGORY_ENUM);
@@ -40,6 +47,14 @@ export default function Home() {
     { name: "Name", category: "Category1, Category2, Category3 " },
   ];
 
+  const searchHandler = () => {
+    if (showCross) {
+      setShowCross(false);
+      setSearchText(null);
+    } else {
+      setShowCross(true);
+    }
+  };
   const renderItem = ({ item }) => {
     return (
       <Items
@@ -58,14 +73,24 @@ export default function Home() {
             <TextInput
               selectionColor={myTheme?.colors?.secondary}
               placeholder={SEARCH}
+              value={searchText}
               placeholderTextColor={myTheme?.colors?.gray}
+              onChangeText={setSearchText}
               style={myStyle?.inputStyle}
             />
-            <Image
-              style={myStyle?.searchIconStyle}
-              source={SEARCH_ICON}
-              resizeMode="contain"
-            />
+            {searchText && (
+              <TouchableOpacity
+                style={myStyle?.searchIconViewStyle}
+                hitSlop={10}
+                onPress={searchHandler}
+              >
+                <Image
+                  style={myStyle?.searchIconStyle}
+                  source={showCross ? CROSS_ICON : SEARCH_ICON}
+                  resizeMode="contain"
+                />
+              </TouchableOpacity>
+            )}
           </View>
         </View>
       </View>

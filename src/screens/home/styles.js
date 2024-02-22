@@ -32,11 +32,16 @@ export const style = (myTheme) =>
         marginHorizontal: scale(5),
       },
     ],
-    searchIconStyle: {
+
+    searchIconViewStyle: {
       width: "12%",
+      height: moderateScale(20),
+    },
+    searchIconStyle: {
+      width: "100%",
+      height: moderateScale(20),
       alignSelf: "center",
       tintColor: myTheme?.color?.gray,
-      height: moderateScale(20),
     },
     buttonStyle: {
       backgroundColor: myTheme?.colors?.secondary,
