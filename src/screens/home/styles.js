@@ -64,7 +64,7 @@ export const style = (myTheme) =>
       marginVertical: scale(10),
       alignSelf: "center",
       tintColor: myTheme?.color?.gray,
-      height: moderateScale(160),
+      height: moderateScale(180),
       borderRadius: moderateScale(12),
     },
     headingTextStyle: [
