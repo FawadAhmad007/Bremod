@@ -12,16 +12,12 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
-		2097142AE9F94819A43503DF /* Karma-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1EDE302F9FE04D1E8AAB3917 /* Karma-Bold.ttf */; };
-		21BFB52A2A144F969D55519C /* Poppins-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BBBA8D6EF59843A4A7631DA7 /* Poppins-SemiBold.ttf */; };
-		337E979D1D4644F88C9B57BC /* Poppins-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DA9BE5F61D7D45898A3484F8 /* Poppins-Regular.ttf */; };
-		352A2382B5D84EF8A6AED4B7 /* Karma-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1B0559D222CC435B841D263F /* Karma-Medium.ttf */; };
-		52789E40ADA1416DA8281B07 /* Poppins-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 19086A5FEE924885A4599D6F /* Poppins-Light.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-Bremod-BremodTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-Bremod-BremodTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		92A4B7F3A47A4E588B1E0F8B /* Poppins-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 649379C1AF6A477DBAFCA377 /* Poppins-Medium.ttf */; };
-		B5CB801DE46040A19B6DDB39 /* Karma-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3364A2CD0E7645EAB2D47C23 /* Karma-Light.ttf */; };
-		FF45BFA0990248D8B011554A /* Karma-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9FAF4D46B8264918B352AF9C /* Karma-Regular.ttf */; };
+		F395FB96C6E84E56AF6C5D43 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CF0869489441469790626E0E /* Lato-Bold.ttf */; };
+		59F31D959FFF4108B0EE916E /* Lato-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A3C67F2283224DA4B52A84CA /* Lato-Light.ttf */; };
+		B2F63B7CF90C4CBD9CD2F711 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2F6B2964C26D4FFD90E63C9A /* Lato-Regular.ttf */; };
+		82AD05F955FB41BE8134C51B /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = ADD30846D9B0419DA091A3CA /* Montserrat-ExtraBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,22 +40,18 @@
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = Bremod/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Bremod/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Bremod/main.m; sourceTree = "<group>"; };
-		19086A5FEE924885A4599D6F /* Poppins-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Light.ttf"; path = "../src/assets/fonts/Poppins-Light.ttf"; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-Bremod-BremodTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bremod-BremodTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1B0559D222CC435B841D263F /* Karma-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Karma-Medium.ttf"; path = "../src/assets/fonts/Karma-Medium.ttf"; sourceTree = "<group>"; };
-		1EDE302F9FE04D1E8AAB3917 /* Karma-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Karma-Bold.ttf"; path = "../src/assets/fonts/Karma-Bold.ttf"; sourceTree = "<group>"; };
-		3364A2CD0E7645EAB2D47C23 /* Karma-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Karma-Light.ttf"; path = "../src/assets/fonts/Karma-Light.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-Bremod.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bremod.debug.xcconfig"; path = "Target Support Files/Pods-Bremod/Pods-Bremod.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-Bremod.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bremod.release.xcconfig"; path = "Target Support Files/Pods-Bremod/Pods-Bremod.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-Bremod-BremodTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bremod-BremodTests.debug.xcconfig"; path = "Target Support Files/Pods-Bremod-BremodTests/Pods-Bremod-BremodTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-Bremod.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Bremod.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		649379C1AF6A477DBAFCA377 /* Poppins-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Medium.ttf"; path = "../src/assets/fonts/Poppins-Medium.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = Bremod/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-Bremod-BremodTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Bremod-BremodTests.release.xcconfig"; path = "Target Support Files/Pods-Bremod-BremodTests/Pods-Bremod-BremodTests.release.xcconfig"; sourceTree = "<group>"; };
-		9FAF4D46B8264918B352AF9C /* Karma-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Karma-Regular.ttf"; path = "../src/assets/fonts/Karma-Regular.ttf"; sourceTree = "<group>"; };
-		BBBA8D6EF59843A4A7631DA7 /* Poppins-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-SemiBold.ttf"; path = "../src/assets/fonts/Poppins-SemiBold.ttf"; sourceTree = "<group>"; };
-		DA9BE5F61D7D45898A3484F8 /* Poppins-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Poppins-Regular.ttf"; path = "../src/assets/fonts/Poppins-Regular.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		CF0869489441469790626E0E /* Lato-Bold.ttf */ = {isa = PBXFileReference; name = "Lato-Bold.ttf"; path = "../src/assets/fonts/Lato-Bold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A3C67F2283224DA4B52A84CA /* Lato-Light.ttf */ = {isa = PBXFileReference; name = "Lato-Light.ttf"; path = "../src/assets/fonts/Lato-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2F6B2964C26D4FFD90E63C9A /* Lato-Regular.ttf */ = {isa = PBXFileReference; name = "Lato-Regular.ttf"; path = "../src/assets/fonts/Lato-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		ADD30846D9B0419DA091A3CA /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; name = "Montserrat-ExtraBold.ttf"; path = "../src/assets/fonts/Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,14 +94,10 @@
 		0A049C514CCC4CDA9B3F4639 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				1EDE302F9FE04D1E8AAB3917 /* Karma-Bold.ttf */,
-				3364A2CD0E7645EAB2D47C23 /* Karma-Light.ttf */,
-				1B0559D222CC435B841D263F /* Karma-Medium.ttf */,
-				9FAF4D46B8264918B352AF9C /* Karma-Regular.ttf */,
-				19086A5FEE924885A4599D6F /* Poppins-Light.ttf */,
-				649379C1AF6A477DBAFCA377 /* Poppins-Medium.ttf */,
-				DA9BE5F61D7D45898A3484F8 /* Poppins-Regular.ttf */,
-				BBBA8D6EF59843A4A7631DA7 /* Poppins-SemiBold.ttf */,
+				CF0869489441469790626E0E /* Lato-Bold.ttf */,
+				A3C67F2283224DA4B52A84CA /* Lato-Light.ttf */,
+				2F6B2964C26D4FFD90E63C9A /* Lato-Regular.ttf */,
+				ADD30846D9B0419DA091A3CA /* Montserrat-ExtraBold.ttf */,
 			);
 			name = Resources;
 			path = "";
@@ -276,14 +264,10 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				2097142AE9F94819A43503DF /* Karma-Bold.ttf in Resources */,
-				B5CB801DE46040A19B6DDB39 /* Karma-Light.ttf in Resources */,
-				352A2382B5D84EF8A6AED4B7 /* Karma-Medium.ttf in Resources */,
-				FF45BFA0990248D8B011554A /* Karma-Regular.ttf in Resources */,
-				52789E40ADA1416DA8281B07 /* Poppins-Light.ttf in Resources */,
-				92A4B7F3A47A4E588B1E0F8B /* Poppins-Medium.ttf in Resources */,
-				337E979D1D4644F88C9B57BC /* Poppins-Regular.ttf in Resources */,
-				21BFB52A2A144F969D55519C /* Poppins-SemiBold.ttf in Resources */,
+				F395FB96C6E84E56AF6C5D43 /* Lato-Bold.ttf in Resources */,
+				59F31D959FFF4108B0EE916E /* Lato-Light.ttf in Resources */,
+				B2F63B7CF90C4CBD9CD2F711 /* Lato-Regular.ttf in Resources */,
+				82AD05F955FB41BE8134C51B /* Montserrat-ExtraBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

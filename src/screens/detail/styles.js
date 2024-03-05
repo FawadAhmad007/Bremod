@@ -26,6 +26,7 @@ export const style = (myTheme) =>
     itemHeadingStyle: [
       FONTS_STYLE.HEADING_BOLD_MEDIUM,
       {
+        width: "30%",
         color: myTheme?.colors?.black,
         includeFontPadding: false,
       },
@@ -33,16 +34,17 @@ export const style = (myTheme) =>
     itemTextStyle: [
       FONTS_STYLE.TEXT_MEDIUM,
       {
+        width: "70%",
         color: myTheme?.colors?.gray,
         includeFontPadding: false,
         marginLeft: moderateScale(10),
       },
     ],
     itemStyle: {
-      width: "80%",
-      alignSelf: "center",
       marginVertical: verticalScale(2),
       flexDirection: "row",
+      alignSelf: "center",
+      width: "80%",
     },
     detailViewStyle: {
       marginVertical: verticalScale(5),

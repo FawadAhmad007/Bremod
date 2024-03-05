@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { FONTS_STYLE } from "../../shared/themes/style/common";
+import { IS_IOS } from "../../shared/themes/deviceInfo";
 export const style = (myTheme) =>
   StyleSheet.create({
     headerStyle: {
@@ -15,15 +16,18 @@ export const style = (myTheme) =>
       alignItems: "center",
       justifyContent: "space-between",
     },
-    inputViewStyle: {
-      width: "100%",
-      backgroundColor: myTheme?.colors?.lightGray,
-      alignSelf: "center",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      borderRadius: moderateScale(8),
-    },
+    inputViewStyle: [
+      {
+        width: "100%",
+        backgroundColor: myTheme?.colors?.lightGray,
+        alignSelf: "center",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        borderRadius: moderateScale(8),
+      },
+      IS_IOS && { padding: moderateScale(10) },
+    ],
     inputStyle: [
       FONTS_STYLE?.TEXT_XSMALL,
       {

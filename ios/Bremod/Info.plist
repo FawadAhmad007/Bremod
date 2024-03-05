@@ -49,14 +49,10 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Karma-Bold.ttf</string>
-		<string>Karma-Light.ttf</string>
-		<string>Karma-Medium.ttf</string>
-		<string>Karma-Regular.ttf</string>
-		<string>Poppins-Light.ttf</string>
-		<string>Poppins-Medium.ttf</string>
-		<string>Poppins-Regular.ttf</string>
-		<string>Poppins-SemiBold.ttf</string>
+		<string>Lato-Bold.ttf</string>
+		<string>Lato-Light.ttf</string>
+		<string>Lato-Regular.ttf</string>
+		<string>Montserrat-ExtraBold.ttf</string>
 	</array>
 </dict>
 </plist>
