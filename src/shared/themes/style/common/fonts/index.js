@@ -21,8 +21,8 @@ export const FONTS_STYLE = {
     includeFontPadding: false,
   },
   HEADING_BOLD_MEDIUM: {
-    fontFamily: "Montserrat-ExtraBold",
-    fontSize: IS_IOS ? RF(12) : RF(14),
+    fontFamily: "Montserrat-Medium",
+    fontSize: IS_IOS ? RF(12) : RF(13),
     fontWeight: IS_IOS ? "400" : "500",
     includeFontPadding: false,
   },
@@ -34,13 +34,13 @@ export const FONTS_STYLE = {
   },
   HEADING_MEDIUM: {
     fontFamily: "Lato-Regular",
-    fontSize: RF(14),
+    fontSize: IS_IOS ? RF(12) : RF(13),
     fontWeight: IS_IOS ? "400" : "500",
     includeFontPadding: false,
   },
   TEXT_HEADING: {
-    fontFamily: "Montserrat-ExtraBold",
-    fontSize: RF(20),
+    fontFamily: "Montserrat-Medium",
+    fontSize: IS_IOS ? RF(18) : RF(20),
     fontWeight: IS_IOS ? "400" : "500",
     includeFontPadding: false,
   },
