@@ -5,6 +5,7 @@ const CATEGORY_ICON = require('./category.png');
 const CROSS_ICON = require('./cross.png');
 const BACK_ICON = require('./back.png');
 const CART_ICON = require('./cart.png');
+const GROCERY_CART_ICON = require('./grocery.png');
 const BREMOD_ICON = require('./breemod.png');
 
 export {
@@ -14,4 +15,5 @@ export {
 	BACK_ICON,
 	CART_ICON,
 	BREMOD_ICON,
+	GROCERY_CART_ICON,
 };

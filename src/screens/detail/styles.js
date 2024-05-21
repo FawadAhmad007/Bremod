@@ -2,7 +2,7 @@
 
 import { StyleSheet } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
-import { FONTS_STYLE, DEVICE_WIDTH } from '../../shared/themes/style/common';
+import { FONTS_STYLE } from '../../shared/themes/style/common';
 export const style = (myTheme) =>
 	StyleSheet.create({
 		headingTextStyle: [
@@ -57,14 +57,6 @@ export const style = (myTheme) =>
 			marginRight: moderateScale(5),
 			tintColor: myTheme?.colors?.primary,
 		},
-		coverImageStyle: {
-			width: '80%',
-			marginVertical: scale(10),
-			alignSelf: 'center',
-			tintColor: myTheme?.color?.gray,
-			height: moderateScale(180),
-			borderRadius: moderateScale(12),
-		},
 
 		itemHeadingStyle: [
 			FONTS_STYLE.HEADING_BOLD_MEDIUM,
@@ -110,5 +102,31 @@ export const style = (myTheme) =>
 				color: myTheme?.colors?.skyBlue,
 				includeFontPadding: false,
 			},
+		],
+
+		listContainer: {
+			flexDirection: 'row',
+			flexWrap: 'wrap',
+			justifyContent: 'flex-start',
+			padding: verticalScale(10),
+			marginHorizontal: scale(19),
+		},
+		circle: {
+			width: moderateScale(40),
+			height: moderateScale(40),
+			borderRadius: scale(25),
+			margin: scale(4),
+			justifyContent: 'center',
+			alignItems: 'center',
+		},
+		selectedCircle: {
+			borderWidth: scale(3),
+			borderColor: myTheme?.colors?.secondary,
+		},
+		count: [
+			{
+				color: myTheme?.colors?.primary,
+			},
+			FONTS_STYLE.TEXT_MEDIUM,
 		],
 	});

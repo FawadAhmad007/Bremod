@@ -25,6 +25,7 @@ import {
 	CATEGORY_ICON,
 	CROSS_ICON,
 	BREMOD_ICON,
+	GROCERY_CART_ICON,
 } from '../../assets';
 import { navigate } from '../../shared/services';
 import Items from './components/Items';
@@ -69,11 +70,27 @@ export default function Home() {
 
 	return (
 		<MyView>
-			<Image
-				style={myStyle?.logoStyle}
-				source={BREMOD_ICON}
-				resizeMode='contain'
-			/>
+			<View
+				style={{
+					flexDirection: 'row',
+					justifyContent: 'space-between',
+				}}>
+				<Image
+					style={myStyle?.logoStyle}
+					source={BREMOD_ICON}
+					resizeMode='contain'
+				/>
+				<TouchableOpacity style={myStyle?.cartContainer}>
+					<Image
+						style={myStyle?.cartStyle}
+						source={GROCERY_CART_ICON}
+						resizeMode='contain'
+					/>
+					<View style={myStyle.badge}>
+						<Text style={myStyle?.cartTextStyle}>{'2'}</Text>
+					</View>
+				</TouchableOpacity>
+			</View>
 			<View style={myStyle?.headerStyle}>
 				<View style={myStyle?.headerInnerStyle}>
 					<View style={myStyle?.inputViewStyle}>

@@ -77,8 +77,36 @@ export const style = (myTheme) =>
 			width: moderateScale(120),
 			height: moderateScale(40),
 			marginVertical: scale(10),
-			alignSelf: 'center',
+			marginStart: moderateScale(130),
 		},
+		cartContainer: {
+			marginVertical: scale(15),
+			marginEnd: moderateScale(10),
+		},
+		cartStyle: {
+			width: moderateScale(30),
+			height: moderateScale(30),
+		},
+		badge: {
+			backgroundColor: myTheme?.colors?.secondary,
+			height: moderateScale(15),
+			width: moderateScale(15),
+			alignSelf: 'flex-end',
+			position: 'absolute',
+			alignContent: 'center',
+			alignItems: 'center',
+			borderRadius: moderateScale(15),
+			// borderColor: myTheme?.colors?.gray,
+			// borderWidth: moderateScale(1),
+		},
+		cartTextStyle: [
+			FONTS_STYLE.TEXT_XSMALL,
+			{
+				color: myTheme?.colors?.primary,
+				textAlign: 'center',
+				includeFontPadding: false,
+			},
+		],
 		headingTextStyle: [
 			FONTS_STYLE.TEXT_HEADING,
 			{

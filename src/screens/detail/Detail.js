@@ -7,8 +7,9 @@ import {
 	ScrollView,
 	TouchableOpacity,
 	Linking,
+	FlatList,
 } from 'react-native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { MyView } from '../../shared/themes/style/common';
 import { useTheme } from '@react-navigation/native';
 import { style } from './styles';
@@ -22,13 +23,41 @@ import {
 } from '../../shared/constants';
 import { PLACEHOLDER_IMAGE, BACK_ICON, CART_ICON } from '../../assets';
 import DetailItem from './components/DetailItem';
+import Carousel from './components/slider';
 import ReadMore from 'react-native-read-more-text';
 import { goBack } from '../../shared/services';
+import { DEVICE_WIDTH } from '../../shared/themes/deviceInfo/index';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 export default function Detail() {
 	const myTheme = useTheme();
 	const myStyle = style(myTheme);
+	const [selectedColors, setSelectedColors] = useState([]);
+	const [numColumns, setNumColumns] = useState(calculateColumns());
 
+	function calculateColumns() {
+		const minCircleWidth = moderateScale(50); // Adjust minimum circle width as needed
+		return Math.floor((DEVICE_WIDTH - scale(32)) / minCircleWidth);
+	}
+
+	useEffect(() => {
+		setNumColumns(calculateColumns());
+	}, []);
+
+	const toggleSelectColor = (color) => {
+		const index = selectedColors.indexOf(color);
+		if (index !== -1) {
+			selectedColors.splice(index, 1); // Deselect color
+		} else {
+			selectedColors.push(color); // Select color
+		}
+		setSelectedColors([...selectedColors]); // Trigger re-render
+	};
+
+	const getColorCount = (color) => {
+		const index = selectedColors.indexOf(color);
+		return index !== -1 ? index + 1 : '';
+	};
 	const renderTruncatedFooter = (handlePress) => {
 		return (
 			<Text
@@ -73,6 +102,30 @@ export default function Detail() {
 				console.log('Error opening WhatsApp', e);
 			});
 	};
+
+	const colors = [
+		'#8B4513',
+		'#000000',
+		'#B2BEB5',
+		'#A52A2A',
+		'#CD5C5C',
+		'#E5E4E2',
+		'#C04000',
+		'#FFD700',
+	];
+	const ColorCircle = ({ color, onPress, count, isSelected }) => (
+		<TouchableOpacity onPress={onPress}>
+			<View
+				style={[
+					myStyle.circle,
+					{ backgroundColor: color },
+					isSelected && myStyle.selectedCircle, // Apply border if isSelected is true
+				]}>
+				{count > 0 && <Text style={myStyle.count}>{count}</Text>}
+			</View>
+		</TouchableOpacity>
+	);
+
 	return (
 		<MyView>
 			<ScrollView>
@@ -95,10 +148,28 @@ export default function Detail() {
 					</Text>
 					<View style={myStyle?.rightIcon} />
 				</View>
-				<Image
-					style={myStyle?.coverImageStyle}
-					source={PLACEHOLDER_IMAGE}
-					resizeMode='cover'
+				<Carousel
+					images={[
+						PLACEHOLDER_IMAGE,
+						PLACEHOLDER_IMAGE,
+						PLACEHOLDER_IMAGE,
+						PLACEHOLDER_IMAGE,
+					]}
+				/>
+				<FlatList
+					data={colors}
+					renderItem={({ item }) => (
+						<ColorCircle
+							color={item}
+							onPress={() => toggleSelectColor(item)}
+							count={getColorCount(item)}
+							isSelected={selectedColors.includes(item)}
+						/>
+					)}
+					keyExtractor={(item, index) => index.toString()}
+					horizontal={false}
+					numColumns={numColumns}
+					contentContainerStyle={myStyle.listContainer}
 				/>
 				<View style={myStyle.detailViewStyle}>
 					<DetailItem
