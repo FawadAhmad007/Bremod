@@ -9,19 +9,24 @@ import { CATEGORY } from '../../shared/constants';
 import { BACK_ICON } from '../../assets';
 import { goBack } from '../../shared/services';
 import CategoryList from './component/index';
-export default function Category() {
+import { useSelector, useDispatch } from 'react-redux';
+
+export default function Category({ route, navigation }) {
 	const myTheme = useTheme();
 	const myStyle = style(myTheme);
+	const categoryData = useSelector((state) => state?.root?.bremod?.category);
 
-	const data = [
-		{ name: 'Category  1' },
-		{ name: 'Category  2' },
-		{ name: 'Category  3' },
-		{ name: 'Category  4' },
-		{ name: 'Category  5' },
-	];
 	const renderItem = ({ item }) => {
-		return <CategoryList text={item?.name} />;
+		return (
+			<CategoryList
+				text={item?.name}
+				onPress={() => handleGoBack(item)}
+			/>
+		);
+	};
+	const handleGoBack = (data) => {
+		route.params.onGoBack(data);
+		goBack();
 	};
 	return (
 		<MyView>
@@ -45,10 +50,9 @@ export default function Category() {
 				<View style={myStyle?.rightIcon} />
 			</View>
 			<FlatList
-				// columnWrapperStyle={myStyle?.flatListStyle}
 				numColumns={1}
 				keyExtractor={(item, index) => index.toString()}
-				data={data}
+				data={categoryData}
 				renderItem={renderItem}
 				ItemSeparatorComponent={<View style={myStyle?.lineStyle} />}
 			/>

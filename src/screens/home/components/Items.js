@@ -1,27 +1,39 @@
-import { Text, TouchableOpacity, Image } from "react-native";
-import React from "react";
-import { style } from "../styles";
-import { useTheme } from "@react-navigation/native";
-import { PLACEHOLDER_IMAGE } from "../../../assets";
+/** @format */
 
-const Items = (props) => {
-  const myTheme = useTheme();
-  const myStyle = style(myTheme);
-  return (
-    <TouchableOpacity style={myStyle?.itemStyle} onPress={props.onPress}>
-      <Image
-        style={myStyle?.itemImageStyle}
-        source={PLACEHOLDER_IMAGE}
-        resizeMode="cover"
-      />
-      <Text numberOfLines={1} style={myStyle?.itemHeadingStyle}>
-        {props.name}
-      </Text>
-      <Text numberOfLines={3} style={myStyle?.itemTextStyle}>
-        {props.category}
-      </Text>
-    </TouchableOpacity>
-  );
+import { Text, TouchableOpacity, Image } from 'react-native';
+import React from 'react';
+import { style } from '../styles';
+import { useTheme } from '@react-navigation/native';
+import { PLACEHOLDER_IMAGE } from '../../../assets';
+
+const Items = ({ data, onPress }) => {
+	const myTheme = useTheme();
+	const myStyle = style(myTheme);
+	return (
+		<TouchableOpacity
+			style={myStyle?.itemStyle}
+			onPress={onPress}>
+			<Image
+				style={myStyle?.itemImageStyle}
+				source={
+					data?.image?.length > 0 ? { uri: data?.image[0] } : PLACEHOLDER_IMAGE
+				}
+				resizeMode='cover'
+			/>
+			<Text
+				numberOfLines={2}
+				style={myStyle?.itemHeadingStyle}>
+				{data?.name}
+			</Text>
+			{data?.categories && (
+				<Text
+					numberOfLines={3}
+					style={myStyle?.itemTextStyle}>
+					{data?.categories[0]?.name}
+				</Text>
+			)}
+		</TouchableOpacity>
+	);
 };
 
 export default Items;

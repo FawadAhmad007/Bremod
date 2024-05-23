@@ -7,8 +7,9 @@ import {
 	Image,
 	TouchableOpacity,
 	FlatList,
+	RefreshControl,
 } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { MyView } from '../../shared/themes/style/common';
 import { useTheme } from '@react-navigation/native';
 import { style } from './styles';
@@ -29,52 +30,186 @@ import {
 } from '../../assets';
 import { navigate } from '../../shared/services';
 import Items from './components/Items';
+import Carousel from './components/slider';
+import {
+	getList,
+	getProductList,
+} from '../../shared/services/FetchIntercepter/request';
+import { useSelector, useDispatch } from 'react-redux';
+import { bremodSilce } from '../../shared/redux/reducers/index';
 
 export default function Home() {
 	const myTheme = useTheme();
 	const myStyle = style(myTheme);
+	const dispatch = useDispatch();
+	const productData = useSelector((state) => state?.root?.bremod?.product);
+	const coverData = useSelector((state) => state?.root?.bremod?.cover);
 	const [searchText, setSearchText] = useState(null);
 	const [showCross, setShowCross] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
+	const [reachedEnd, setReachedEnd] = useState(false);
+	const [pagination, setPagination] = useState(false);
+	const [category, setCategory] = useState(null);
+
+	let page = useRef(1);
 
 	const navigateHandler = () => {
-		navigate(CATEGORY_ENUM);
+		navigate(CATEGORY_ENUM, {
+			onGoBack: (data) => {
+				setSearchText(data?.name);
+				setCategory(data?.name);
+			},
+		});
 	};
 
-	const data = [
-		{ name: 'Name', category: 'Category1, Category2, Category3 ' },
-		{ name: 'Name', category: 'Category1, Category2, Category3 ' },
-		{ name: 'Name', category: 'Category1, Category2, Category3 ' },
-		{ name: 'Name', category: 'Category1, Category2, Category3 ' },
-		{ name: 'Name', category: 'Category1, Category2, Category3 ' },
-		{ name: 'Name', category: 'Category1, Category2, Category3 ' },
-		{ name: 'Name', category: 'Category1, Category2, Category3 ' },
-	];
+	const appendDataToProducts = (
+		products,
+		images,
+		productCategories,
+		categoryList,
+	) => {
+		const imageMap = images.reduce((map, cover) => {
+			if (!map[cover.product_id]) {
+				map[cover.product_id] = [];
+			}
+			map[cover.product_id].push(cover.url);
+			return map;
+		}, {});
+		const categoryMap = categoryList.reduce((map, category) => {
+			map[category.id] = category.name;
+			return map;
+		}, {});
+
+		const categoryByProductMap = productCategories.reduce((map, pc) => {
+			if (!map[pc.product_id]) {
+				map[pc.product_id] = [];
+			}
+			map[pc.product_id].push({
+				id: pc.category_id,
+				name: categoryMap[pc.category_id],
+			});
+			return map;
+		}, {});
+
+		return products.map((product) => ({
+			...product,
+			image: imageMap[product.id] || null,
+			categories: categoryByProductMap[product.id] || [],
+		}));
+	};
+
+	const getProducts = async () => {
+		try {
+			const res = await getProductList(
+				'_product',
+				page.current,
+				10,
+				searchText,
+			);
+			const [
+				imageRes,
+				productCategoriesRes,
+				categoriesRes,
+				coverRes,
+				colorRes,
+			] = await Promise.all([
+				getList('image'),
+				getProductList('_products_categories', page.current, 10),
+				getProductList('_category', page.current, 10),
+				getList('_cover'),
+				getList('_color'),
+			]);
+
+			const updateProductData = appendDataToProducts(
+				res?.data?.data,
+				imageRes?.data?.data,
+				productCategoriesRes?.data?.data,
+				categoriesRes?.data?.data,
+			);
+			dispatch(bremodSilce?.actions?.ADD_COVER(coverRes?.data?.data));
+			dispatch(bremodSilce?.actions?.ADD_COLOR(colorRes?.data?.data));
+			setRefreshing(false);
+			dispatch(bremodSilce?.actions?.ADD_CATEGORY(categoriesRes?.data?.data));
+			const data = { data: updateProductData, page: page.current };
+			dispatch(bremodSilce?.actions?.ADD_PRODUCTS(data));
+			data?.data?.length == 10
+				? (page.current = page.current + 1)
+				: setPagination(true);
+		} catch (error) {
+			console.error('Error fetching data:', error);
+		}
+	};
+
+	useEffect(() => {
+		getProducts();
+	}, []);
 
 	const searchHandler = () => {
 		if (showCross) {
+			fetchSearchedProducts();
 			setShowCross(false);
 			setSearchText(null);
+			setCategory(null);
 		} else {
+			fetchSearchedProducts();
 			setShowCross(true);
 		}
 	};
+	const fetchSearchedProducts = async () => {
+		page.current = 1;
+		setPagination(false);
+		setReachedEnd(false);
+		await getProducts();
+	};
+
+	useEffect(() => {
+		if (category !== null) {
+			setShowCross(true);
+		}
+		fetchSearchedProducts();
+	}, [category, searchText]);
+
+	const handleRefresh = () => {
+		page.current = 1;
+		setPagination(false);
+		setReachedEnd(false);
+		getProducts();
+	};
+
+	const handelPagination = () => {
+		getProducts();
+	};
+
 	const renderItem = ({ item }) => {
 		return (
 			<Items
-				name={item?.name}
-				category={item?.category}
-				onPress={() => navigate(DETAIL_ENUM)}
+				data={item}
+				onPress={() => navigate(DETAIL_ENUM, { data: item })}
 			/>
 		);
 	};
 
+	const HeaderComponent = () => (
+		<View>
+			<Carousel
+				images={coverData?.length > 0 ? coverData : [PLACEHOLDER_IMAGE]}
+			/>
+			{/* <Image
+				style={myStyle?.coverImageStyle}
+				source={PLACEHOLDER_IMAGE}
+				resizeMode='cover'
+			/> */}
+			<Text
+				numberOfLines={1}
+				style={myStyle?.headingTextStyle}>
+				{OUR_PRODUCTS}
+			</Text>
+		</View>
+	);
+
 	return (
 		<MyView>
-			<View
-				style={{
-					flexDirection: 'row',
-					justifyContent: 'space-between',
-				}}>
+			<View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
 				<Image
 					style={myStyle?.logoStyle}
 					source={BREMOD_ICON}
@@ -98,44 +233,52 @@ export default function Home() {
 							selectionColor={myTheme?.colors?.secondary}
 							placeholder={SEARCH}
 							value={searchText}
+							keyboardType='default'
 							placeholderTextColor={myTheme?.colors?.gray}
-							onChangeText={setSearchText}
+							onChangeText={(e) => {
+								setCategory(null);
+								setSearchText(e);
+							}}
 							style={myStyle?.inputStyle}
 						/>
-						{searchText && (
-							<TouchableOpacity
-								style={myStyle?.searchIconViewStyle}
-								hitSlop={10}
-								onPress={searchHandler}>
-								<Image
-									style={myStyle?.searchIconStyle}
-									source={showCross ? CROSS_ICON : SEARCH_ICON}
-									resizeMode='contain'
-								/>
-							</TouchableOpacity>
-						)}
+
+						<TouchableOpacity
+							style={myStyle?.searchIconViewStyle}
+							hitSlop={10}
+							onPress={searchHandler}>
+							<Image
+								style={myStyle?.searchIconStyle}
+								source={showCross ? CROSS_ICON : SEARCH_ICON}
+								resizeMode='contain'
+							/>
+						</TouchableOpacity>
 					</View>
 				</View>
 			</View>
-
-			<Image
-				style={myStyle?.coverImageStyle}
-				source={PLACEHOLDER_IMAGE}
-				resizeMode='cover'
-			/>
-
-			<Text
-				numberOfLines={1}
-				style={myStyle?.headingTextStyle}>
-				{OUR_PRODUCTS}
-			</Text>
-
 			<FlatList
 				columnWrapperStyle={myStyle?.flatListStyle}
 				numColumns={3}
 				keyExtractor={(item, index) => index.toString()}
-				data={data}
+				data={productData}
+				ListHeaderComponent={HeaderComponent}
 				renderItem={renderItem}
+				onEndReached={() => {
+					if (!reachedEnd) {
+						productData?.length > 0 &&
+							page.current > 0 &&
+							!pagination &&
+							handelPagination();
+					}
+				}}
+				onEndReachedThreshold={0.1}
+				refreshControl={
+					<RefreshControl
+						refreshing={refreshing}
+						onRefresh={() => {
+							handleRefresh();
+						}}
+					/>
+				}
 			/>
 
 			<TouchableOpacity

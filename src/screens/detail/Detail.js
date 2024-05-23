@@ -28,16 +28,19 @@ import ReadMore from 'react-native-read-more-text';
 import { goBack } from '../../shared/services';
 import { DEVICE_WIDTH } from '../../shared/themes/deviceInfo/index';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
+import { useSelector, useDispatch } from 'react-redux';
 
-export default function Detail() {
+export default function Detail({ route, navigation }) {
 	const myTheme = useTheme();
 	const myStyle = style(myTheme);
 	const [selectedColors, setSelectedColors] = useState([]);
-	const [numColumns, setNumColumns] = useState(calculateColumns());
+	const colorsData = useSelector((state) => state?.root?.bremod?.color);
 
+	const [numColumns, setNumColumns] = useState(calculateColumns());
+	let data = route.params.data;
 	function calculateColumns() {
-		const minCircleWidth = moderateScale(50); // Adjust minimum circle width as needed
-		return Math.floor((DEVICE_WIDTH - scale(32)) / minCircleWidth);
+		const minCircleWidth = moderateScale(30);
+		return Math.floor((DEVICE_WIDTH - scale(62)) / minCircleWidth);
 	}
 
 	useEffect(() => {
@@ -54,10 +57,6 @@ export default function Detail() {
 		setSelectedColors([...selectedColors]); // Trigger re-render
 	};
 
-	const getColorCount = (color) => {
-		const index = selectedColors.indexOf(color);
-		return index !== -1 ? index + 1 : '';
-	};
 	const renderTruncatedFooter = (handlePress) => {
 		return (
 			<Text
@@ -103,67 +102,55 @@ export default function Detail() {
 			});
 	};
 
-	const colors = [
-		'#8B4513',
-		'#000000',
-		'#B2BEB5',
-		'#A52A2A',
-		'#CD5C5C',
-		'#E5E4E2',
-		'#C04000',
-		'#FFD700',
-	];
-	const ColorCircle = ({ color, onPress, count, isSelected }) => (
-		<TouchableOpacity onPress={onPress}>
-			<View
-				style={[
-					myStyle.circle,
-					{ backgroundColor: color },
-					isSelected && myStyle.selectedCircle, // Apply border if isSelected is true
-				]}>
-				{count > 0 && <Text style={myStyle.count}>{count}</Text>}
-			</View>
+	const ColorCircle = ({ data, onPress, isSelected }) => (
+		<TouchableOpacity
+			style={{
+				paddingHorizontal: moderateScale(16),
+				paddingVertical: verticalScale(8),
+				marginVertical: moderateScale(3),
+				marginHorizontal: moderateScale(2),
+				borderRadius: moderateScale(25),
+				backgroundColor: myTheme?.colors?.gray10,
+			}}
+			onPress={onPress}>
+			<Text
+				style={{
+					color: 'black',
+				}}>
+				{data?.name}
+			</Text>
 		</TouchableOpacity>
 	);
-
 	return (
 		<MyView>
+			<View style={myStyle?.container}>
+				<TouchableOpacity
+					style={myStyle?.touchableContainerStyle}
+					hitSlop={20}
+					activeOpacity={0.6}
+					onPress={() => goBack()}>
+					<Image
+						style={myStyle.leftIcon}
+						source={BACK_ICON}
+						resizeMode='contain'
+					/>
+				</TouchableOpacity>
+				<Text
+					numberOfLines={1}
+					style={myStyle?.headingTextStyle}>
+					{OUR_PRODUCTS}
+				</Text>
+				<View style={myStyle?.rightIcon} />
+			</View>
 			<ScrollView>
-				<View style={myStyle?.container}>
-					<TouchableOpacity
-						style={myStyle?.touchableContainerStyle}
-						hitSlop={20}
-						activeOpacity={0.6}
-						onPress={() => goBack()}>
-						<Image
-							style={myStyle.leftIcon}
-							source={BACK_ICON}
-							resizeMode='contain'
-						/>
-					</TouchableOpacity>
-					<Text
-						numberOfLines={1}
-						style={myStyle?.headingTextStyle}>
-						{OUR_PRODUCTS}
-					</Text>
-					<View style={myStyle?.rightIcon} />
-				</View>
-				<Carousel
-					images={[
-						PLACEHOLDER_IMAGE,
-						PLACEHOLDER_IMAGE,
-						PLACEHOLDER_IMAGE,
-						PLACEHOLDER_IMAGE,
-					]}
-				/>
+				<Carousel images={data?.image ? data?.image : [PLACEHOLDER_IMAGE]} />
+
 				<FlatList
-					data={colors}
+					data={colorsData}
 					renderItem={({ item }) => (
 						<ColorCircle
-							color={item}
+							data={item}
 							onPress={() => toggleSelectColor(item)}
-							count={getColorCount(item)}
-							isSelected={selectedColors.includes(item)}
 						/>
 					)}
 					keyExtractor={(item, index) => index.toString()}
@@ -174,15 +161,15 @@ export default function Detail() {
 				<View style={myStyle.detailViewStyle}>
 					<DetailItem
 						heading={NAME}
-						text={'Product'}
+						text={data?.name}
 					/>
 					<DetailItem
 						heading={CATEGORY}
-						text={'Category1, Category2, Category3'}
+						text={data?.categories[0]?.name}
 					/>
 					<DetailItem
 						heading={PRICE}
-						text={'00.00'}
+						text={data?.price}
 					/>
 					<View style={myStyle?.detailView}>
 						<Text style={myStyle?.detailHeadingStyle}>{DESCRIPTION}:</Text>
@@ -190,18 +177,7 @@ export default function Detail() {
 							numberOfLines={8}
 							renderTruncatedFooter={renderTruncatedFooter}
 							renderRevealedFooter={renderRevealedFooter}>
-							<Text style={myStyle?.itemTextStyle}>
-								Lorem Ipsum is simply dummy text of the printing and typesetting
-								industry. Lorem Ipsum has been the industry's standard dummy
-								text ever since the 1500s, when an unknown printer took a galley
-								of type and scrambled it to make a type specimen book. It has
-								survived not only five centuries, but also the leap into
-								electronic typesetting, remaining essentially unchanged. It was
-								popularised in the 1960s with the release of Letraset sheets
-								containing Lorem Ipsum passages, and more recently with desktop
-								publishing software like Aldus PageMaker including versions of
-								Lorem Ipsum.
-							</Text>
+							<Text style={myStyle?.itemTextStyle}>{data?.description}</Text>
 						</ReadMore>
 					</View>
 				</View>

@@ -18,10 +18,10 @@ export const style = (myTheme) =>
 			alignItems: 'center',
 		},
 		image: {
-			width: DEVICE_WIDTH,
+			width: DEVICE_WIDTH - scale(32),
 			marginVertical: scale(10),
 			alignSelf: 'center',
-			height: moderateScale(180),
+			height: DEVICE_WIDTH - scale(32),
 			borderRadius: moderateScale(12),
 		},
 		paginationContainer: {

@@ -8,6 +8,7 @@ const DEFAULT_THEME = {
 		black: '#000000',
 		gray: '#818181',
 		skyBlue: '#5699E6',
+		gray10: '#81818126',
 	},
 };
 

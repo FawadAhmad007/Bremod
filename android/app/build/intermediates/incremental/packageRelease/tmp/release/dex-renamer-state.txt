@@ -1,7 +1,0 @@
-#Thu May 16 18:13:48 PKT 2024
-base.1=/home/fawad/work/new/Bremod/android/app/build/intermediates/dex/release/mergeDexRelease/classes2.dex
-path.1=classes2.dex
-base.0=/home/fawad/work/new/Bremod/android/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
-renamed.1=classes2.dex
-renamed.0=classes.dex
-path.0=classes.dex

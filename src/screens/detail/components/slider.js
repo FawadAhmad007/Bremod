@@ -12,13 +12,14 @@ import {
 import { useTheme } from '@react-navigation/native';
 import { style } from './styles';
 import { DEVICE_WIDTH } from '../../../shared/themes/deviceInfo/index';
+import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 
 const Carousel = ({ images }) => {
 	const myTheme = useTheme();
 	const myStyle = style(myTheme);
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const carouselRef = useRef();
-
+	const [currentItem, setCurrentItem] = useState(0);
 	const dotScaleAnim = useRef(images.map(() => new Animated.Value(1))).current;
 	const dotOpacityAnim = useRef(
 		images.map(() => new Animated.Value(0.5)),
@@ -42,7 +43,7 @@ const Carousel = ({ images }) => {
 	useEffect(() => {
 		const interval = setInterval(() => {
 			const newIndex = (currentIndex + 1) % images.length;
-			setCurrentIndex(newIndex);
+
 			scrollToIndex(newIndex);
 		}, 3000);
 
@@ -74,38 +75,40 @@ const Carousel = ({ images }) => {
 				pagingEnabled
 				showsHorizontalScrollIndicator={false}
 				onScroll={handleScroll}
-				scrollEventThrottle={16}>
+				scrollEventThrottle={16}
+				onSnapToItem={setCurrentIndex}>
 				{images.map((imageSource, index) => (
 					<View
 						key={index}
 						style={myStyle.item}>
 						<Image
 							style={myStyle.image}
-							source={imageSource}
+							source={{ uri: imageSource }}
 							resizeMode='cover'
 						/>
 					</View>
 				))}
 			</ScrollView>
-			<View style={myStyle.paginationContainer}>
-				{images.map((item, index) => (
-					<TouchableOpacity
+			<View
+				style={{
+					alignSelf: 'center',
+					flexDirection: 'row',
+					marginTop: verticalScale(5),
+				}}>
+				{images?.map((_, index) => (
+					<View
 						key={index}
-						onPress={() => scrollToIndex(index)}>
-						<Animated.View
-							style={[
-								myStyle.dot,
-								{
-									transform: [{ scale: dotScaleAnim[index] }],
-									// opacity: dotOpacityAnim[index],
-									backgroundColor:
-										index == currentIndex
-											? myTheme?.colors?.secondary
-											: myTheme?.colors?.lightGray,
-								},
-							]}
-						/>
-					</TouchableOpacity>
+						style={{
+							height: verticalScale(4),
+							width: scale(18),
+							borderRadius: scale(8),
+							marginHorizontal: scale(3),
+							backgroundColor:
+								index == currentIndex
+									? myTheme?.colors?.secondary
+									: myTheme?.colors?.gray10,
+						}}
+					/>
 				))}
 			</View>
 		</View>

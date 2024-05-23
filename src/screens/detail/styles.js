@@ -3,6 +3,7 @@
 import { StyleSheet } from 'react-native';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
 import { FONTS_STYLE } from '../../shared/themes/style/common';
+import { DEVICE_WIDTH } from '../../shared/themes/deviceInfo/index';
 export const style = (myTheme) =>
 	StyleSheet.create({
 		headingTextStyle: [
@@ -95,6 +96,7 @@ export const style = (myTheme) =>
 			width: '80%',
 			alignSelf: 'center',
 			marginTop: verticalScale(10),
+			paddingBottom: moderateScale(25),
 		},
 		moreTextStyle: [
 			FONTS_STYLE.TEXT_MEDIUM,
@@ -129,4 +131,16 @@ export const style = (myTheme) =>
 			},
 			FONTS_STYLE.TEXT_MEDIUM,
 		],
+		item: {
+			width: DEVICE_WIDTH,
+			justifyContent: 'center',
+			alignItems: 'center',
+		},
+		image: {
+			width: DEVICE_WIDTH,
+			marginVertical: scale(10),
+			alignSelf: 'center',
+			height: moderateScale(180),
+			borderRadius: moderateScale(12),
+		},
 	});
