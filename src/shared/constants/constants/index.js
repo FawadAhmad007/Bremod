@@ -3,6 +3,7 @@
 const CATEGORY = 'Category';
 const SEARCH = 'Search';
 const OUR_PRODUCTS = 'Our Products';
+const CART = 'My Cart';
 const PRODUCT_DETAIL = 'Product Detail';
 const NAME = 'Name';
 const PRICE = 'Price';
@@ -18,4 +19,5 @@ export {
 	PRICE,
 	DESCRIPTION,
 	ADD_CART,
+	CART
 };
