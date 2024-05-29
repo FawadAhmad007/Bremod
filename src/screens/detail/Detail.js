@@ -27,22 +27,24 @@ import Carousel from "./components/slider";
 import ReadMore from "react-native-read-more-text";
 import { goBack } from "../../shared/services";
 import { DEVICE_WIDTH } from "../../shared/themes/deviceInfo/index";
-import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import { moderateScale, scale } from "react-native-size-matters";
 import { useSelector, useDispatch } from "react-redux";
 import { ADD_CARD } from "../../shared/redux/reducers/index";
+import { FONTS_STYLE } from "../../shared/themes/style/common";
 
 export default function Detail({ route, navigation }) {
+  let data = route?.params?.data;
   const myTheme = useTheme();
   const myStyle = style(myTheme);
-  const [selectedColors, setSelectedColors] = useState([]);
+  const [selectedId, setSelectedId] = useState(null);
   const colorsData = useSelector((state) => state?.root?.bremod?.color);
+  const [count, setCount] = useState(1);
+  const [numColumns, setNumColumns] = useState(calculateColumns());
   const dispatch = useDispatch();
 
-  const [numColumns, setNumColumns] = useState(calculateColumns());
-  let data = route.params.data;
   function calculateColumns() {
-    const minCircleWidth = moderateScale(30);
-    return Math.floor((DEVICE_WIDTH - scale(62)) / minCircleWidth);
+    const minCircleWidth = moderateScale(60);
+    return Math.floor((DEVICE_WIDTH - scale(32)) / minCircleWidth);
   }
 
   useEffect(() => {
@@ -50,29 +52,22 @@ export default function Detail({ route, navigation }) {
   }, []);
 
   const handleAddToCart = () => {
-    console.log("data in details", data);
     let responseData = {
-      id: data?.id,
+      id: data?.product_id,
       name: data?.name,
-      image: data?.image,
+      image: data?.product_image_urls[0],
       price: data?.price,
+      selectedColor: selectedId,
+      quantity: count,
       // Other product details
     };
-    // console.log("responseData", responseData);
-	const objShallowCopy = {...responseData};
+    const objShallowCopy = { ...responseData };
     dispatch(ADD_CARD(objShallowCopy));
   };
 
-  const toggleSelectColor = (color) => {
-    const index = selectedColors.indexOf(color);
-    if (index !== -1) {
-      selectedColors.splice(index, 1); // Deselect color
-    } else {
-      selectedColors.push(color); // Select color
-    }
-    setSelectedColors([...selectedColors]); // Trigger re-render
+  const toggleSelectColor = (item) => {
+    setSelectedId(item === selectedId ? null : item);
   };
-
   const renderTruncatedFooter = (handlePress) => {
     return (
       <Text style={myStyle?.moreTextStyle} onPress={handlePress}>
@@ -114,24 +109,30 @@ export default function Detail({ route, navigation }) {
       });
   };
 
-  const ColorCircle = ({ data, onPress, isSelected }) => (
+  const incrementCount = () => setCount(count + 1);
+  const decrementCount = () => setCount(count > 0 ? count - 1 : 0);
+
+  const ColorCircle = ({ data, onPress, selected }) => (
     <TouchableOpacity
-      style={{
-        paddingHorizontal: moderateScale(16),
-        paddingVertical: verticalScale(8),
-        marginVertical: moderateScale(3),
-        marginHorizontal: moderateScale(2),
-        borderRadius: moderateScale(25),
-        backgroundColor: myTheme?.colors?.gray10,
-      }}
+      style={[
+        myStyle.circle,
+        {
+          backgroundColor: selected
+            ? myTheme?.colors?.secondary
+            : myTheme?.colors?.gray10,
+        },
+      ]}
       onPress={onPress}
     >
       <Text
-        style={{
-          color: "black",
-        }}
+        style={[
+          {
+            color: selected ? "white" : "black",
+          },
+          FONTS_STYLE?.TEXT_MEDIUM,
+        ]}
       >
-        {data?.name}
+        {data}
       </Text>
     </TouchableOpacity>
   );
@@ -156,22 +157,63 @@ export default function Detail({ route, navigation }) {
         <View style={myStyle?.rightIcon} />
       </View>
       <ScrollView>
-        <Carousel images={data?.image ? data?.image : []} />
+        <Carousel
+          images={data?.product_image_urls ? data?.product_image_urls : []}
+        />
 
         <FlatList
-          data={colorsData}
+          data={data?.product_colors}
           renderItem={({ item }) => (
-            <ColorCircle data={item} onPress={() => toggleSelectColor(item)} />
+            <ColorCircle
+              data={item}
+              onPress={() => toggleSelectColor(item)}
+              selected={item === selectedId}
+            />
           )}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item) => item}
           horizontal={false}
-          numColumns={4}
+          numColumns={numColumns}
           contentContainerStyle={myStyle.listContainer}
         />
+
         <View style={myStyle.detailViewStyle}>
           <DetailItem heading={NAME} text={data?.name} />
-          <DetailItem heading={CATEGORY} text={data?.categories[0]?.name} />
+          <DetailItem
+            heading={CATEGORY}
+            text={data?.product_categories.join(", ")}
+          />
           <DetailItem heading={PRICE} text={data?.price} />
+          <View style={myStyle.itemStyle}>
+            <Text numberOfLines={1} style={myStyle?.itemHeadingStyle}>
+              Quantity :
+            </Text>
+            <View style={myStyle.counterRow}>
+              <TouchableOpacity
+                onPress={decrementCount}
+                style={[
+                  myStyle.counterButton,
+                  count === 1 && myStyle.counterButtonTextDisabled,
+                ]}
+              >
+                <Text
+                  style={[
+                    myStyle.counterButtonText,
+                    count === 1 && myStyle.counterButtonTextDisabled,
+                  ]}
+                >
+                  -
+                </Text>
+              </TouchableOpacity>
+              <Text style={myStyle.counterText}>{count}</Text>
+              <TouchableOpacity
+                onPress={incrementCount}
+                style={myStyle.counterButton}
+              >
+                <Text style={myStyle.counterButtonText}>+</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+
           <View style={myStyle?.detailView}>
             <Text style={myStyle?.detailHeadingStyle}>{DESCRIPTION}:</Text>
             <ReadMore

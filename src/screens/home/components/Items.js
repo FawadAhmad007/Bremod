@@ -16,7 +16,7 @@ const Items = ({ data, onPress }) => {
 			<Image
 				style={myStyle?.itemImageStyle}
 				source={
-					data?.image?.length > 0 ? { uri: data?.image[0] } : PLACEHOLDER_IMAGE
+					data?.product_image_urls?.length > 0 ? { uri: data?.product_image_urls[0] } : PLACEHOLDER_IMAGE
 				}
 				resizeMode='cover'
 			/>

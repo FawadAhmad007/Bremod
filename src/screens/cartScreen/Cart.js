@@ -1,6 +1,6 @@
 /** @format */
 
-import { View, Text, Image, TouchableOpacity, FlatList,Linking } from "react-native";
+import { View, Text, Image, TouchableOpacity, FlatList } from "react-native";
 import React, { useState } from "react";
 import { MyView } from "../../shared/themes/style/common";
 import { useTheme } from "@react-navigation/native";
@@ -10,47 +10,27 @@ import { goBack } from "../../shared/services";
 import CartItem from "./components/cartItem";
 import { BACK_ICON } from "../../assets";
 import { CommonModal } from "../../shared/components/index";
-import { useSelector } from "react-redux";
+import { REMOVE_ITEM_FROM_CART } from "../../shared/redux/reducers/index";
+import { useSelector, useDispatch } from "react-redux";
 
 export default function Cart() {
   const myTheme = useTheme();
   const myStyle = style(myTheme);
+  const dispatch = useDispatch();
   const [modal, setModal] = useState(false);
   const cart = useSelector((state) => state?.root?.bremod?.card);
   const userData = useSelector((state) => state?.root?.bremod?.userData);
 
   const renderItem = ({ item }) => {
-    return <CartItem item={item} />;
+    return <CartItem item={item} removeItem={handleRemoveItem} />;
+  };
+
+  const handleRemoveItem = (item) => {
+    dispatch(REMOVE_ITEM_FROM_CART(item?.id));
   };
 
   const handleModal = () => {
     setModal(!modal);
-  };
-
-  const openWhatsApp = () => {
-    const phoneNumber = "1234567890";
-    const message = "Hello%20World";
-    const url = `whatsapp://send?phone=${phoneNumber}&text=${message}`;
-    console.log("here");
-    Linking.canOpenURL(url)
-      .then((canOpen) => {
-        console.log(canOpen);
-        if (canOpen) {
-          return Linking.openURL(url);
-        } else {
-          // WhatsApp is not installed, redirect to the app store
-          const storeUrl = Platform.select({
-            ios: "https://apps.apple.com/app/whatsapp/id310633997",
-            android:
-              "https://play.google.com/store/apps/details?id=com.whatsapp",
-          });
-
-          return Linking.openURL(storeUrl);
-        }
-      })
-      .catch((e) => {
-        console.log("Error opening WhatsApp", e);
-      });
   };
 
   return (
@@ -89,13 +69,13 @@ export default function Cart() {
         />
       </View>
       <View style={myStyle.footer}>
-        <Text style={myStyle.totalPriceLabel}>Total Price: ${245}</Text>
+        {/* <Text style={myStyle.totalPriceLabel}>Total Price: ${245}</Text> */}
         <TouchableOpacity
           style={myStyle.checkoutButton}
           onPress={() => {
-            !userData || Object.keys(userData).length === 0
-              ? handleModal()
-              : openWhatsApp();
+            // !userData || Object.keys(userData).length === 0
+            handleModal();
+            // : openWhatsApp();
           }}
         >
           <Text style={myStyle.checkoutButtonText}>CHECKOUT</Text>

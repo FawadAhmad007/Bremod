@@ -9,6 +9,7 @@ const initialState = {
   category: [],
   cover: [],
   color: [],
+  pdfId: "",
 };
 
 export const bremodSilce = createSlice({
@@ -16,7 +17,6 @@ export const bremodSilce = createSlice({
   initialState,
   reducers: {
     ADD_CARD: (state, action) => {
-      console.log("response in state", action.payload);
       state.card = [...state.card, action.payload]; // Append the new item to the array
     },
     ADD_PRODUCTS: (state, action) => {
@@ -26,9 +26,18 @@ export const bremodSilce = createSlice({
           : [...state.product, ...action.payload.data];
     },
     ADD_USERDATA: (state, action) => {
-      console.log("response in redux", action.payload);
       state.userData = action.payload;
     },
+    ADD_PDFID: (state, action) => {
+      state.pdfId = action.payload;
+    },
+    REMOVE_ITEM_FROM_CART: (state, action) => {
+      return {
+        ...state,
+        card: state.card.filter((item) => item.id !== action.payload),
+      };
+    },
+
     ADD_CATEGORY: (state, action) => {
       state.category = action.payload;
     },
@@ -56,7 +65,9 @@ export const {
   ADD_CATEGORY,
   ADD_COVER,
   ADD_COLOR,
-  ADD_USERDATA
+  ADD_USERDATA,
+  ADD_PDFID,
+  REMOVE_ITEM_FROM_CART,
 } = bremodSilce.actions;
 
 export default bremodSilce.reducer;

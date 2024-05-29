@@ -16,6 +16,16 @@ export const style = (myTheme) =>
         includeFontPadding: false,
       },
     ],
+    itemTextStyle: [
+      FONTS_STYLE.TEXT_MEDIUM,
+      {
+        width: "70%",
+        color: myTheme?.colors?.gray,
+        includeFontPadding: false,
+        marginLeft: moderateScale(10),
+      },
+    ],
+
     container: {
       alignSelf: "center",
       alignItems: "center",
@@ -24,11 +34,32 @@ export const style = (myTheme) =>
       position: "relative",
       width: "90%",
     },
+
+    flatlistContainer: {
+      alignSelf: "center",
+      alignItems: "center",
+      justifyContent: "space-between",
+      flexDirection: "row",
+      position: "relative",
+      width: "90%",
+      // height: DEVICE_HEIGHT - scale(32),
+      backgroundColor: "red",
+    },
+
     subContainer: {
       flexDirection: "column",
       alignItems: "center",
       justifyContent: "space-between",
     },
+    crossImage: {
+      position: "absolute",
+      marginBottom: moderateScale(15),
+      right: 0,
+      width: 20,
+      height: 20,
+      tintColor: "red",
+    },
+
     cartItem: {
       flexDirection: "row",
       padding: 10,
@@ -56,7 +87,7 @@ export const style = (myTheme) =>
     },
     counterButton: {
       paddingLeft: moderateScale(10),
-	  paddingRight: moderateScale(10),
+      paddingRight: moderateScale(10),
       backgroundColor: "#ddd",
       borderRadius: 4,
     },
@@ -71,7 +102,9 @@ export const style = (myTheme) =>
 
     productDescriptionDetails: {
       flexDirection: "column",
+      justifyContent: "space-between",
       paddingRight: moderateScale(20),
+      padding: moderateScale(5),
     },
     productColor: {
       fontSize: 16,
@@ -106,15 +139,15 @@ export const style = (myTheme) =>
       borderRadius: 30,
       alignItems: "center",
     },
-    disablecheckoutButton : {
+    disablecheckoutButton: {
       backgroundColor: myTheme.colors.secondary,
       paddingVertical: 15,
       borderRadius: 30,
       alignItems: "center",
-      pointerEvents: 'none',
+      pointerEvents: "none",
       opacity: 0.5,
     },
-    
+
     checkoutButtonText: {
       fontSize: 18,
       color: "#fff",

@@ -33,8 +33,8 @@ import { navigate } from "../../shared/services";
 import Items from "./components/Items";
 import Carousel from "./components/slider";
 import {
-  getList,
   getProductList,
+  getListForCategoryAndCover,
 } from "../../shared/services/FetchIntercepter/request";
 import { useSelector, useDispatch } from "react-redux";
 import { bremodSilce } from "../../shared/redux/reducers/index";
@@ -45,6 +45,7 @@ export default function Home() {
   const dispatch = useDispatch();
   const productData = useSelector((state) => state?.root?.bremod?.product);
   const coverData = useSelector((state) => state?.root?.bremod?.cover);
+  const cart = useSelector((state) => state?.root?.bremod?.card);
   const [searchText, setSearchText] = useState(null);
   const [showCross, setShowCross] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
@@ -63,75 +64,42 @@ export default function Home() {
     });
   };
 
-  const appendDataToProducts = (
-    products,
-    images,
-    productCategories,
-    categoryList
-  ) => {
-    const imageMap = images.reduce((map, cover) => {
-      if (!map[cover.product_id]) {
-        map[cover.product_id] = [];
-      }
-      map[cover.product_id].push(cover.url);
-      return map;
-    }, {});
-    const categoryMap = categoryList.reduce((map, category) => {
-      map[category.id] = category.name;
-      return map;
-    }, {});
-
-    const categoryByProductMap = productCategories.reduce((map, pc) => {
-      if (!map[pc.product_id]) {
-        map[pc.product_id] = [];
-      }
-      map[pc.product_id].push({
-        id: pc.category_id,
-        name: categoryMap[pc.category_id],
-      });
-      return map;
-    }, {});
-
-    return products.map((product) => ({
-      ...product,
-      image: imageMap[product.id] || null,
-      categories: categoryByProductMap[product.id] || [],
-    }));
-  };
+  function processProducts(products) {
+    return products.map((product) => {
+      return {
+        ...product,
+        product_categories: product.product_categories
+          ? product.product_categories.split(",")
+          : [],
+        product_image_urls: product.product_image_urls
+          ? product.product_image_urls.split(",")
+          : [],
+        product_colors: product.product_colors
+          ? product.product_colors.split(",")
+          : [],
+      };
+    });
+  }
 
   const getProducts = async () => {
     try {
       const res = await getProductList(
-        "_product",
+        "products/listing",
         page.current,
         10,
         searchText
       );
-      const [
-        imageRes,
-        productCategoriesRes,
-        categoriesRes,
-        coverRes,
-        colorRes,
-      ] = await Promise.all([
-        getList("image"),
-        getList("_products_categories"),
-        getList("_category"),
-        getList("_cover"),
-        getList("_color"),
+      const [categoriesRes, coverRes] = await Promise.all([
+        getListForCategoryAndCover("_category"),
+        getListForCategoryAndCover("_cover"),
       ]);
 
-      const updateProductData = appendDataToProducts(
-        res?.data?.data,
-        imageRes?.data?.data,
-        productCategoriesRes?.data?.data,
-        categoriesRes?.data?.data
-      );
+      const processedProducts = processProducts(res?.data);
+
       dispatch(bremodSilce?.actions?.ADD_COVER(coverRes?.data?.data));
-      dispatch(bremodSilce?.actions?.ADD_COLOR(colorRes?.data?.data));
       setRefreshing(false);
       dispatch(bremodSilce?.actions?.ADD_CATEGORY(categoriesRes?.data?.data));
-      const data = { data: updateProductData, page: page.current };
+      const data = { data: processedProducts, page: page.current };
       dispatch(bremodSilce?.actions?.ADD_PRODUCTS(data));
       data?.data?.length == 10
         ? (page.current = page.current + 1)
@@ -219,7 +187,7 @@ export default function Home() {
             resizeMode="contain"
           />
           <View style={myStyle.badge}>
-            <Text style={myStyle?.cartTextStyle}>{"2"}</Text>
+            <Text style={myStyle?.cartTextStyle}>{cart?.length}</Text>
           </View>
         </TouchableOpacity>
       </View>
