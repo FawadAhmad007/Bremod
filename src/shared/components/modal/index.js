@@ -10,8 +10,10 @@ import {
   submitUserData,
   generatePdfFile,
 } from "../../../shared/services/FetchIntercepter/request";
+import Toast from "react-native-toast-message";
+import RNFS from "react-native-fs";
+import { Buffer } from "buffer";
 import style from "./styles";
-
 const CommonModal = ({ isVisible, heading, handleClose }) => {
   const myTheme = useTheme();
   const myStyle = style(myTheme);
@@ -23,6 +25,8 @@ const CommonModal = ({ isVisible, heading, handleClose }) => {
   const cart = useSelector((state) => state?.root?.bremod?.card);
   const [address, setAddress] = useState(userData?.customer_address || "");
   const [phone, setPhone] = useState(userData?.customer_number || "");
+  const [isEmailValid, setIsEmailValid] = useState(true);
+
 
   useEffect(() => {
     if (userData) {
@@ -34,10 +38,20 @@ const CommonModal = ({ isVisible, heading, handleClose }) => {
   }, [userData]);
 
   const handleAddToForm = () => {
+    if (!validateEmail(email)) {
+      setIsEmailValid(false);
+      Toast.show({
+        type: "error",
+        text1: "Invalid Email Address",
+        visibilityTime: 2000,
+      });
+      return;
+    }
+
     const transformedProduct = cart.map((product) => ({
       product_id: product.id,
       product_quantitiy: product.quantity,
-      product_color: product.selectedColor,
+      product_color: product.selectedColor ? product.selectedColor : "No color",
     }));
 
     let responseData = {
@@ -51,20 +65,46 @@ const CommonModal = ({ isVisible, heading, handleClose }) => {
     };
     submitUser(responseData);
     dispatch(ADD_USERDATA(responseData));
-    handleClose();
+  };
+
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
   };
 
   const submitUser = async (responseData) => {
     try {
       const res = await submitUserData(responseData);
-      dispatch(ADD_PDFID(res?.data?.order_id));
-      generatePdf();
+      console.log("response of the order submission", res);
+      console.log("response of the order data", res?.data);
+      console.log("response of the order", res?.status);
+      if (res?.status === 200) {
+        Toast.show({
+          type: "success",
+          text1: "Order Created Successfully",
+          visibilityTime: 2000,
+        });
+        dispatch(ADD_PDFID(res?.data?.order_id));
+        generatePdf();
+      } else {
+        Toast.show({
+          type: "error",
+          text1: res?.message,
+          visibilityTime: 2000,
+        });
+      }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      Toast.show({
+        type: "error",
+        text1: "Error Fetching Data:",
+        text2: error,
+        visibilityTime: 2000,
+      });
     }
   };
 
   const generatePdf = async () => {
+    console.log("pdf id", pdfId);
     let payload = {
       id: pdfId,
       customer_name: name,
@@ -74,17 +114,74 @@ const CommonModal = ({ isVisible, heading, handleClose }) => {
     };
     try {
       const res = await generatePdfFile(payload);
-       openWhatsApp(res?.data);
+      console.log("payload  generated", payload);
+      console.log("pdf generated", res?.data);
+      console.log("pdf resssssss", res?.status);
+      // Convert the binary data to base64
+      if (res?.status === 200) {
+        Toast.show({
+          type: "success",
+          text1: "Pdf Generated Successfully",
+          visibilityTime: 2000,
+        });
+        handleClose();
+      } else {
+        Toast.show({
+          type: "error",
+          text1: res?.message,
+          visibilityTime: 2000,
+        });
+      }
+
+      // console.log("Type of res.data:", typeof res.data);
+      // const base64Data = arrayBufferToBase64(res?.data);
+      // const base64Data = Buffer.from(res?.data).toString('base64');
+      // const path = await savePDFToLocal(base64Data, "sample.pdf");
+      // console.log("PDF saved to:", path);
+      // openWhatsApp(path);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      Toast.show({
+        type: "error",
+        text1: "Error Fetching Data:",
+        text2: error,
+        visibilityTime: 2000,
+      });
+    }
+  };
+
+  // Function to convert array buffer to base64
+  const arrayBufferToBase64 = (buffer) => {
+    console.log("buffer", buffer);
+    let binary = "";
+    const bytes = new Uint8Array(buffer);
+    console.log("bytes", bytes);
+    const len = bytes.byteLength;
+    for (let i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    console.log("binary in pdf", binary);
+    return Buffer.from(binary, "binary").toString("base64");
+  };
+
+  const savePDFToLocal = async (base64Data, fileName) => {
+    const path = `${RNFS.DownloadDirectoryPath}/${fileName}`;
+    try {
+      await RNFS.writeFile(path, base64Data, "base64");
+      return path;
+    } catch (error) {
+      console.error("Error saving PDF:", error);
+      throw error;
     }
   };
 
   const openWhatsApp = (data) => {
+    console.log("dataatatatata in pdfffffffff", data);
     const phoneNumber = "923044957426";
-    // const message = "Hello%20World";
+    const message =
+      "https://learninginhand.com/blog/google-document-url-tricks";
     const pdf = data;
-    const url = `whatsapp://send?phone=${phoneNumber}&text=${pdf}`;
+    console.log("messasge in the open whatsapp", pdf);
+    const url = `whatsapp://send?phone=${phoneNumber}&text=${message}`;
     Linking.canOpenURL(url)
       .then((canOpen) => {
         if (canOpen) {
@@ -142,6 +239,7 @@ const CommonModal = ({ isVisible, heading, handleClose }) => {
           width={"100%"}
           onChangeText={(e) => {
             setEmail(e);
+            setIsEmailValid(validateEmail(e));
           }}
         />
 
@@ -158,7 +256,7 @@ const CommonModal = ({ isVisible, heading, handleClose }) => {
         <View style={myStyle.footer}>
           <TouchableOpacity
             style={myStyle.checkoutButton}
-            disabled={!email || !name || !phone || !address}
+            disabled={!email || !name || !phone || !address || !isEmailValid}
             onPress={() => handleAddToForm()}
           >
             <Text style={myStyle.checkoutButtonText}>Place Order</Text>

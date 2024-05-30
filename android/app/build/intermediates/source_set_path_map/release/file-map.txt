@@ -36,6 +36,7 @@ com.bremod.app-merged_res-34 /Users/apple/Desktop/Office Projects/Bremod/android
 com.bremod.app-main-35 /Users/apple/Desktop/Office Projects/Bremod/android/app/src/main/res
 com.bremod.app-release-36 /Users/apple/Desktop/Office Projects/Bremod/android/app/src/release/res
 com.bremod.app-packaged_res-37 /Users/apple/Desktop/Office Projects/Bremod/node_modules/@react-native-async-storage/async-storage/android/build/intermediates/packaged_res/release
-com.bremod.app-packaged_res-38 /Users/apple/Desktop/Office Projects/Bremod/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/release
-com.bremod.app-packaged_res-39 /Users/apple/Desktop/Office Projects/Bremod/node_modules/react-native-screens/android/build/intermediates/packaged_res/release
-com.bremod.app-packaged_res-40 /Users/apple/Desktop/Office Projects/Bremod/node_modules/react-native-splash-screen/android/build/intermediates/packaged_res/release
+com.bremod.app-packaged_res-38 /Users/apple/Desktop/Office Projects/Bremod/node_modules/react-native-fs/android/build/intermediates/packaged_res/release
+com.bremod.app-packaged_res-39 /Users/apple/Desktop/Office Projects/Bremod/node_modules/react-native-safe-area-context/android/build/intermediates/packaged_res/release
+com.bremod.app-packaged_res-40 /Users/apple/Desktop/Office Projects/Bremod/node_modules/react-native-screens/android/build/intermediates/packaged_res/release
+com.bremod.app-packaged_res-41 /Users/apple/Desktop/Office Projects/Bremod/node_modules/react-native-splash-screen/android/build/intermediates/packaged_res/release

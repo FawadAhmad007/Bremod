@@ -153,6 +153,7 @@ export const style = (myTheme) =>
 			justifyContent: 'flex-start',
 			width: '100%',
 			paddingHorizontal: '2%',
+			flex:1
 		},
 
 		categoryIconStyle: {

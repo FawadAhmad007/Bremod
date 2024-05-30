@@ -38,6 +38,7 @@ import {
 } from "../../shared/services/FetchIntercepter/request";
 import { useSelector, useDispatch } from "react-redux";
 import { bremodSilce } from "../../shared/redux/reducers/index";
+import Toast from "react-native-toast-message";
 
 export default function Home() {
   const myTheme = useTheme();
@@ -93,19 +94,33 @@ export default function Home() {
         getListForCategoryAndCover("_category"),
         getListForCategoryAndCover("_cover"),
       ]);
-
-      const processedProducts = processProducts(res?.data);
-
-      dispatch(bremodSilce?.actions?.ADD_COVER(coverRes?.data?.data));
-      setRefreshing(false);
-      dispatch(bremodSilce?.actions?.ADD_CATEGORY(categoriesRes?.data?.data));
-      const data = { data: processedProducts, page: page.current };
-      dispatch(bremodSilce?.actions?.ADD_PRODUCTS(data));
-      data?.data?.length == 10
-        ? (page.current = page.current + 1)
-        : setPagination(true);
+      if (res?.status === 200) {
+        Toast.show({
+          type: "success",
+          text1: "Products Fetched Successfully",
+          visibilityTime: 2000,
+        });
+        const processedProducts = processProducts(res?.data);
+        dispatch(bremodSilce?.actions?.ADD_COVER(coverRes?.data?.data));
+        setRefreshing(false);
+        dispatch(bremodSilce?.actions?.ADD_CATEGORY(categoriesRes?.data?.data));
+        const data = { data: processedProducts, page: page.current };
+        dispatch(bremodSilce?.actions?.ADD_PRODUCTS(data));
+        data?.data?.length == 10
+          ? (page.current = page.current + 1)
+          : setPagination(true);
+      } else {
+        Toast.show({
+          type: "error",
+          text1: "Something went wrong",
+          visibilityTime: 3000,
+        });
+      }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      Toast.show({
+        type: "error",
+        text1: error,
+      });
     }
   };
 
@@ -178,7 +193,9 @@ export default function Home() {
           resizeMode="contain"
         />
         <TouchableOpacity
-          onPress={() => navigate(CART_ENUM)}
+          onPress={() => {
+            cart?.length && cart?.length > 0 ? navigate(CART_ENUM) : "";
+          }}
           style={myStyle?.cartContainer}
         >
           <Image
@@ -228,6 +245,11 @@ export default function Home() {
         data={productData}
         ListHeaderComponent={HeaderComponent}
         renderItem={renderItem}
+        ListEmptyComponent={() => (
+          <Text style={{ justifyContent: "center", alignSelf: "center" }}>
+            No Data Found
+          </Text>
+        )}
         onEndReached={() => {
           if (!reachedEnd) {
             productData?.length > 0 &&

@@ -5,6 +5,7 @@ import { IS_ANDROID } from "./shared/themes/deviceInfo";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistor, store } from "./shared/redux/store";
+import Toast from 'react-native-toast-message';
 
 const App = () => {
   React.useEffect(() => {
@@ -17,6 +18,7 @@ const App = () => {
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <Routes />
+        <Toast />
       </PersistGate>
     </Provider>
   );
