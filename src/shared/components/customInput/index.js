@@ -1,4 +1,4 @@
-import {View, Text, TouchableOpacity, Image} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {useTheme} from '@react-navigation/native';
 import { scale, verticalScale} from 'react-native-size-matters';

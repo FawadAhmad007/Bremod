@@ -29,12 +29,13 @@ export const bremodSilce = createSlice({
       state.userData = action.payload;
     },
     ADD_PDFID: (state, action) => {
+      console.log("PDF ID IN REDUX");
       state.pdfId = action.payload;
     },
     REMOVE_ITEM_FROM_CART: (state, action) => {
       return {
         ...state,
-        card: state.card.filter((item) => item.id !== action.payload),
+        card: state.card.filter((item, index) => index !== action.payload),
       };
     },
 

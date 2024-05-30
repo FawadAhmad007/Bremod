@@ -21,12 +21,13 @@ export default function Cart() {
   const cart = useSelector((state) => state?.root?.bremod?.card);
   const userData = useSelector((state) => state?.root?.bremod?.userData);
 
-  const renderItem = ({ item }) => {
-    return <CartItem item={item} removeItem={handleRemoveItem} />;
+  const renderItem = ({ item,index }) => {
+    return <CartItem item={item} index={index} removeItem={handleRemoveItem} />;
   };
 
-  const handleRemoveItem = (item) => {
-    dispatch(REMOVE_ITEM_FROM_CART(item?.id));
+  const handleRemoveItem = (item, index) => {
+    console.log("index of the removal product",index);
+    dispatch(REMOVE_ITEM_FROM_CART(index));
   };
 
   const handleModal = () => {
@@ -66,6 +67,11 @@ export default function Cart() {
           data={cart}
           renderItem={renderItem}
           showsVerticalScrollIndicator={false}
+          ListEmptyComponent={() => (
+            <Text style={{ justifyContent: "center", alignSelf: "center" }}>
+              No Products Available
+            </Text>
+          )}
         />
       </View>
       <View style={myStyle.footer}>

@@ -6,7 +6,6 @@ import {
   Image,
   ScrollView,
   TouchableOpacity,
-  Linking,
   FlatList,
 } from "react-native";
 import React, { useState, useEffect } from "react";
@@ -28,16 +27,16 @@ import ReadMore from "react-native-read-more-text";
 import { goBack } from "../../shared/services";
 import { DEVICE_WIDTH } from "../../shared/themes/deviceInfo/index";
 import { moderateScale, scale } from "react-native-size-matters";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { ADD_CARD } from "../../shared/redux/reducers/index";
 import { FONTS_STYLE } from "../../shared/themes/style/common";
+import Toast from "react-native-toast-message";
 
 export default function Detail({ route, navigation }) {
   let data = route?.params?.data;
   const myTheme = useTheme();
   const myStyle = style(myTheme);
   const [selectedId, setSelectedId] = useState(null);
-  const colorsData = useSelector((state) => state?.root?.bremod?.color);
   const [count, setCount] = useState(1);
   const [numColumns, setNumColumns] = useState(calculateColumns());
   const dispatch = useDispatch();
@@ -57,12 +56,25 @@ export default function Detail({ route, navigation }) {
       name: data?.name,
       image: data?.product_image_urls[0],
       price: data?.price,
-      selectedColor: selectedId,
+      selectedColor: selectedId ? selectedId : handleByDefaultColor(),
       quantity: count,
       // Other product details
     };
     const objShallowCopy = { ...responseData };
     dispatch(ADD_CARD(objShallowCopy));
+  };
+
+  const handleByDefaultColor = () => {
+    if (data?.product_colors?.length > 0) {
+      Toast.show({
+        type: "info",
+        text1: "First Colour of the product is selected",
+        visibilityTime: 2000,
+      });
+      return data?.product_colors[0];
+    } else {
+      return "";
+    }
   };
 
   const toggleSelectColor = (item) => {
@@ -82,31 +94,6 @@ export default function Detail({ route, navigation }) {
         Show less
       </Text>
     );
-  };
-  const openWhatsApp = () => {
-    const phoneNumber = "1234567890";
-    const message = "Hello%20World";
-    const url = `whatsapp://send?phone=${phoneNumber}&text=${message}`;
-    console.log("here");
-    Linking.canOpenURL(url)
-      .then((canOpen) => {
-        console.log(canOpen);
-        if (canOpen) {
-          return Linking.openURL(url);
-        } else {
-          // WhatsApp is not installed, redirect to the app store
-          const storeUrl = Platform.select({
-            ios: "https://apps.apple.com/app/whatsapp/id310633997",
-            android:
-              "https://play.google.com/store/apps/details?id=com.whatsapp",
-          });
-
-          return Linking.openURL(storeUrl);
-        }
-      })
-      .catch((e) => {
-        console.log("Error opening WhatsApp", e);
-      });
   };
 
   const incrementCount = () => setCount(count + 1);

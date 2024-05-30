@@ -5,7 +5,7 @@ import { style } from "../styles";
 import { PLACEHOLDER_IMAGE } from "../../../assets";
 import { CROSS_ICON } from "../../../assets/icons";
 
-const CartItem = ({ item, removeItem }) => {
+const CartItem = ({ item, removeItem,index }) => {
   const myTheme = useTheme();
   const myStyle = style(myTheme);
 
@@ -29,7 +29,7 @@ const CartItem = ({ item, removeItem }) => {
         </View>
       </View>
       <View style={myStyle.productDescriptionDetails}>
-        <TouchableOpacity hitSlop={15} onPress={() => removeItem(item)}>
+        <TouchableOpacity hitSlop={15} onPress={() => removeItem(item, index)}>
           <Image source={CROSS_ICON} style={myStyle.crossImage} />
         </TouchableOpacity>
         <Text style={myStyle.productPrice}>
