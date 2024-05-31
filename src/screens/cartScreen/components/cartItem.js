@@ -5,7 +5,7 @@ import { style } from "../styles";
 import { PLACEHOLDER_IMAGE } from "../../../assets";
 import { CROSS_ICON } from "../../../assets/icons";
 
-const CartItem = ({ item, removeItem,index }) => {
+const CartItem = ({ item, removeItem, index }) => {
   const myTheme = useTheme();
   const myStyle = style(myTheme);
 

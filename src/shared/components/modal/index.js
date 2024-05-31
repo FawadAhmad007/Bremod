@@ -79,11 +79,11 @@ const CommonModal = ({ isVisible, heading, handleClose }) => {
       console.log("response of the order data", res?.data);
       console.log("response of the order", res?.status);
       if (res?.status === 200) {
-        Toast.show({
-          type: "success",
-          text1: "Order Created Successfully",
-          visibilityTime: 2000,
-        });
+        // Toast.show({
+        //   type: "success",
+        //   text1: "Order Created Successfully",
+        //   visibilityTime: 2000,
+        // });
         dispatch(ADD_PDFID(res?.data?.order_id));
         generatePdf();
       } else {
@@ -119,11 +119,11 @@ const CommonModal = ({ isVisible, heading, handleClose }) => {
       console.log("pdf resssssss", res?.status);
       // Convert the binary data to base64
       if (res?.status === 200) {
-        Toast.show({
-          type: "success",
-          text1: "Pdf Generated Successfully",
-          visibilityTime: 2000,
-        });
+        // Toast.show({
+        //   type: "success",
+        //   text1: "Pdf Generated Successfully",
+        //   visibilityTime: 2000,
+        // });
         handleClose();
       } else {
         Toast.show({

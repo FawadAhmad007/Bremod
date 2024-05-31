@@ -19,6 +19,7 @@ import {
   OUR_PRODUCTS,
   PRICE,
   ADD_CART,
+  HOME_ENUM,
 } from "../../shared/constants";
 import { BACK_ICON, CART_ICON } from "../../assets";
 import DetailItem from "./components/DetailItem";
@@ -30,13 +31,14 @@ import { moderateScale, scale } from "react-native-size-matters";
 import { useDispatch } from "react-redux";
 import { ADD_CARD } from "../../shared/redux/reducers/index";
 import { FONTS_STYLE } from "../../shared/themes/style/common";
+import { navigate } from "../../shared/services";
 import Toast from "react-native-toast-message";
 
 export default function Detail({ route, navigation }) {
   let data = route?.params?.data;
   const myTheme = useTheme();
   const myStyle = style(myTheme);
-  const [selectedId, setSelectedId] = useState(null);
+  const [selectedId, setSelectedId] = useState(data?.product_colors[0]);
   const [count, setCount] = useState(1);
   const [numColumns, setNumColumns] = useState(calculateColumns());
   const dispatch = useDispatch();
@@ -56,12 +58,18 @@ export default function Detail({ route, navigation }) {
       name: data?.name,
       image: data?.product_image_urls[0],
       price: data?.price,
-      selectedColor: selectedId ? selectedId : handleByDefaultColor(),
+      selectedColor: selectedId,
       quantity: count,
       // Other product details
     };
     const objShallowCopy = { ...responseData };
     dispatch(ADD_CARD(objShallowCopy));
+    Toast.show({
+      type: "success",
+      text1: "Product Added Successfully",
+      visibilityTime: 2000,
+    });
+    navigate(HOME_ENUM);
   };
 
   const handleByDefaultColor = () => {
