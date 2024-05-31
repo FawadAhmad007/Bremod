@@ -95,11 +95,11 @@ export default function Home() {
         getListForCategoryAndCover("_cover"),
       ]);
       if (res?.status === 200) {
-        Toast.show({
-          type: "success",
-          text1: "Products Fetched Successfully",
-          visibilityTime: 2000,
-        });
+        // Toast.show({
+        //   type: "success",
+        //   text1: "Products Fetched Successfully",
+        //   visibilityTime: 2000,
+        // });
         const processedProducts = processProducts(res?.data);
         dispatch(bremodSilce?.actions?.ADD_COVER(coverRes?.data?.data));
         setRefreshing(false);
@@ -112,7 +112,7 @@ export default function Home() {
       } else {
         Toast.show({
           type: "error",
-          text1: "Something went wrong",
+          text1: res?.error,
           visibilityTime: 3000,
         });
       }
@@ -175,14 +175,25 @@ export default function Home() {
 
   const HeaderComponent = () => (
     <View>
-      <Carousel
-        images={coverData?.length > 0 ? coverData : [PLACEHOLDER_IMAGE]}
-      />
+      {(!searchText || searchText === "") && (
+        <Carousel
+          images={coverData?.length > 0 ? coverData : [PLACEHOLDER_IMAGE]}
+        />
+      )}
       <Text numberOfLines={1} style={myStyle?.headingTextStyle}>
         {OUR_PRODUCTS}
       </Text>
     </View>
   );
+
+  const handleEmptyCart = () => {
+    Toast.show({
+      type: "error",
+      text1: "Please Add Products in the Cart",
+      visibilityTime: 2000,
+    });
+    return "";
+  };
 
   return (
     <MyView>
@@ -194,7 +205,9 @@ export default function Home() {
         />
         <TouchableOpacity
           onPress={() => {
-            cart?.length && cart?.length > 0 ? navigate(CART_ENUM) : "";
+            cart?.length && cart?.length > 0
+              ? navigate(CART_ENUM)
+              : handleEmptyCart();
           }}
           style={myStyle?.cartContainer}
         >

@@ -55,8 +55,6 @@ export const submitOrdersProduct = async (data) => {
 
 export const generatePdfFile = async (data) => {
   let url = BASE_URL + END_POINT.GENERATE_PDF;
-
   const config = postConfig(data, `${url}`);
-
   return await responseHandler(config);
 };

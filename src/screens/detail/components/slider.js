@@ -6,13 +6,11 @@ import {
   ScrollView,
   Image,
   Animated,
-  TouchableOpacity,
-  Dimensions,
 } from "react-native";
 import { useTheme } from "@react-navigation/native";
 import { style } from "./styles";
 import { DEVICE_WIDTH } from "../../../shared/themes/deviceInfo/index";
-import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import {  scale, verticalScale } from "react-native-size-matters";
 import { PLACEHOLDER_IMAGE } from "../../../assets";
 const Carousel = ({ images }) => {
   const myTheme = useTheme();
