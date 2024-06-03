@@ -24,7 +24,6 @@ export default function Cart() {
   };
 
   const handleRemoveItem = (item, index) => {
-    console.log("index of the removal product", index);
     dispatch(REMOVE_ITEM_FROM_CART(index));
   };
 

@@ -28,8 +28,11 @@ import ReadMore from "react-native-read-more-text";
 import { goBack } from "../../shared/services";
 import { DEVICE_WIDTH } from "../../shared/themes/deviceInfo/index";
 import { moderateScale, scale } from "react-native-size-matters";
-import { useDispatch } from "react-redux";
-import { ADD_CARD } from "../../shared/redux/reducers/index";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ADD_CARD,
+  UPDATE_CARD_QUANTITY,
+} from "../../shared/redux/reducers/index";
 import { FONTS_STYLE } from "../../shared/themes/style/common";
 import { navigate } from "../../shared/services";
 import Toast from "react-native-toast-message";
@@ -42,6 +45,7 @@ export default function Detail({ route, navigation }) {
   const [count, setCount] = useState(1);
   const [numColumns, setNumColumns] = useState(calculateColumns());
   const dispatch = useDispatch();
+  const cart = useSelector((state) => state.root.bremod.card); // Assuming this is your cart state
 
   function calculateColumns() {
     const minCircleWidth = moderateScale(60);
@@ -53,6 +57,7 @@ export default function Detail({ route, navigation }) {
   }, []);
 
   const handleAddToCart = () => {
+    console.log("cart datatat", cart);
     let responseData = {
       id: data?.product_id,
       name: data?.name,
@@ -62,13 +67,39 @@ export default function Detail({ route, navigation }) {
       quantity: count,
       // Other product details
     };
-    const objShallowCopy = { ...responseData };
-    dispatch(ADD_CARD(objShallowCopy));
-    Toast.show({
-      type: "success",
-      text1: "Product Added Successfully",
-      visibilityTime: 2000,
-    });
+    const existingProductIndex = cart.findIndex(
+      (item) =>
+        item.id === responseData.id &&
+        item.selectedColor === responseData.selectedColor
+    );
+
+    if (existingProductIndex >= 0) {
+      const updatedProduct = {
+        ...cart[existingProductIndex],
+        quantity: cart[existingProductIndex].quantity + responseData.quantity,
+      };
+      console.log("updated product in the cart", updatedProduct);
+      dispatch(
+        UPDATE_CARD_QUANTITY({
+          index: existingProductIndex,
+          product: updatedProduct,
+        })
+      );
+      Toast.show({
+        type: "success",
+        text1: "Product updated successfully",
+        visibilityTime: 2000,
+      });
+    } else {
+      const objShallowCopy = { ...responseData };
+      console.log("response prod in the cart", objShallowCopy);
+      dispatch(ADD_CARD(objShallowCopy));
+      Toast.show({
+        type: "success",
+        text1: "Product Added Successfully",
+        visibilityTime: 2000,
+      });
+    }
     navigate(HOME_ENUM);
   };
 
