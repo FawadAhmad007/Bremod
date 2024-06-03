@@ -81,6 +81,7 @@ export const style = (myTheme) =>
       fontSize: 16,
       fontWeight: "bold",
       marginBottom: 10,
+      color: myTheme?.colors?.black,
     },
     counterRow: {
       marginBottom: 5,
@@ -108,16 +109,18 @@ export const style = (myTheme) =>
     },
     productColor: {
       fontSize: 16,
-      color: "#666",
+      color: myTheme?.colors?.black,
       marginBottom: 10,
     },
 
     productColorSpan: {
       fontWeight: "bold",
+      color: myTheme?.colors?.black,
     },
     productPrice: {
       fontSize: 16,
       fontWeight: "bold",
+      color: myTheme?.colors?.black,
     },
     footer: {
       position: "absolute",

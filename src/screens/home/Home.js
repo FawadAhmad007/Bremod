@@ -99,6 +99,7 @@ export default function Home() {
         getListForCategoryAndCover("_category"),
         getListForCategoryAndCover("_cover"),
       ]);
+      console.log("ressssss of the products",res);
       if (res?.status === 200) {
         // Toast.show({
         //   type: "success",

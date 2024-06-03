@@ -54,7 +54,6 @@ export default function CustomerDetails() {
   useEffect(() => {
     console.log("here in the effect of the pfd block", pdfId);
     if (pdfId && allowGeneratePdf) {
-      console.log("here in the pdf block", pdfId);
       generatePdf();
     }
   }, [pdfId, allowGeneratePdf]);
@@ -87,7 +86,7 @@ export default function CustomerDetails() {
       return;
     }
     setErrors({});
-    setLoading(true); // Start loading
+    setLoading(true); 
 
     const transformedProduct = cart.map((product) => ({
       product_id: product.id,
@@ -144,7 +143,6 @@ export default function CustomerDetails() {
 
   const generatePdf = async () => {
     console.log("in the pdf generation func");
-    console.log("in the pdf generation func: pdfid", pdfId);
     setAllowGeneratePdf(false);
     let payload = {
       id: pdfId,
@@ -281,7 +279,7 @@ const openWhatsApp = (data) => {
 
             <View style={myStyle.inputFieldContainer}>
               <InputField
-                headerText={"Email*"}
+                headerText={"Email"}
                 value={email}
                 placeholder={"Email"}
                 keyboardType="email-address"

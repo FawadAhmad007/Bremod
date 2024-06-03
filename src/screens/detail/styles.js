@@ -98,7 +98,7 @@ export const style = (myTheme) =>
       width: "80%",
       alignSelf: "center",
       marginTop: verticalScale(10),
-      paddingBottom: moderateScale(25),
+      marginBottom: moderateScale(40),
     },
     moreTextStyle: [
       FONTS_STYLE.TEXT_MEDIUM,
@@ -153,7 +153,7 @@ export const style = (myTheme) =>
     counterButton: {
       paddingLeft: moderateScale(10),
       paddingRight: moderateScale(10),
-      backgroundColor: "#ddd",
+      backgroundColor: "darkgrey",
       borderRadius: 4,
     },
     counterButtonText: {
@@ -163,6 +163,7 @@ export const style = (myTheme) =>
     counterText: {
       // marginHorizontal: 10,
       fontSize: 16,
+      color: myTheme?.colors?.black,
     },
     counterButtonTextDisabled: {
       opacity: 0.5,
