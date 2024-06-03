@@ -7,6 +7,7 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  ActivityIndicator,
   RefreshControl,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
@@ -52,6 +53,7 @@ export default function Home() {
   const [refreshing, setRefreshing] = useState(false);
   const [reachedEnd, setReachedEnd] = useState(false);
   const [pagination, setPagination] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [category, setCategory] = useState(null);
 
   let page = useRef(1);
@@ -84,6 +86,9 @@ export default function Home() {
 
   const getProducts = async () => {
     try {
+      setLoading(true);
+      console.log("products page", page.current);
+      console.log("products query", searchText);
       const res = await getProductList(
         "products/listing",
         page.current,
@@ -100,12 +105,15 @@ export default function Home() {
         //   text1: "Products Fetched Successfully",
         //   visibilityTime: 2000,
         // });
+        // console.log("res info",res);
+        // console.log("res of the products",JSON.stringify(res?.data));
         const processedProducts = processProducts(res?.data);
         dispatch(bremodSilce?.actions?.ADD_COVER(coverRes?.data?.data));
         setRefreshing(false);
         dispatch(bremodSilce?.actions?.ADD_CATEGORY(categoriesRes?.data?.data));
         const data = { data: processedProducts, page: page.current };
         dispatch(bremodSilce?.actions?.ADD_PRODUCTS(data));
+        console.log("products data",JSON.stringify(data,4,null));
         data?.data?.length == 10
           ? (page.current = page.current + 1)
           : setPagination(true);
@@ -113,14 +121,17 @@ export default function Home() {
         Toast.show({
           type: "error",
           text1: res?.error,
-          visibilityTime: 3000,
+          visibilityTime: 2000,
         });
       }
     } catch (error) {
       Toast.show({
         type: "error",
         text1: error,
+        text2: error.message,
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -189,7 +200,7 @@ export default function Home() {
   const handleEmptyCart = () => {
     Toast.show({
       type: "error",
-      text1: "Please Add Products in the Cart",
+      text1: "Your Cart is empty.",
       visibilityTime: 2000,
     });
     return "";
@@ -281,7 +292,6 @@ export default function Home() {
           />
         }
       />
-
       <TouchableOpacity style={myStyle?.buttonStyle} onPress={navigateHandler}>
         <Image
           style={myStyle?.categoryIconStyle}
@@ -292,6 +302,11 @@ export default function Home() {
           {CATEGORY}
         </Text>
       </TouchableOpacity>
+      {loading && (
+        <View style={myStyle.loaderContainer}>
+          <ActivityIndicator size="large" color="#19B95C" />
+        </View>
+      )}
     </MyView>
   );
 }

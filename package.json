@@ -5,6 +5,8 @@
 	"scripts": {
 		"android": "react-native run-android",
 		"ios": "react-native run-ios --simulator=\"iPhone 15 Pro Max\"",
+		"log-android": "react-native log-android",
+		"android:release": "react-native run-android --mode=release",
 		"lint": "eslint .",
 		"start": "react-native start --reset-cache",
 		"test": "jest",

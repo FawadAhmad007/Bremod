@@ -18,12 +18,12 @@ const CartItem = ({ item, removeItem, index }) => {
       <View style={myStyle.productDetails}>
         <Text style={myStyle.productName}>{item.name}</Text>
         <Text style={myStyle.productColor}>
-          <Text style={myStyle.productColorSpan}>Color : </Text>
+          <Text style={myStyle.productColorSpan}>Color:  </Text>
           {item?.selectedColor ? item?.selectedColor : " "}
         </Text>
         <View style={myStyle.counterRow}>
           <Text style={myStyle.counterText}>
-            <Text style={myStyle.productColorSpan}>Quantity : </Text>{" "}
+            <Text style={myStyle.productColorSpan}>Quantity:  </Text>{" "}
             {item?.quantity}
           </Text>
         </View>
@@ -33,7 +33,14 @@ const CartItem = ({ item, removeItem, index }) => {
           <Image source={CROSS_ICON} style={myStyle.crossImage} />
         </TouchableOpacity>
         <Text style={myStyle.productPrice}>
-          {item.price} <Text style={myStyle?.itemTextStyle}>per item</Text>
+          {item?.price ? (
+            <>
+              {" "}
+              {item?.price} <Text style={myStyle?.itemTextStyle}>per item</Text>{" "}
+            </>
+          ) : (
+            ""
+          )}
         </Text>
       </View>
     </View>

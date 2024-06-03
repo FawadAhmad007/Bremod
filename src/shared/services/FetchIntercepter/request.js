@@ -8,10 +8,10 @@ export const getProductList = async (name, page, size, search) => {
   let url = search
     ? `${
         BASE_URL + END_POINT.GET_LIST
-      }${name}?_page=${page}&_limit=${size}&search=${search}`
-    : `${BASE_URL + END_POINT.GET_LIST}${name}?_page=${page}&_limit=${size}`;
+      }${name}?page=${page}&limit=${size}&search=${search}`
+    : `${BASE_URL + END_POINT.GET_LIST}${name}?page=${page}&limit=${size}`;
   const config = getConfig(url);
-
+  console.log("url of the product", url);
   return await responseHandler(config);
 };
 export const getList = async (name) => {
