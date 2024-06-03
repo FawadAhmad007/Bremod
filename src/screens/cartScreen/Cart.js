@@ -70,9 +70,7 @@ export default function Cart() {
         <TouchableOpacity
           style={myStyle.checkoutButton}
           onPress={() => {
-            // !userData || Object.keys(userData).length === 0
             handleModal();
-            // : openWhatsApp();
           }}
         >
           <Text style={myStyle.checkoutButtonText}>CHECKOUT</Text>

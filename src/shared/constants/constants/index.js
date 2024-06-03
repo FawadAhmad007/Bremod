@@ -1,6 +1,6 @@
 /** @format */
 
-const CATEGORY = "Category";
+const CATEGORY = "Categories";
 const SEARCH = "Search";
 const OUR_PRODUCTS = "Our Products";
 const CART = "My Cart";
@@ -12,7 +12,6 @@ const DESCRIPTION = "Description";
 const ADD_CART = "Add to Cart";
 
 export {
-  CATEGORY,
   SEARCH,
   OUR_PRODUCTS,
   PRODUCT_DETAIL,
@@ -22,4 +21,5 @@ export {
   ADD_CART,
   CART,
   CUSTOMER_DETAIL,
+  CATEGORY
 };

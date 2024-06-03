@@ -9,9 +9,9 @@ import { CATEGORY } from '../../shared/constants';
 import { BACK_ICON } from '../../assets';
 import { goBack } from '../../shared/services';
 import CategoryList from './component/index';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-export default function Category({ route, navigation }) {
+export default function Category({ route }) {
 	const myTheme = useTheme();
 	const myStyle = style(myTheme);
 	const categoryData = useSelector((state) => state?.root?.bremod?.category);

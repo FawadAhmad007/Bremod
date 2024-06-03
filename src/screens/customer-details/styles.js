@@ -76,4 +76,11 @@ export const style = (myTheme) =>
       color: "#fff",
       fontWeight: "bold",
     },
+
+    loaderContainer: {
+      ...StyleSheet.absoluteFillObject,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background
+    },
   });
