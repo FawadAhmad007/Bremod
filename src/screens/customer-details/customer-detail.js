@@ -167,61 +167,30 @@ export default function CustomerDetails() {
     }
   };
 
-const openWhatsApp = (data) => {
-  let phoneWithCountryCode ="923114291712";
-  let mobile =
-    Platform.OS == "ios" ? phoneWithCountryCode : "+" + phoneWithCountryCode;
-  if (mobile) {
-    if (msg) {
-      let url = "whatsapp://send?text=" + data + "&phone=" + mobile;
-      Linking.openURL(url)
-        .then(data => {
-          console.log("WhatsApp Opened");
-        })        .catch(() => {
-        
-          Toast.show({
-            type: "error",
-            text1: "Whatsapp not installed!",
-            text2: "Make sure WhatsApp installed on your device:",
-            visibilityTime: 2000,
+
+
+  const openWhatsApp = (data) => {
+    const phoneNumber = "923114291712";
+    const url =`https://wa.me/${phoneNumber}?text=${data}`
+    Linking.canOpenURL(url)
+      .then((canOpen) => {
+        if (canOpen) {
+          return Linking.openURL(url);
+        } else {
+          // WhatsApp is not installed, redirect to the app store
+          const storeUrl = Platform.select({
+            ios: "https://apps.apple.com/app/whatsapp/id310633997",
+            android:
+              "https://play.google.com/store/apps/details?id=com.whatsapp",
           });
-        });
-    } else {
-      Toast.show({
-        type: "error",
 
-        text2: "Please insert message to send",
-        visibilityTime: 2000,
+          return Linking.openURL(storeUrl);
+        }
+      })
+      .catch((e) => {
+        console.log("Error opening WhatsApp", e);
       });
-  
-    }
-  } else {
-  
-  }
-};
-
-  // const openWhatsApp = (data) => {
-  //   const phoneNumber = "923114291712";
-  //   const url = `whatsapp://send?phone=${phoneNumber}&text=${data}`;
-  //   Linking.canOpenURL(url)
-  //     .then((canOpen) => {
-  //       if (canOpen) {
-  //         return Linking.openURL(url);
-  //       } else {
-  //         // WhatsApp is not installed, redirect to the app store
-  //         const storeUrl = Platform.select({
-  //           ios: "https://apps.apple.com/app/whatsapp/id310633997",
-  //           android:
-  //             "https://play.google.com/store/apps/details?id=com.whatsapp",
-  //         });
-
-  //         return Linking.openURL(storeUrl);
-  //       }
-  //     })
-  //     .catch((e) => {
-  //       console.log("Error opening WhatsApp", e);
-  //     });
-  // };
+  };
 
   return (
     <MyView>
