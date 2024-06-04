@@ -101,7 +101,6 @@ export default function Home() {
 				getListForCategoryAndCover('_category'),
 				getListForCategoryAndCover('_cover'),
 			]);
-			console.log('ressssss of the products', res);
 			if (res?.status === 200) {
 				// Toast.show({
 				//   type: "success",
@@ -111,7 +110,7 @@ export default function Home() {
 				// console.log("res info",res);
 				// console.log("res of the products",JSON.stringify(res?.data));
 				setLoader(false);
-
+				setLoading(false);
 				const processedProducts = processProducts(res?.data);
 				dispatch(bremodSilce?.actions?.ADD_COVER(coverRes?.data?.data));
 				setRefreshing(false);
@@ -122,9 +121,17 @@ export default function Home() {
 				data?.data?.length == 10
 					? (page.current = page.current + 1)
 					: setPagination(true);
+			} else if (res?.message == 'Network Error') {
+				setLoader(false);
+				setLoading(false);
+				Toast.show({
+					type: 'error',
+					text1: 'Network Error',
+					visibilityTime: 2000,
+				});
 			} else {
 				setLoader(false);
-
+				setLoading(false);
 				Toast.show({
 					type: 'error',
 					text1: res?.error,
@@ -133,7 +140,7 @@ export default function Home() {
 			}
 		} catch (error) {
 			setLoader(false);
-
+			setLoading(false);
 			Toast.show({
 				type: 'error',
 				text1: error,
@@ -141,7 +148,6 @@ export default function Home() {
 			});
 		} finally {
 			setLoader(false);
-
 			setLoading(false);
 		}
 	};
@@ -216,7 +222,7 @@ export default function Home() {
 
 	const handleEmptyCart = () => {
 		Toast.show({
-			type: 'error',
+			type: 'info',
 			text1: 'Your Cart is empty.',
 			visibilityTime: 2000,
 		});

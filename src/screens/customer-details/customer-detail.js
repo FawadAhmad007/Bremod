@@ -1,35 +1,35 @@
 /** @format */
 
 import {
-  View,
-  Text,
-  Image,
-  ActivityIndicator,
-  TouchableOpacity,
-  Linking,
-  ScrollView,
-} from "react-native";
-import React, { useState, useEffect } from "react";
-import { MyView } from "../../shared/themes/style/common";
-import { useTheme } from "@react-navigation/native";
-import { style } from "./styles";
-import { InputField } from "../../shared/components/index";
-import { goBack } from "../../shared/services";
-import { BACK_ICON } from "../../assets";
-import { CUSTOMER_DETAIL } from "../../shared/constants";
+	View,
+	Text,
+	Image,
+	ActivityIndicator,
+	TouchableOpacity,
+	Linking,
+	ScrollView,
+} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { MyView } from '../../shared/themes/style/common';
+import { StackActions, useTheme } from '@react-navigation/native';
+import { style } from './styles';
+import { InputField } from '../../shared/components/index';
+import { goBack } from '../../shared/services';
+import { BACK_ICON } from '../../assets';
+import { CUSTOMER_DETAIL } from '../../shared/constants';
 import {
-  ADD_USERDATA,
-  ADD_PDFID,
-  ADD_CARD,
-} from "../../shared/redux/reducers/index";
-import Toast from "react-native-toast-message";
+	ADD_USERDATA,
+	ADD_PDFID,
+	ADD_CARD,
+} from '../../shared/redux/reducers/index';
+import Toast from 'react-native-toast-message';
 import {
 	submitUserData,
 	generatePdfFile,
 } from '../../shared/services/FetchIntercepter/request';
 import { useSelector, useDispatch } from 'react-redux';
 
-export default function CustomerDetails() {
+export default function CustomerDetails({ navigation }) {
 	const myTheme = useTheme();
 	const myStyle = style(myTheme);
 	const dispatch = useDispatch();
@@ -64,38 +64,39 @@ export default function CustomerDetails() {
 	const validateForm = ({ name, email, address, phone }) => {
 		const errors = {};
 
-    if (!name) {
-      errors.name = "Name is required.";
-    }
-    if (!phone) {
-      errors.phone = "Phone number is required.";
-    } else if (!validatePhone(phone)) {
-      errors.phone = "Invalid phone number.";
-    }
-    if (!address) {
-      errors.address = "Address is required.";
-    }
-    if (!validateEmail(email)) {
-      errors.email = "Invalid email address. Please enter a valid email.";
-    }
-
+		if (!name) {
+			errors.name = 'Name is required.';
+		}
+		if (!phone) {
+			errors.phone = 'Phone number is required.';
+		} else if (!validatePhone(phone)) {
+			errors.phone = 'Invalid phone number.';
+		}
+		if (!address) {
+			errors.address = 'Address is required.';
+		}
+		if (!validateEmail(email)) {
+			errors.email = 'Invalid email address. Please enter a valid email.';
+		}
 
 		return errors;
 	};
 
-  const handleAddToForm = () => {
-    const validationErrors = validateForm({ name, email, address, phone });
-    if (Object.keys(validationErrors).length > 0) {
-      setErrors(validationErrors);
-      return;
-    }
-    setErrors({});
-    setLoading(true);
+	const handleAddToForm = () => {
+		const validationErrors = validateForm({ name, email, address, phone });
+		if (Object.keys(validationErrors).length > 0) {
+			setErrors(validationErrors);
+			return;
+		}
+		setErrors({});
+		setLoading(true);
 
 		const transformedProduct = cart.map((product) => ({
-			product_id: product.id,
-			product_quantitiy: product.quantity,
-			product_color: product.selectedColor ? product.selectedColor : 'No color',
+			product_id: product?.id,
+			product_quantitiy: product?.quantity,
+			product_color: product?.selectedColor
+				? product?.selectedColor
+				: 'No color',
 		}));
 
 		let responseData = {
@@ -127,8 +128,19 @@ export default function CustomerDetails() {
 			if (res?.status === 200) {
 				dispatch(ADD_PDFID(res?.data?.order_id));
 				setAllowGeneratePdf(true);
+				setLoading(false);
 				generatePdf();
+			} else if (res?.message == 'Network Error') {
+				setLoading(false);
+
+				Toast.show({
+					type: 'error',
+					text1: 'Network Error',
+					visibilityTime: 2000,
+				});
 			} else {
+				setLoading(false);
+
 				Toast.show({
 					type: 'error',
 					text1: res?.message,
@@ -136,6 +148,8 @@ export default function CustomerDetails() {
 				});
 			}
 		} catch (error) {
+			setLoading(false);
+
 			Toast.show({
 				type: 'error',
 				text1: 'Error Fetching Data:',
@@ -145,54 +159,64 @@ export default function CustomerDetails() {
 		}
 	};
 
-  const generatePdf = async () => {
-    console.log("in the pdf generation func");
-    setAllowGeneratePdf(false);
-    let payload = {
-      id: pdfId,
-      customer_name: name,
-      customer_number: phone,
-      customer_email: email,
-      customer_address: address,
-    };
-    try {
-      console.log("payload in pdf", payload);
-      const res = pdfId ? await generatePdfFile(payload) : "";
-      console.log("responsesss in thr pdf req", res);
-      if (res?.status === 200) {
-        console.log("responsesss", res?.data?.fileUrl);
-        dispatch(ADD_CARD([]));
-        openWhatsApp(res?.data?.fileUrl);
-      }
-    } catch (error) {
-      console.log("error in the pdf request", JSON.stringify(error));
-    } finally {
-      setLoading(false); // Stop loading
-    }
-  };
+	const generatePdf = async () => {
+		console.log('in the pdf generation func');
+		setAllowGeneratePdf(false);
+		let payload = {
+			id: pdfId,
+			customer_name: name,
+			customer_number: phone,
+			customer_email: email,
+			customer_address: address,
+		};
+		try {
+			console.log('payload in pdf', payload);
+			const res = pdfId ? await generatePdfFile(payload) : '';
+			console.log('responsesss in thr pdf req', res);
+			if (res?.status === 200) {
+				setLoading(false);
+				console.log('responsesss', res?.data?.fileUrl);
+				dispatch(ADD_CARD([]));
+				navigation.dispatch(StackActions.popToTop());
+				openWhatsApp(res?.data?.fileUrl);
+			} else if (res?.message == 'Network Error') {
+				setLoading(false);
+				Toast.show({
+					type: 'error',
+					text1: 'Network Error',
+					visibilityTime: 2000,
+				});
+			}
+		} catch (error) {
+			setLoading(false);
+			console.log('error in the pdf request', JSON.stringify(error));
+		} finally {
+			setLoading(false); // Stop loading
+		}
+	};
 
-  const openWhatsApp = (data) => {
-    const phoneNumber = "923114291712";
-    const url = `https://wa.me/${phoneNumber}?text=${data}`;
-    Linking.canOpenURL(url)
-      .then((canOpen) => {
-        if (canOpen) {
-          return Linking.openURL(url);
-        } else {
-          // WhatsApp is not installed, redirect to the app store
-          const storeUrl = Platform.select({
-            ios: "https://apps.apple.com/app/whatsapp/id310633997",
-            android:
-              "https://play.google.com/store/apps/details?id=com.whatsapp",
-          });
+	const openWhatsApp = (data) => {
+		const phoneNumber = '923114291712';
+		const url = `https://wa.me/${phoneNumber}?text=${data}`;
+		Linking.canOpenURL(url)
+			.then((canOpen) => {
+				if (canOpen) {
+					return Linking.openURL(url);
+				} else {
+					// WhatsApp is not installed, redirect to the app store
+					const storeUrl = Platform.select({
+						ios: 'https://apps.apple.com/app/whatsapp/id310633997',
+						android:
+							'https://play.google.com/store/apps/details?id=com.whatsapp',
+					});
 
-          return Linking.openURL(storeUrl);
-        }
-      })
-      .catch((e) => {
-        console.log("Error opening WhatsApp", e);
-      });
-  };
+					return Linking.openURL(storeUrl);
+				}
+			})
+			.catch((e) => {
+				console.log('Error opening WhatsApp', e);
+			});
+	};
 
 	return (
 		<MyView>
@@ -286,26 +310,24 @@ export default function CustomerDetails() {
 							<TouchableOpacity
 								style={[
 									myStyle.checkoutButton,
-									(!name || !phone || !address) &&
+									(!name || !phone || !address || loading) &&
 										myStyle.disablecheckoutButton,
 								]}
-								disabled={!name || !phone || !address}
+								disabled={!name || !phone || !address || loading}
 								onPress={handleAddToForm}>
-								<Text style={myStyle.checkoutButtonText}>Place Order</Text>
+								{loading ? (
+									<ActivityIndicator
+										size='small'
+										color={myTheme?.colors?.primary}
+									/>
+								) : (
+									<Text style={myStyle.checkoutButtonText}>Place Order</Text>
+								)}
 							</TouchableOpacity>
 						</View>
 					</View>
 				</View>
 			</ScrollView>
-
-			{loading && (
-				<View style={myStyle.loaderContainer}>
-					<ActivityIndicator
-						size='large'
-						color='#19B95C'
-					/>
-				</View>
-			)}
 		</MyView>
 	);
 }

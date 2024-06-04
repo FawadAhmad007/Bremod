@@ -34,55 +34,58 @@ export const style = (myTheme) =>
 			position: 'relative',
 			width: '90%',
 		},
-
-		flatlistContainer: {
-			alignSelf: 'center',
-			alignItems: 'center',
-			justifyContent: 'space-between',
-			flexDirection: 'row',
-			position: 'relative',
-			width: '90%',
-			// height: DEVICE_HEIGHT - scale(32),
-			backgroundColor: 'red',
-		},
-
 		subContainer: {
 			flexDirection: 'column',
 			alignItems: 'center',
 			justifyContent: 'space-between',
 		},
 		crossImage: {
-			position: 'absolute',
-			marginBottom: moderateScale(15),
-			right: 0,
-			width: 20,
-			height: 20,
+			width: moderateScale(20),
+			height: moderateScale(20),
 			tintColor: 'red',
 		},
-
-		cartItem: {
+		imageContainer: {
 			flexDirection: 'row',
-			padding: 10,
-			marginBottom: 10,
+			justifyContent: 'space-between',
+		},
+		imageSubContainer: {
+			flexDirection: 'row',
+			width: '90%',
+			alignItems: 'center',
+		},
+		cartItem: {
+			width: '100%',
+			padding: moderateScale(10),
+			marginBottom: verticalScale(10),
 			backgroundColor: myTheme?.colors?.lightGray,
-			borderRadius: 20,
-			elevation: 2,
+			borderRadius: moderateScale(15),
+			shadowColor: '#000',
+			shadowOffset: {
+				width: 0,
+				height: 3,
+			},
+			shadowOpacity: 0.29,
+			shadowRadius: 4.65,
+
+			elevation: 7,
 		},
 		productImage: {
-			width: 80,
-			height: 80,
-			marginRight: 10,
+			width: moderateScale(70),
+			height: moderateScale(70),
+			marginRight: moderateScale(8),
+			borderRadius: moderateScale(5),
 		},
 		productDetails: {
 			flex: 1,
 			justifyContent: 'center',
 		},
-		productName: {
-			fontSize: 16,
-			fontWeight: 'bold',
-			marginBottom: 10,
-			color: myTheme?.colors?.black,
-		},
+		productName: [
+			{
+				marginBottom: moderateScale(10),
+				color: myTheme?.colors?.black,
+			},
+			FONTS_STYLE?.HEADING_MEDIUM,
+		],
 		counterRow: {
 			marginBottom: 5,
 		},
@@ -97,7 +100,6 @@ export const style = (myTheme) =>
 			fontWeight: 'bold',
 		},
 		counterText: {
-			// marginHorizontal: 10,
 			fontSize: 16,
 		},
 
@@ -107,16 +109,20 @@ export const style = (myTheme) =>
 			paddingRight: moderateScale(20),
 			padding: moderateScale(5),
 		},
-		productColor: {
-			fontSize: 16,
-			color: myTheme?.colors?.black,
-			marginBottom: 10,
-		},
+		productColor: [
+			{
+				color: myTheme?.colors?.black,
+				marginBottom: moderateScale(10),
+			},
+			FONTS_STYLE?.TEXT_MEDIUM,
+		],
 
-		productColorSpan: {
-			fontWeight: 'bold',
-			color: myTheme?.colors?.black,
-		},
+		productColorSpan: [
+			{
+				color: myTheme?.colors?.black,
+			},
+			FONTS_STYLE?.HEADING_MEDIUM,
+		],
 		productPrice: {
 			fontSize: 16,
 			fontWeight: 'bold',
