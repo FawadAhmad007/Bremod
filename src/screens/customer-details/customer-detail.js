@@ -1,33 +1,32 @@
 /** @format */
 
 import {
-	View,
-	Text,
-	Image,
-	ActivityIndicator,
-	TouchableOpacity,
-	Linking,
-	ScrollView,
-} from 'react-native';
-import React, { useState, useEffect } from 'react';
-import { MyView } from '../../shared/themes/style/common';
-import { useTheme } from '@react-navigation/native';
-import { style } from './styles';
-import { InputField } from '../../shared/components/index';
-import { goBack } from '../../shared/services';
-import { BACK_ICON } from '../../assets';
-import { CUSTOMER_DETAIL } from '../../shared/constants';
+  View,
+  Text,
+  Image,
+  ActivityIndicator,
+  TouchableOpacity,
+  Linking,
+  ScrollView,
+} from "react-native";
+import React, { useState, useEffect } from "react";
+import { MyView } from "../../shared/themes/style/common";
+import { useTheme } from "@react-navigation/native";
+import { style } from "./styles";
+import { InputField } from "../../shared/components/index";
+import { goBack } from "../../shared/services";
+import { BACK_ICON } from "../../assets";
+import { CUSTOMER_DETAIL } from "../../shared/constants";
 import {
-	ADD_USERDATA,
-	ADD_PDFID,
-	ADD_CARD,
-} from '../../shared/redux/reducers/index';
-import Toast from 'react-native-toast-message';
+  ADD_USERDATA,
+  ADD_PDFID,
+  ADD_CARD,
+} from "../../shared/redux/reducers/index";
+import Toast from "react-native-toast-message";
 import {
 	submitUserData,
 	generatePdfFile,
 } from '../../shared/services/FetchIntercepter/request';
-
 import { useSelector, useDispatch } from 'react-redux';
 
 export default function CustomerDetails() {
@@ -65,32 +64,33 @@ export default function CustomerDetails() {
 	const validateForm = ({ name, email, address, phone }) => {
 		const errors = {};
 
-		if (!name) {
-			errors.name = 'Name is required.';
-		}
-		if (!phone) {
-			errors.phone = 'Phone number is required.';
-		} else if (!validatePhone(phone)) {
-			errors.phone = 'Invalid phone number.';
-		}
-		if (!address) {
-			errors.address = 'Address is required.';
-		}
-		if (!validateEmail(email)) {
-			errors.email = 'Invalid email address. Please enter a valid email.';
-		}
+    if (!name) {
+      errors.name = "Name is required.";
+    }
+    if (!phone) {
+      errors.phone = "Phone number is required.";
+    } else if (!validatePhone(phone)) {
+      errors.phone = "Invalid phone number.";
+    }
+    if (!address) {
+      errors.address = "Address is required.";
+    }
+    if (!validateEmail(email)) {
+      errors.email = "Invalid email address. Please enter a valid email.";
+    }
+
 
 		return errors;
 	};
 
-	const handleAddToForm = () => {
-		const validationErrors = validateForm({ name, email, address, phone });
-		if (Object.keys(validationErrors).length > 0) {
-			setErrors(validationErrors);
-			return;
-		}
-		setErrors({});
-		setLoading(true);
+  const handleAddToForm = () => {
+    const validationErrors = validateForm({ name, email, address, phone });
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+      return;
+    }
+    setErrors({});
+    setLoading(true);
 
 		const transformedProduct = cart.map((product) => ({
 			product_id: product.id,
@@ -145,85 +145,54 @@ export default function CustomerDetails() {
 		}
 	};
 
-	const generatePdf = async () => {
-		console.log('in the pdf generation func');
-		setAllowGeneratePdf(false);
-		let payload = {
-			id: pdfId,
-			customer_name: name,
-			customer_number: phone,
-			customer_email: email,
-			customer_address: address,
-		};
-		try {
-			console.log('payload in pdf', payload);
-			const res = pdfId ? await generatePdfFile(payload) : '';
-			console.log('responsesss in thr pdf req', res);
-			if (res?.status === 200) {
-				console.log('responsesss', res?.data?.fileUrl);
-				dispatch(ADD_CARD([]));
-				openWhatsApp(res?.data?.fileUrl);
-			}
-		} catch (error) {
-			console.log('error in the pdf request', JSON.stringify(error));
-		} finally {
-			setLoading(false); // Stop loading
-		}
-	};
+  const generatePdf = async () => {
+    console.log("in the pdf generation func");
+    setAllowGeneratePdf(false);
+    let payload = {
+      id: pdfId,
+      customer_name: name,
+      customer_number: phone,
+      customer_email: email,
+      customer_address: address,
+    };
+    try {
+      console.log("payload in pdf", payload);
+      const res = pdfId ? await generatePdfFile(payload) : "";
+      console.log("responsesss in thr pdf req", res);
+      if (res?.status === 200) {
+        console.log("responsesss", res?.data?.fileUrl);
+        dispatch(ADD_CARD([]));
+        openWhatsApp(res?.data?.fileUrl);
+      }
+    } catch (error) {
+      console.log("error in the pdf request", JSON.stringify(error));
+    } finally {
+      setLoading(false); // Stop loading
+    }
+  };
 
-	const openWhatsApp = (data) => {
-		let phoneWithCountryCode = '923114291712';
-		let mobile =
-			Platform.OS == 'ios' ? phoneWithCountryCode : '+' + phoneWithCountryCode;
-		if (mobile) {
-			if (msg) {
-				let url = 'whatsapp://send?text=' + data + '&phone=' + mobile;
-				Linking.openURL(url)
-					.then((data) => {
-						console.log('WhatsApp Opened');
-					})
-					.catch(() => {
-						Toast.show({
-							type: 'error',
-							text1: 'Whatsapp not installed!',
-							text2: 'Make sure WhatsApp installed on your device:',
-							visibilityTime: 2000,
-						});
-					});
-			} else {
-				Toast.show({
-					type: 'error',
+  const openWhatsApp = (data) => {
+    const phoneNumber = "923114291712";
+    const url = `https://wa.me/${phoneNumber}?text=${data}`;
+    Linking.canOpenURL(url)
+      .then((canOpen) => {
+        if (canOpen) {
+          return Linking.openURL(url);
+        } else {
+          // WhatsApp is not installed, redirect to the app store
+          const storeUrl = Platform.select({
+            ios: "https://apps.apple.com/app/whatsapp/id310633997",
+            android:
+              "https://play.google.com/store/apps/details?id=com.whatsapp",
+          });
 
-					text2: 'Please insert message to send',
-					visibilityTime: 2000,
-				});
-			}
-		} else {
-		}
-	};
-
-	// const openWhatsApp = (data) => {
-	//   const phoneNumber = "923114291712";
-	//   const url = `whatsapp://send?phone=${phoneNumber}&text=${data}`;
-	//   Linking.canOpenURL(url)
-	//     .then((canOpen) => {
-	//       if (canOpen) {
-	//         return Linking.openURL(url);
-	//       } else {
-	//         // WhatsApp is not installed, redirect to the app store
-	//         const storeUrl = Platform.select({
-	//           ios: "https://apps.apple.com/app/whatsapp/id310633997",
-	//           android:
-	//             "https://play.google.com/store/apps/details?id=com.whatsapp",
-	//         });
-
-	//         return Linking.openURL(storeUrl);
-	//       }
-	//     })
-	//     .catch((e) => {
-	//       console.log("Error opening WhatsApp", e);
-	//     });
-	// };
+          return Linking.openURL(storeUrl);
+        }
+      })
+      .catch((e) => {
+        console.log("Error opening WhatsApp", e);
+      });
+  };
 
 	return (
 		<MyView>
