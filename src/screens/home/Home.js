@@ -89,8 +89,6 @@ export default function Home() {
 
 	const getProducts = async () => {
 		try {
-			console.log('products page', page.current);
-			console.log('products query', searchText);
 			const res = await getProductList(
 				'products/listing',
 				page.current,
@@ -102,13 +100,6 @@ export default function Home() {
 				getListForCategoryAndCover('_cover'),
 			]);
 			if (res?.status === 200) {
-				// Toast.show({
-				//   type: "success",
-				//   text1: "Products Fetched Successfully",
-				//   visibilityTime: 2000,
-				// });
-				// console.log("res info",res);
-				// console.log("res of the products",JSON.stringify(res?.data));
 				setLoader(false);
 				setLoading(false);
 				const processedProducts = processProducts(res?.data);
@@ -117,7 +108,6 @@ export default function Home() {
 				dispatch(bremodSilce?.actions?.ADD_CATEGORY(categoriesRes?.data?.data));
 				const data = { data: processedProducts, page: page.current };
 				dispatch(bremodSilce?.actions?.ADD_PRODUCTS(data));
-				console.log('products data', JSON.stringify(data, 4, null));
 				data?.data?.length == 10
 					? (page.current = page.current + 1)
 					: setPagination(true);

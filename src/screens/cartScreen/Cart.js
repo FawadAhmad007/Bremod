@@ -85,7 +85,6 @@ export default function Cart() {
 				/>
 			</View>
 			<View style={myStyle.footer}>
-				{/* <Text style={myStyle.totalPriceLabel}>Total Price: ${245}</Text> */}
 				<TouchableOpacity
 					style={myStyle.checkoutButton}
 					onPress={() => {

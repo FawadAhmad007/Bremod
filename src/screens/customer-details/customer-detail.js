@@ -20,7 +20,7 @@ import { CUSTOMER_DETAIL } from '../../shared/constants';
 import {
 	ADD_USERDATA,
 	ADD_PDFID,
-	ADD_CARD,
+	REMOVE_CARD,
 } from '../../shared/redux/reducers/index';
 import Toast from 'react-native-toast-message';
 import {
@@ -55,7 +55,6 @@ export default function CustomerDetails({ navigation }) {
 	}, [userData]);
 
 	useEffect(() => {
-		console.log('here in the effect of the pfd block', pdfId);
 		if (pdfId && allowGeneratePdf) {
 			generatePdf();
 		}
@@ -114,7 +113,7 @@ export default function CustomerDetails({ navigation }) {
 
 	const validateEmail = (email) => {
 		const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-		return emailRegex.test(email);
+		return email ? emailRegex.test(email) : true;
 	};
 
 	const validatePhone = (phone) => {
@@ -128,11 +127,9 @@ export default function CustomerDetails({ navigation }) {
 			if (res?.status === 200) {
 				dispatch(ADD_PDFID(res?.data?.order_id));
 				setAllowGeneratePdf(true);
-				setLoading(false);
 				generatePdf();
 			} else if (res?.message == 'Network Error') {
 				setLoading(false);
-
 				Toast.show({
 					type: 'error',
 					text1: 'Network Error',
@@ -140,16 +137,14 @@ export default function CustomerDetails({ navigation }) {
 				});
 			} else {
 				setLoading(false);
-
 				Toast.show({
 					type: 'error',
-					text1: res?.message,
+					text1: res?.message || res?.error,
 					visibilityTime: 2000,
 				});
 			}
 		} catch (error) {
 			setLoading(false);
-
 			Toast.show({
 				type: 'error',
 				text1: 'Error Fetching Data:',
@@ -160,7 +155,6 @@ export default function CustomerDetails({ navigation }) {
 	};
 
 	const generatePdf = async () => {
-		console.log('in the pdf generation func');
 		setAllowGeneratePdf(false);
 		let payload = {
 			id: pdfId,
@@ -170,13 +164,9 @@ export default function CustomerDetails({ navigation }) {
 			customer_address: address,
 		};
 		try {
-			console.log('payload in pdf', payload);
 			const res = pdfId ? await generatePdfFile(payload) : '';
-			console.log('responsesss in thr pdf req', res);
 			if (res?.status === 200) {
-				setLoading(false);
-				console.log('responsesss', res?.data?.fileUrl);
-				dispatch(ADD_CARD([]));
+				dispatch(REMOVE_CARD());
 				navigation.dispatch(StackActions.popToTop());
 				openWhatsApp(res?.data?.fileUrl);
 			} else if (res?.message == 'Network Error') {
@@ -189,14 +179,14 @@ export default function CustomerDetails({ navigation }) {
 			}
 		} catch (error) {
 			setLoading(false);
-			console.log('error in the pdf request', JSON.stringify(error));
 		} finally {
 			setLoading(false); // Stop loading
 		}
 	};
 
 	const openWhatsApp = (data) => {
-		const phoneNumber = '923114291712';
+		setLoading(false);
+		const phoneNumber = '923000777736';
 		const url = `https://wa.me/${phoneNumber}?text=${data}`;
 		Linking.canOpenURL(url)
 			.then((canOpen) => {

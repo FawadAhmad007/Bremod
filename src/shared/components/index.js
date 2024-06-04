@@ -1,2 +1,3 @@
-export {default as InputField} from './customInput';
-export {default as CommonModal} from './modal';
+/** @format */
+
+export { default as InputField } from './customInput';
