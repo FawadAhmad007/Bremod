@@ -4,26 +4,26 @@ import { FONTS_STYLE } from "../../shared/themes/style/common";
 
 export const style = (myTheme) =>
   StyleSheet.create({
-    container: {
-      flex: 1,
-      backgroundColor: myTheme.colors.background,
-      padding: 15, // Added padding around the screen
-    },
+    // container: {
+    //   flex: 1,
+    //   backgroundColor: myTheme.colors.background,
+    //   padding: 15, // Added padding around the screen
+    // },
 
     inputFieldContainer: {
-      marginBottom: 15, // Gap between fields
+      marginBottom: moderateScale(5), // Gap between fields
     },
 
     headerContainer: {
       flexDirection: "row",
       alignItems: "center",
-      padding: 15,
+      margin: moderateScale(0),
+      paddingVertical: moderateScale(15),
       backgroundColor: myTheme.colors.card,
-      //   borderBottomWidth: 1,
       borderBottomColor: myTheme.colors.border,
     },
     touchableContainerStyle: {
-      padding: 10,
+      padding: moderateScale(15),
     },
     leftIcon: {
       width: moderateScale(20),
@@ -42,7 +42,7 @@ export const style = (myTheme) =>
     ],
     contentContainer: {
       flexGrow: 1,
-      padding: moderateScale(20),
+      paddingHorizontal: moderateScale(20),
     },
 
     errorText: {
@@ -54,7 +54,7 @@ export const style = (myTheme) =>
     footer: {
       padding: 15,
       backgroundColor: myTheme.colors.card,
-      marginTop: moderateScale(20),
+      marginTop: moderateScale(10),
     },
     checkoutButton: {
       backgroundColor: myTheme.colors.secondary,
@@ -77,10 +77,79 @@ export const style = (myTheme) =>
       fontWeight: "bold",
     },
 
+    noteText: {
+      color: "red",
+      fontSize: moderateScale(12),
+      marginBottom: verticalScale(10),
+      textAlign: "center",
+    },
+
     loaderContainer: {
       ...StyleSheet.absoluteFillObject,
       justifyContent: "center",
       alignItems: "center",
       backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background
+    },
+    container: {
+      flex: 1,
+      // justifyContent: "center",
+      // alignItems: "center",
+    },
+    title: {
+      fontSize: 20,
+      marginBottom: 20,
+    },
+    dropdownButton: {
+      width: "80%",
+      height: 50,
+      backgroundColor: "#FFF",
+      borderRadius: 8,
+      borderWidth: 1,
+      borderColor: "#444",
+    },
+    dropdownButtonText: {
+      color: "#444",
+      textAlign: "left",
+    },
+    label: {
+      fontSize: 14,
+      marginBottom: 5,
+      textAlign: "left",
+      color: "black",
+    },
+    dropdownButtonStyle: {
+      borderWidth: 1,
+      borderColor: "#6a6a6a", // Adjust border color to match other fields
+      width: "100%",
+      borderRadius: 5,
+      padding: 10,
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
+    },
+    dropdownButtonTxtStyle: {
+      fontSize: 14,
+      color: myTheme?.colors?.black,
+    },
+    dropdownButtonArrowStyle: {
+      fontSize: 20,
+      marginLeft: 10,
+    },
+    dropdownItemStyle: {
+      padding: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: "#ccc",
+      color: "#6a6a6a", // Adjust border color to match other fields
+    },
+    dropdownItemTxtStyle: {
+      fontSize: 16,
+      color: "#6a6a6a", // Adjust border color to match other fields
+    },
+    dropdownMenuStyle: {
+      marginTop: 5,
+      borderWidth: 1,
+      borderColor: "#333", // Adjust border color to match other fields
+      borderRadius: 5,
+      height: 200, // Adjust the height as needed
     },
   });

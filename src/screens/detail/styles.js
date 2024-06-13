@@ -69,6 +69,8 @@ export const style = (myTheme) =>
         includeFontPadding: false,
       },
     ],
+
+
     itemTextStyle: [
       FONTS_STYLE.TEXT_MEDIUM,
       {
@@ -160,6 +162,14 @@ export const style = (myTheme) =>
       fontSize: 18,
       fontWeight: "bold",
     },
+
+    loaderContainer: {
+      ...StyleSheet.absoluteFillObject,
+      justifyContent: "center",
+      alignItems: "center",
+      backgroundColor: "rgba(0, 0, 0, 0.5)", // Semi-transparent black background
+    },
+
     counterText: {
       // marginHorizontal: 10,
       fontSize: 16,
