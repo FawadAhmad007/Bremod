@@ -16,7 +16,9 @@ const Items = ({ data, onPress }) => {
 			<Image
 				style={myStyle?.itemImageStyle}
 				source={
-					data?.product_image_urls?.length > 0 ? { uri: data?.product_image_urls[0] } : PLACEHOLDER_IMAGE
+					data?.product_image_urls?.length > 0
+						? { uri: data?.product_image_urls[0] }
+						: PLACEHOLDER_IMAGE
 				}
 				resizeMode='cover'
 			/>
@@ -25,13 +27,15 @@ const Items = ({ data, onPress }) => {
 				style={myStyle?.itemHeadingStyle}>
 				{data?.name}
 			</Text>
-			{data?.categories && (
-				<Text
-					numberOfLines={3}
-					style={myStyle?.itemTextStyle}>
-					{data?.categories[0]?.name}
-				</Text>
-			)}
+			{data?.product_categories &&
+				data.product_categories.map((category, index) => (
+					<Text
+						key={index}
+						numberOfLines={3}
+						style={myStyle?.itemTextStyle}>
+						{category}
+					</Text>
+				))}
 		</TouchableOpacity>
 	);
 };

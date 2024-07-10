@@ -1,7 +1,8 @@
+/** @format */
+
 export const isDiscountValid = (endDateString) => {
-  console.log("endDateString",endDateString);
-    const discountEndDate = new Date(endDateString);
-    const today = new Date();
-    return discountEndDate > today;
-  };
-  
+	const discountEndDate = new Date(endDateString);
+	const today = new Date();
+	today.setHours(0, 0, 0, 0);
+	return discountEndDate > today;
+};

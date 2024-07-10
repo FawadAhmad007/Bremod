@@ -7,8 +7,10 @@ const BACK_ICON = require('./back.png');
 const CART_ICON = require('./cart.png');
 const GROCERY_CART_ICON = require('./grocery.png');
 const BREMOD_ICON = require('./breemod.png');
+const WHATSAPP_ICON = require('./whatsApp.png');
 
 export {
+	WHATSAPP_ICON,
 	SEARCH_ICON,
 	CATEGORY_ICON,
 	CROSS_ICON,

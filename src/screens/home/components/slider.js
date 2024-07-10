@@ -13,7 +13,7 @@ import { useTheme } from '@react-navigation/native';
 import { style } from './styles';
 import { DEVICE_WIDTH } from '../../../shared/themes/deviceInfo/index';
 import { moderateScale, scale, verticalScale } from 'react-native-size-matters';
-
+import { PLACEHOLDER_IMAGE } from '../../../assets/images';
 const Carousel = ({ images }) => {
 	const myTheme = useTheme();
 	const myStyle = style(myTheme);
@@ -65,7 +65,6 @@ const Carousel = ({ images }) => {
 			}).start();
 		});
 	}, [currentIndex]);
-
 	return (
 		<View style={myStyle.container}>
 			<ScrollView
@@ -82,7 +81,11 @@ const Carousel = ({ images }) => {
 						style={myStyle.item}>
 						<Image
 							style={myStyle.image}
-							source={{ uri: imageSource?.image }}
+							source={
+								images[0].image === null || images[0].image === undefined
+									? PLACEHOLDER_IMAGE
+									: { uri: imageSource?.image }
+							}
 							resizeMode='cover'
 						/>
 					</View>

@@ -22,6 +22,9 @@ export const bremodSilce = createSlice({
 		REMOVE_CARD: (state, action) => {
 			state.card = []; // Append the new item to the array
 		},
+		UPDATE_CARD: (state, action) => {
+			state.card = action.payload; // Append the new item to the array
+		},
 		UPDATE_CARD_QUANTITY: (state, action) => {
 			const updatedCard = [...state.card];
 			updatedCard[action.payload.index] = action.payload.product;
@@ -72,6 +75,7 @@ export const selectCard = (state) => state.bremod?.card;
 
 export const {
 	ADD_CARD,
+	UPDATE_CARD,
 	ADD_PRODUCTS,
 	UPDATE_PRODUCTS,
 	ADD_CATEGORY,

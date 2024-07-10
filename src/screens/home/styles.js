@@ -76,11 +76,9 @@ export const style = (myTheme) =>
 		logoStyle: {
 			width: moderateScale(120),
 			height: moderateScale(40),
-			marginVertical: scale(10),
 			marginStart: moderateScale(130),
 		},
 		cartContainer: {
-			marginVertical: scale(15),
 			marginEnd: moderateScale(10),
 		},
 		cartStyle: {
@@ -123,6 +121,7 @@ export const style = (myTheme) =>
 			width: '33.33%',
 			paddingHorizontal: '3%',
 			marginVertical: verticalScale(8),
+			alignSelf: 'center',
 		},
 
 		itemImageStyle: {
@@ -131,6 +130,7 @@ export const style = (myTheme) =>
 			tintColor: myTheme?.color?.gray,
 			height: moderateScale(100),
 			borderRadius: moderateScale(8),
+			backgroundColor: myTheme?.color?.lightGray,
 		},
 
 		itemHeadingStyle: [
@@ -139,6 +139,7 @@ export const style = (myTheme) =>
 				color: myTheme?.colors?.black,
 				includeFontPadding: false,
 				marginTop: verticalScale(8),
+				textAlign: 'center',
 			},
 		],
 
@@ -147,6 +148,7 @@ export const style = (myTheme) =>
 			{
 				color: myTheme?.colors?.gray,
 				includeFontPadding: false,
+				textAlign: 'center',
 			},
 		],
 		flatListStyle: {
@@ -163,10 +165,10 @@ export const style = (myTheme) =>
 			tintColor: myTheme?.colors?.primary,
 		},
 		loaderContainer: {
-			...StyleSheet.absoluteFillObject,
+			flex: 1,
 			justifyContent: 'center',
 			alignItems: 'center',
-			backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent black background
+			backgroundColor: myTheme?.colors?.primary,
 		},
 		ListFooterComponentLoader: {
 			justifyContent: 'center',

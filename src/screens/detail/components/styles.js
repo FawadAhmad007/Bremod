@@ -18,6 +18,7 @@ export const style = (myTheme) =>
 			alignItems: 'center',
 		},
 		image: {
+			backgroundColor: myTheme?.color?.lightGray,
 			width: DEVICE_WIDTH - scale(32),
 			marginVertical: scale(10),
 			alignSelf: 'center',
