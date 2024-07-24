@@ -25,4 +25,3 @@ mipmap ic_launcher_round
 string app_name
 style AppTheme
 style SplashScreenTheme
-xml network_security_config

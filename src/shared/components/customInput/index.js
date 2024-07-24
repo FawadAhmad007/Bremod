@@ -1,10 +1,10 @@
-import {View, Text, TouchableOpacity} from 'react-native';
-import React from 'react';
-import {useTheme} from '@react-navigation/native';
-import { scale, verticalScale} from 'react-native-size-matters';
-import TextInput from 'react-native-text-input-interactive';
-import style from './styles';
-import {DEVICE_WIDTH} from '../../themes/deviceInfo/index';
+import { View, Text, TouchableOpacity } from "react-native";
+import React from "react";
+import { useTheme } from "@react-navigation/native";
+import { moderateScale, scale, verticalScale } from "react-native-size-matters";
+import TextInput from "react-native-text-input-interactive";
+import style from "./styles";
+import { DEVICE_WIDTH } from "../../themes/deviceInfo/index";
 
 const InputField = ({
   onInputPress,
@@ -19,23 +19,29 @@ const InputField = ({
   width,
   height,
   vertical,
-  keyboardType
+  keyboardType,
 }) => {
   const myTheme = useTheme();
   const myStyle = style(myTheme);
 
   return (
     <View
-      style={[myStyle?.container, {width: width || DEVICE_WIDTH - scale(32)}]}>
+      style={[myStyle?.container, { width: width || DEVICE_WIDTH - scale(32) }]}
+    >
       <Text style={myStyle?.header}>{headerText}</Text>
 
-      <TouchableOpacity activeOpacity={1} onPress={onInputPress}>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={{ height: moderateScale(48) }}
+        onPress={onInputPress}
+      >
         <TextInput
-          pointerEvents={pressable && 'none'}
-          originalColor={ myTheme?.colors?.gray}
-          mainColor={ myTheme?.colors?.black}
+          pointerEvents={pressable && "none"}
+          originalColor={myTheme?.colors?.gray}
+          mainColor={myTheme?.colors?.black}
           placeholder={placeholder || headerText}
           value={value}
+          style={{ height: moderateScale(48) }}
           secureTextEntry={secureTextEntry}
           onFocus={onFocus}
           onBlur={onBlur}
@@ -44,7 +50,7 @@ const InputField = ({
           textInputStyle={[
             myStyle?.textInputStyle,
             {
-              textAlignVertical: vertical || 'center',
+              textAlignVertical: vertical || "center",
               height: height || verticalScale(40),
               width: width || DEVICE_WIDTH - scale(32),
             },
@@ -52,7 +58,6 @@ const InputField = ({
           onChangeText={onChangeText}
         />
       </TouchableOpacity>
-
     </View>
   );
 };
