@@ -149,24 +149,17 @@ export default function Cart() {
         </Text>
         <View style={myStyle?.rightIcon} />
       </View>
-      <View
-        style={[
-          // myStyle?.container,
-          {
-            marginBottom: verticalScale(280),
-          },
-        ]}
-      >
+    
         <FlatList
           keyExtractor={(item, index) => index.toString()}
           data={cart}
           renderItem={renderItem}
           contentContainerStyle={
             cart?.length == 0 && {
-              height: "100%",
               paddingBottom: IS_IOS ? verticalScale(85) : verticalScale(130),
             }
           }
+          
           showsVerticalScrollIndicator={false}
           ListEmptyComponent={() => (
             <Text
@@ -182,7 +175,7 @@ export default function Cart() {
             </Text>
           )}
         />
-      </View>
+
 
       <View style={myStyle.footer}>
         {cart?.length != 0 && (

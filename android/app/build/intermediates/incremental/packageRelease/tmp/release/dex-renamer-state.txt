@@ -1,7 +1,0 @@
-#Tue Jul 23 14:51:38 PKT 2024
-base.0=/Users/ameerhamza/Desktop/Bremod/android/app/build/intermediates/dex/release/mergeDexRelease/classes.dex
-base.1=/Users/ameerhamza/Desktop/Bremod/android/app/build/intermediates/dex/release/mergeDexRelease/classes2.dex
-path.0=classes.dex
-path.1=classes2.dex
-renamed.0=classes.dex
-renamed.1=classes2.dex

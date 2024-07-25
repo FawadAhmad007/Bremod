@@ -143,11 +143,7 @@ export const style = (myTheme) =>
       color: myTheme?.colors?.black,
     },
     footer: {
-      position: "absolute",
-      bottom: 0,
-      left: 0,
-      right: 0,
-      backgroundColor: "#fff",
+      backgroundColor: 'white',
       padding: moderateScale(20),
     },
     totalPriceLabel: {
