@@ -47,14 +47,14 @@ export const style = (myTheme) =>
     },
 
     errorText: {
-      color: "red", // Color for error message
+      color: myTheme?.colors?.red, // Color for error message
       marginTop: 5,
       marginLeft: 5, // Adding some margin to the left for better alignment
     },
 
     footer: {
       padding: 15,
-      backgroundColor: myTheme.colors.card,
+      backgroundColor: myTheme.colors.primary,
       marginTop: moderateScale(10),
     },
     checkoutButton: {
@@ -74,12 +74,12 @@ export const style = (myTheme) =>
 
     checkoutButtonText: {
       fontSize: 18,
-      color: "#fff",
+      color: myTheme.colors.textColor,
       fontWeight: "bold",
     },
 
     noteText: {
-      color: "red",
+      color: myTheme?.colors?.red,
       fontSize: moderateScale(12),
       marginBottom: verticalScale(10),
       textAlign: "center",

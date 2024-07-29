@@ -190,7 +190,7 @@ export default function Detail({ route, navigation }) {
       <Text
         style={[
           {
-            color: selected ? "white" : "black",
+            color: myTheme.colors.textColor,
           },
           FONTS_STYLE?.TEXT_MEDIUM,
         ]}

@@ -40,7 +40,7 @@ export const style = (myTheme) =>
     crossImage: {
       width: moderateScale(20),
       height: moderateScale(20),
-      tintColor: "red",
+      tintColor: myTheme?.colors?.red,
     },
     imageContainer: {
       flexDirection: "row",
@@ -170,7 +170,7 @@ export const style = (myTheme) =>
 
     checkoutButtonText: {
       fontSize: 18,
-      color: "#fff",
+      color: myTheme.colors.textColor,
       fontWeight: "bold",
     },
 
@@ -201,13 +201,13 @@ export const style = (myTheme) =>
     },
     buttonTextStyle: [
       FONTS_STYLE?.TEXT_BOLD_SMALL,
-      { color: myTheme?.colors?.primary },
+      { color: myTheme?.colors?.textColor },
     ],
     categoryIconStyle: {
       width: moderateScale(15),
       height: moderateScale(15),
       marginRight: moderateScale(5),
-      tintColor: myTheme?.colors?.primary,
+      tintColor: myTheme?.colors?.textColor,
     },
 
     itemHeadingStyle: [
@@ -277,7 +277,7 @@ export const style = (myTheme) =>
     },
     count: [
       {
-        color: myTheme?.colors?.primary,
+        color: myTheme?.colors?.textColor,
       },
       FONTS_STYLE.TEXT_MEDIUM,
     ],

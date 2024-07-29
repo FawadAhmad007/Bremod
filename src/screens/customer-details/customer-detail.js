@@ -519,7 +519,7 @@ export default function CustomerDetails({ navigation, route }) {
                 {loading ? (
                   <ActivityIndicator
                     size="small"
-                    color={myTheme?.colors?.primary}
+                    color={myTheme?.colors?.textColor}
                   />
                 ) : (
                   <View
@@ -534,7 +534,7 @@ export default function CustomerDetails({ navigation, route }) {
 
                         {
                           marginTop: moderateScale(2),
-                          tintColor: "#fff",
+                          tintColor: myTheme.colors.textColor,
                           marginRight: moderateScale(7),
                         },
                       ]}

@@ -68,7 +68,7 @@ export const style = (myTheme) =>
     },
     buttonTextStyle: [
       FONTS_STYLE?.TEXT_BOLD_SMALL,
-      { color: myTheme?.colors?.primary },
+      { color: myTheme?.colors?.textColor },
     ],
     coverImageStyle: {
       width: "90%",
@@ -107,7 +107,7 @@ export const style = (myTheme) =>
     cartTextStyle: [
       FONTS_STYLE.TEXT_XSMALL,
       {
-        color: myTheme?.colors?.primary,
+        color: myTheme?.colors?.textColor,
         textAlign: "center",
         includeFontPadding: false,
       },
@@ -169,7 +169,7 @@ export const style = (myTheme) =>
       width: moderateScale(15),
       height: moderateScale(15),
       marginRight: moderateScale(5),
-      tintColor: myTheme?.colors?.primary,
+      tintColor: myTheme?.colors?.textColor,
     },
     loaderContainer: {
       flex: 1,

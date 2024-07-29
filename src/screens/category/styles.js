@@ -39,7 +39,7 @@ export const style = (myTheme) =>
       FONTS_STYLE.TEXT_MEDIUM,
       {
         alignSelf: "left",
-        color: myTheme?.colors?.gray,
+        color: myTheme.colors.textColor,
         textAlign: "left",
         includeFontPadding: false,
       },
