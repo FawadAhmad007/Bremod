@@ -81,6 +81,7 @@ export const style = (myTheme) =>
     logoStyle: {
       width: moderateScale(120),
       height: moderateScale(40),
+      tintColor:'#46A456',
       marginStart: moderateScale(130),
     },
     cartContainer: {

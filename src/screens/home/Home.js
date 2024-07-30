@@ -300,6 +300,7 @@ export default function Home() {
           style={myStyle?.logoStyle}
           source={BREMOD_ICON}
           resizeMode="contain"
+          
         />
         <TouchableOpacity
           onPress={() => {
