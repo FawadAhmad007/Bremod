@@ -8,8 +8,9 @@ import {
   DETAIL_ENUM,
   CART_ENUM,
   CUSTOMER_ENUM,
+  SPLASH_ENUM,
 } from "../../shared/constants";
-import { Home, Category, Detail, Cart, CustomerDetails } from "../../screens";
+import { Home, Category, Detail, Cart, CustomerDetails, SplashScreen } from "../../screens";
 import { DEFAULT_THEME } from "../../shared/themes/style/themes";
 
 const Stack = createNativeStackNavigator();
@@ -25,6 +26,7 @@ export default function Routes() {
           animation: "ios",
         }}
       >
+        <Stack.Screen name={SPLASH_ENUM} component={SplashScreen} />
         <Stack.Screen name={HOME_ENUM} component={Home} />
         <Stack.Screen name={CATEGORY_ENUM} component={Category} />
         <Stack.Screen name={DETAIL_ENUM} component={Detail} />

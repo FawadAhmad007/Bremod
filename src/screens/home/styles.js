@@ -35,15 +35,14 @@ export const style = (myTheme) =>
       {
         color: myTheme?.colors?.black,
         width: "85%",
-        height: 48,
+        height: moderateScale(48),
         marginHorizontal: scale(5),
       },
     ],
 
     searchIconViewStyle: {
       width: "12%",
-      height: moderateScale(20),
-      height: 48,
+      height: moderateScale(48),
       justifyContent: "center",
       alignItems: "center",
     },
@@ -68,7 +67,7 @@ export const style = (myTheme) =>
     },
     buttonTextStyle: [
       FONTS_STYLE?.TEXT_BOLD_SMALL,
-      { color: myTheme?.colors?.primary },
+      { color: myTheme?.colors?.textColor },
     ],
     coverImageStyle: {
       width: "90%",
@@ -80,13 +79,14 @@ export const style = (myTheme) =>
     },
     logoStyle: {
       width: moderateScale(120),
-      height: moderateScale(40),
+      height: moderateScale(48),
       tintColor:'#46A456',
+
       marginStart: moderateScale(130),
     },
     cartContainer: {
-      marginEnd: moderateScale(10),
-      height: 48,
+      width: moderateScale(48),
+      height: moderateScale(48),
     },
     cartStyle: {
       width: moderateScale(30),
@@ -100,7 +100,7 @@ export const style = (myTheme) =>
       position: "absolute",
       alignContent: "center",
       alignItems: "center",
-      right: -5,
+      right: 10,
       borderRadius: moderateScale(15),
       // borderColor: myTheme?.colors?.gray,
       // borderWidth: moderateScale(1),
@@ -108,7 +108,7 @@ export const style = (myTheme) =>
     cartTextStyle: [
       FONTS_STYLE.TEXT_XSMALL,
       {
-        color: myTheme?.colors?.primary,
+        color: myTheme?.colors?.textColor,
         textAlign: "center",
         includeFontPadding: false,
       },
@@ -170,7 +170,7 @@ export const style = (myTheme) =>
       width: moderateScale(15),
       height: moderateScale(15),
       marginRight: moderateScale(5),
-      tintColor: myTheme?.colors?.primary,
+      tintColor: myTheme?.colors?.textColor,
     },
     loaderContainer: {
       flex: 1,

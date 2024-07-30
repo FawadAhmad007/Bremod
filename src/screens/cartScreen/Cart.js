@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   FlatList,
+  ToastAndroid,
 } from "react-native";
 import React, { useEffect, useMemo, useState } from "react";
 import { MyView } from "../../shared/themes/style/common";
@@ -22,7 +23,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { isDiscountValid } from "../../shared/utils/index"; // Import the utility function
 import { getListForDiscount } from "../../shared/services/FetchIntercepter/request";
 import DiscountBar from "../home/components/discountBar";
-import Toast from "react-native-toast-message";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { IS_IOS } from "../../shared/themes/deviceInfo/index";
 import { WHATSAPP_ICON } from "../../assets/icons/index";
@@ -73,21 +73,17 @@ export default function Cart() {
         setShowBar(showDiscountBar);
       } else if (res?.message == "Network Error") {
         setLoading(false);
-        Toast.show({
-          type: "error",
-          text1: "Network Error",
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show("Network Error", ToastAndroid.SHORT);
+
       } else {
         setLoading(false);
       }
     } catch (error) {
       setLoading(false);
-      Toast.show({
-        type: "error",
-        text1: error,
-        text2: error.message,
-      });
+      ToastAndroid.show(error, ToastAndroid.SHORT);
+
+      
+
     }
   };
 

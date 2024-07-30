@@ -87,15 +87,15 @@ const CartItem = ({ item, removeItem, index }) => {
           <View style={myStyle.counterRow}>
             <TouchableOpacity
               onPress={decrementCount}
+              disabled={ item?.quantity === 1}
               style={[
                 myStyle.counterButton,
-                item?.quantity === 1 && myStyle.counterButtonTextDisabled,
+
               ]}
             >
               <Text
                 style={[
                   myStyle.counterButtonText,
-                  item?.quantity === 1 && myStyle.counterButtonTextDisabled,
                 ]}
               >
                 -

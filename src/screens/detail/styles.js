@@ -54,13 +54,13 @@ export const style = (myTheme) =>
     },
     buttonTextStyle: [
       FONTS_STYLE?.TEXT_BOLD_SMALL,
-      { color: myTheme?.colors?.primary },
+      { color: myTheme?.colors?.textColor },
     ],
     categoryIconStyle: {
       width: moderateScale(15),
       height: moderateScale(15),
       marginRight: moderateScale(5),
-      tintColor: myTheme?.colors?.primary,
+      tintColor: myTheme?.colors?.textColor,
     },
 
     itemHeadingStyle: [
@@ -69,6 +69,7 @@ export const style = (myTheme) =>
         width: "30%",
         color: myTheme?.colors?.black,
         includeFontPadding: false,
+        
       },
     ],
 
@@ -132,7 +133,7 @@ export const style = (myTheme) =>
     },
     count: [
       {
-        color: myTheme?.colors?.primary,
+        color: myTheme?.colors?.textColor,
       },
       FONTS_STYLE.TEXT_MEDIUM,
     ],
@@ -152,11 +153,11 @@ export const style = (myTheme) =>
       flexDirection: "row",
       gap: moderateScale(10),
       marginBottom: 5,
+      alignItems:'baseline'
     },
     counterButton: {
-      height: verticalScale(22),
-      width: verticalScale(28),
-      backgroundColor: "black",
+      height:moderateScale(48),
+      width:  moderateScale(48),
       borderRadius: 4,
       alignItems: "center",
       justifyContent: "center",
@@ -164,6 +165,12 @@ export const style = (myTheme) =>
     counterButtonText: {
       fontSize: 18,
       fontWeight: "bold",
+      backgroundColor:'black',
+      width:moderateScale(35),
+      height:moderateScale(22),
+      textAlign:'center',
+      textAlignVertical:'center',
+      borderRadius:4,
       color: "white",
     },
 
@@ -175,7 +182,6 @@ export const style = (myTheme) =>
     },
 
     counterText: {
-      // marginHorizontal: 10,
       fontSize: 16,
       color: myTheme?.colors?.black,
     },

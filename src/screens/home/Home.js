@@ -43,7 +43,6 @@ import {
 } from "../../shared/services/FetchIntercepter/request";
 import { useSelector, useDispatch } from "react-redux";
 import { bremodSilce } from "../../shared/redux/reducers/index";
-import Toast from "react-native-toast-message";
 import { IS_IOS } from "../../shared/themes/deviceInfo/index";
 import { moderateScale, verticalScale } from "react-native-size-matters";
 import { isDiscountValid } from "../../shared/utils/index"; // Import the utility function
@@ -140,28 +139,18 @@ export default function Home() {
       } else if (res?.message == "Network Error") {
         setLoader(false);
         setLoading(false);
-        Toast.show({
-          type: "error",
-          text1: "Network Error",
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show("Network Error", ToastAndroid.SHORT);
       } else {
         setLoader(false);
         setLoading(false);
-        Toast.show({
-          type: "error",
-          text1: res?.error,
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show(res?.error, ToastAndroid.SHORT);
+        
       }
     } catch (error) {
       setLoader(false);
       setLoading(false);
-      Toast.show({
-        type: "error",
-        text1: error,
-        text2: error.message,
-      });
+      ToastAndroid.show(error, ToastAndroid.SHORT);
+   
     } finally {
       setLoader(false);
       setLoading(false);
@@ -277,11 +266,9 @@ export default function Home() {
   );
 
   const handleEmptyCart = () => {
-    Toast.show({
-      type: "info",
-      text1: "Your Cart is empty.",
-      visibilityTime: 2000,
-    });
+
+    ToastAndroid.show("Your Cart is empty.", ToastAndroid.SHORT);
+
     return "";
   };
 
@@ -307,6 +294,7 @@ export default function Home() {
             cart?.length && cart?.length > 0
               ? navigate(CART_ENUM)
               : handleEmptyCart();
+              
           }}
           style={myStyle?.cartContainer}
         >
@@ -328,7 +316,7 @@ export default function Home() {
               placeholder={SEARCH}
               value={searchText}
               keyboardType="default"
-              placeholderTextColor={myTheme?.colors?.gray}
+              placeholderTextColor={myTheme?.colors?.black}
               onChangeText={(e) => {
                 setCategory(null);
                 setSearchText(e);

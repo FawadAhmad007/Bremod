@@ -7,6 +7,7 @@ import {
 	FlatList,
 	ActivityIndicator,
 	TouchableOpacity,
+	ToastAndroid,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { MyView } from '../../shared/themes/style/common';
@@ -17,7 +18,6 @@ import { BACK_ICON } from '../../assets';
 import { goBack } from '../../shared/services';
 import CategoryList from './component/index';
 import { useSelector } from 'react-redux';
-import Toast from 'react-native-toast-message';
 import { getListForDiscount } from '../../shared/services/FetchIntercepter/request';
 import DiscountBar from '../home/components/discountBar';
 import { isDiscountValid } from '../../shared/utils/index'; // Import the utility function
@@ -56,11 +56,8 @@ export default function Category({ route }) {
 				setShowBar(showDiscountBar);
 			} else if (res?.message == 'Network Error') {
 				setLoading(false);
-				Toast.show({
-					type: 'error',
-					text1: 'Network Error',
-					visibilityTime: 2000,
-				});
+				ToastAndroid.show("Network Error", ToastAndroid.SHORT);
+		
 			} else {
 				setLoading(false);
 				// Toast.show({
@@ -71,11 +68,8 @@ export default function Category({ route }) {
 			}
 		} catch (error) {
 			setLoading(false);
-			Toast.show({
-				type: 'error',
-				text1: error,
-				text2: error.message,
-			});
+			ToastAndroid.show(error, ToastAndroid.SHORT);
+	
 		}
 	};
 

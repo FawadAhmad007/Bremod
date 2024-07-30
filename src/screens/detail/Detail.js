@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   FlatList,
+  ToastAndroid,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { MyView } from "../../shared/themes/style/common";
@@ -21,6 +22,7 @@ import {
   PRICE,
   ADD_CART,
   HOME_ENUM,
+  PRODUCTS_DETAIL,
 } from "../../shared/constants";
 import { BACK_ICON, CART_ICON } from "../../assets";
 import DetailItem from "./components/DetailItem";
@@ -37,8 +39,6 @@ import {
 import { FONTS_STYLE } from "../../shared/themes/style/common";
 import { navigate } from "../../shared/services";
 import { getListForDiscount } from "../../shared/services/FetchIntercepter/request";
-import Toast from "react-native-toast-message";
-
 import DiscountBar from "../home/components/discountBar";
 import { isDiscountValid } from "../../shared/utils/index"; // Import the utility function
 
@@ -77,11 +77,8 @@ export default function Detail({ route, navigation }) {
         });
         setShowBar(showDiscountBar);
       } else if (res?.message == "Network Error") {
-        Toast.show({
-          type: "error",
-          text1: "Network Error",
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show("Network Error", ToastAndroid.SHORT);
+   
       } else {
         // Toast.show({
         // 	type: 'error',
@@ -90,11 +87,8 @@ export default function Detail({ route, navigation }) {
         // });
       }
     } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: error,
-        text2: error.message,
-      });
+      ToastAndroid.show(error, ToastAndroid.SHORT);
+
     } finally {
       setLoading(false);
     }
@@ -135,19 +129,14 @@ export default function Detail({ route, navigation }) {
           product: updatedProduct,
         })
       );
-      Toast.show({
-        type: "success",
-        text1: "Product updated successfully",
-        visibilityTime: 2000,
-      });
+  
+
     } else {
       const objShallowCopy = { ...responseData };
+      ToastAndroid.show("Product Added Successfully", ToastAndroid.SHORT);
       dispatch(ADD_CARD(objShallowCopy));
-      Toast.show({
-        type: "success",
-        text1: "Product Added Successfully",
-        visibilityTime: 2000,
-      });
+     
+
     }
     navigate(HOME_ENUM);
   };
@@ -190,7 +179,7 @@ export default function Detail({ route, navigation }) {
       <Text
         style={[
           {
-            color: selected ? "white" : "black",
+            color: myTheme.colors.textColor,
           },
           FONTS_STYLE?.TEXT_MEDIUM,
         ]}
@@ -252,9 +241,24 @@ export default function Detail({ route, navigation }) {
           keyExtractor={(item) => item}
           horizontal={false}
           numColumns={numColumns}
-          contentContainerStyle={myStyle.listContainer}
+          contentContaine
+          
+          rStyle={myStyle.listContainer}
         />
-
+     <Text numberOfLines={1} style={[
+      FONTS_STYLE.HEADING_BOLD_MEDIUM,
+      {
+        width: "80%",
+        alignSelf: "center",
+        color: myTheme?.colors?.black,
+        marginTop: verticalScale(10),
+        fontSize:16,
+fontWeight:'700',
+        includeFontPadding: false,
+      },
+    ]}>
+          {PRODUCTS_DETAIL}
+        </Text>
         <View style={myStyle.detailViewStyle}>
           {data?.name && <DetailItem heading={NAME} text={data?.name} />}
           {data?.product_categories && (
@@ -264,27 +268,29 @@ export default function Detail({ route, navigation }) {
             />
           )}
           {isValidPrice && <DetailItem heading={PRICE} text={data?.price} />}
-          <View style={myStyle.itemStyle}>
+          <View style={[myStyle.itemStyle, {alignItems:'center'}]}>
             <Text numberOfLines={1} style={myStyle?.itemHeadingStyle}>
               Quantity :
             </Text>
             <View style={myStyle.counterRow}>
               <TouchableOpacity
                 onPress={decrementCount}
+                disabled={ count === 1 }
                 style={[
                   myStyle.counterButton,
-                  count === 1 && myStyle.counterButtonTextDisabled,
+                
                 ]}
               >
                 <Text
                   style={[
                     myStyle.counterButtonText,
-                    count === 1 && myStyle.counterButtonTextDisabled,
+      
                   ]}
                 >
                   -
                 </Text>
               </TouchableOpacity>
+          
               <Text style={myStyle.counterText}>{count}</Text>
               <TouchableOpacity
                 onPress={incrementCount}

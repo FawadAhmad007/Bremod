@@ -22,7 +22,6 @@ import {
   ADD_PDFID,
   REMOVE_CARD,
 } from "../../shared/redux/reducers/index";
-import Toast from "react-native-toast-message";
 import {
   submitUserData,
   generatePdfFile,
@@ -92,24 +91,15 @@ export default function CustomerDetails({ navigation, route }) {
         setCitiesOfPakistan(res?.data?.data);
       } else if (res?.message == "Network Error") {
         setLoading(false);
-        Toast.show({
-          type: "error",
-          text1: "Network Error",
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show("Network Error", ToastAndroid.SHORT);
+ 
       } else {
-        Toast.show({
-          type: "error",
-          text1: res?.error,
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show(res?.error, ToastAndroid.SHORT);
+
       }
     } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: error,
-        text2: error.error,
-      });
+      ToastAndroid.show(error, ToastAndroid.SHORT);
+      
     } finally {
       setLoading(false);
     }
@@ -129,11 +119,8 @@ export default function CustomerDetails({ navigation, route }) {
         });
         setShowBar(showDiscountBar);
       } else if (res?.message == "Network Error") {
-        Toast.show({
-          type: "error",
-          text1: "Network Error",
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show("Network Error", ToastAndroid.SHORT);
+
       } else {
         // Toast.show({
         // 	type: 'error',
@@ -141,12 +128,10 @@ export default function CustomerDetails({ navigation, route }) {
         // 	visibilityTime: 2000,
         // });
       }
+
     } catch (error) {
-      Toast.show({
-        type: "error",
-        text1: error,
-        text2: error.message,
-      });
+      ToastAndroid.show(error, ToastAndroid.SHORT);
+
     } finally {
       setLoading(false); // Set loading to false after fetching data
     }
@@ -231,31 +216,16 @@ export default function CustomerDetails({ navigation, route }) {
         generatePdf();
       } else if (res?.message == "Network Error") {
         setLoading(false);
-        Toast.show({
-          type: "error",
-          text1: "Network Error",
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show("Network Error", ToastAndroid.SHORT);
+   
       } else {
         setLoading(false);
-        Toast.show({
-          type: "error",
-          text1:
-            res?.message == "Failed to insert order products" ||
-            res?.error == "Failed to insert order products"
-              ? "product not available"
-              : res?.message || res?.error,
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show("Failed to insert order products", ToastAndroid.SHORT);
+ 
       }
     } catch (error) {
       setLoading(false);
-      Toast.show({
-        type: "error",
-        text1: "Error Fetching Data:",
-        text2: error,
-        visibilityTime: 2000,
-      });
+      ToastAndroid.show("Error Fetching Data:", ToastAndroid.SHORT);
     }
   };
 
@@ -387,6 +357,7 @@ export default function CustomerDetails({ navigation, route }) {
                 headerText={"Name*"}
                 value={name}
                 placeholder={"Enter Name"}
+                height={moderateScale(48)}
                 width={"100%"}
                 keyboardType="default"
                 onChangeText={(e) => {
@@ -404,6 +375,7 @@ export default function CustomerDetails({ navigation, route }) {
                 value={phone}
                 placeholder={"Enter Phone Number"}
                 keyboardType="phone-pad"
+                height={moderateScale(48)}
                 width={"100%"}
                 onChangeText={(e) => {
                   setPhone(e);
@@ -419,8 +391,10 @@ export default function CustomerDetails({ navigation, route }) {
                 headerText={"Email"}
                 value={email}
                 placeholder={"Enter Email"}
+              
                 keyboardType="email-address"
                 width={"100%"}
+                height={moderateScale(48)}
                 onChangeText={(e) => {
                   setEmail(e);
                   setIsEmailValid(validateEmail(e));
@@ -489,6 +463,7 @@ export default function CustomerDetails({ navigation, route }) {
                 placeholder={"Enter Address"}
                 width={"100%"}
                 keyboardType="default"
+                height={moderateScale(48)}
                 onChangeText={(e) => {
                   setAddress(e);
                 }}
@@ -519,7 +494,7 @@ export default function CustomerDetails({ navigation, route }) {
                 {loading ? (
                   <ActivityIndicator
                     size="small"
-                    color={myTheme?.colors?.primary}
+                    color={myTheme?.colors?.textColor}
                   />
                 ) : (
                   <View
@@ -534,7 +509,7 @@ export default function CustomerDetails({ navigation, route }) {
 
                         {
                           marginTop: moderateScale(2),
-                          tintColor: "#fff",
+                          tintColor: myTheme.colors.textColor,
                           marginRight: moderateScale(7),
                         },
                       ]}

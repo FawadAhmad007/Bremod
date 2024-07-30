@@ -10,7 +10,7 @@ export const style = (myTheme) =>
       {
         width: "70%",
         alignSelf: "center",
-        color: myTheme?.colors?.black,
+        color: 'black',
         marginBottom: verticalScale(30),
         textAlign: "center",
         includeFontPadding: false,
@@ -20,7 +20,7 @@ export const style = (myTheme) =>
       FONTS_STYLE.TEXT_MEDIUM,
       {
         width: "70%",
-        color: myTheme?.colors?.gray,
+        color: 'black',
         includeFontPadding: false,
         marginLeft: moderateScale(10),
       },
@@ -40,7 +40,7 @@ export const style = (myTheme) =>
     crossImage: {
       width: moderateScale(20),
       height: moderateScale(20),
-      tintColor: "red",
+      tintColor: myTheme?.colors?.red,
     },
     imageContainer: {
       flexDirection: "row",
@@ -83,15 +83,23 @@ export const style = (myTheme) =>
       alignItems: "center",
     },
     counterButton: {
-      paddingLeft: moderateScale(14),
-      paddingRight: moderateScale(14),
-      backgroundColor: "black",
-      paddingVertical: moderateScale(2),
-      borderRadius: 4,
+
+        height:moderateScale(48),
+        width:  moderateScale(48),
+        borderRadius: 4,
+        alignItems: "center",
+        justifyContent: "center",
+  
     },
     counterButtonText: {
       fontSize: 18,
       fontWeight: "bold",
+      backgroundColor:'black',
+      width:moderateScale(35),
+      height:moderateScale(22),
+      textAlign:'center',
+      textAlignVertical:'center',
+      borderRadius:4,
       color: "white",
     },
 
@@ -170,22 +178,22 @@ export const style = (myTheme) =>
 
     checkoutButtonText: {
       fontSize: 18,
-      color: "#fff",
+      color: myTheme.colors.textColor,
       fontWeight: "bold",
     },
 
     touchableContainerStyle: {
       marginTop: moderateScale(5),
-      width: moderateScale(24),
-      height: moderateScale(24),
+      width: moderateScale(48),
+      height: moderateScale(48),
     },
     leftIcon: {
       width: moderateScale(20),
       height: moderateScale(20),
     },
     rightIcon: {
-      width: moderateScale(20),
-      height: moderateScale(20),
+      width: moderateScale(48),
+      height: moderateScale(48),
     },
     buttonStyle: {
       backgroundColor: myTheme?.colors?.secondary,
@@ -201,13 +209,13 @@ export const style = (myTheme) =>
     },
     buttonTextStyle: [
       FONTS_STYLE?.TEXT_BOLD_SMALL,
-      { color: myTheme?.colors?.primary },
+      { color: myTheme?.colors?.textColor },
     ],
     categoryIconStyle: {
       width: moderateScale(15),
       height: moderateScale(15),
       marginRight: moderateScale(5),
-      tintColor: myTheme?.colors?.primary,
+      tintColor: myTheme?.colors?.textColor,
     },
 
     itemHeadingStyle: [
@@ -277,7 +285,7 @@ export const style = (myTheme) =>
     },
     count: [
       {
-        color: myTheme?.colors?.primary,
+        color: myTheme?.colors?.textColor,
       },
       FONTS_STYLE.TEXT_MEDIUM,
     ],
