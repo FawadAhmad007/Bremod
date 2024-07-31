@@ -28,6 +28,7 @@ import {
   getListForCities,
 } from "../../shared/services/FetchIntercepter/request";
 import SelectDropdown from "react-native-select-dropdown";
+import { Dropdown } from 'react-native-element-dropdown';
 import { getListForDiscount } from "../../shared/services/FetchIntercepter/request";
 import { isDiscountValid } from "../../shared/utils/index";
 import { useSelector, useDispatch } from "react-redux";
@@ -49,7 +50,7 @@ export default function CustomerDetails({ navigation, route }) {
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [loading, setLoading] = useState(false);
   const [allowGeneratePdf, setAllowGeneratePdf] = useState(false);
-  const [selectedCity, setSelectedCity] = useState(null);
+  const [selectedCity, setSelectedCity] = useState([]);
   const [discountDetails, setDiscountDetails] = useState({
     message: "",
     date: "",
@@ -59,6 +60,17 @@ export default function CustomerDetails({ navigation, route }) {
   const [showBar, setShowBar] = useState(false);
   const [errors, setErrors] = useState({});
   const { totalPrice, discountedPrice } = route.params;
+
+  const data = [
+    { label: 'Item 1', value: '1' },
+    { label: 'Item 2', value: '2' },
+    { label: 'Item 3', value: '3' },
+    { label: 'Item 4', value: '4' },
+    { label: 'Item 5', value: '5' },
+    { label: 'Item 6', value: '6' },
+    { label: 'Item 7', value: '7' },
+    { label: 'Item 8', value: '8' },
+  ];
 
   useEffect(() => {
     getDiscount();
@@ -264,6 +276,21 @@ export default function CustomerDetails({ navigation, route }) {
     }
   };
 
+
+  const [value, setValue] = useState(null);
+    const [isFocus, setIsFocus] = useState(false);
+
+    const renderLabel = () => {
+      if (value || isFocus) {
+        return (
+          <Text style={[myStyle.label, isFocus && { color: 'blue' }]}>
+            Dropdown label
+          </Text>
+        );
+      }
+      return null;
+    };
+
   const openWhatsApp = (orderData) => {
     const { order, products } = orderData;
 
@@ -407,9 +434,37 @@ export default function CustomerDetails({ navigation, route }) {
             </View>
 
             <View style={myStyle.inputFieldContainer}>
-              <Text style={myStyle.label}>Select City*</Text>
+    
               {/* SelectDropdown component */}
-              <SelectDropdown
+
+
+
+
+        <Dropdown
+          style={[myStyle.dropdown, isFocus && { borderColor: 'black' }]}
+          placeholderStyle={myStyle.placeholderStyle}
+          selectedTextStyle={myStyle.selectedTextStyle}
+          inputSearchStyle={myStyle.inputSearchStyle}
+          iconStyle={myStyle.iconStyle}
+          data={data}
+          search
+          maxHeight={300}
+          labelField="label"
+          valueField="value"
+          placeholder={!isFocus ? 'Select item' : '...'}
+          searchPlaceholder="Search..."
+          value={value}
+          onFocus={() => setIsFocus(true)}
+          onBlur={() => setIsFocus(false)}
+          onChange={item => {
+            setValue(item.value);
+            setIsFocus(false);
+          }}
+    
+        />
+
+
+              {/* <SelectDropdown
                 data={citiesOfPakistan}
                 onSelect={(selectedItem, index) => {
                   setSelectedCity(selectedItem?.name);
@@ -450,7 +505,7 @@ export default function CustomerDetails({ navigation, route }) {
                 dropdownStyle={myStyle.dropdownMenuStyle}
                 rowStyle={myStyle.dropdownItemStyle}
                 rowTextStyle={myStyle.dropdownItemTxtStyle}
-              />
+              /> */}
               {errors.city && (
                 <Text style={myStyle.errorText}>{errors.city}</Text>
               )}

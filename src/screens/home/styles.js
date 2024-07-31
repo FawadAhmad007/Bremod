@@ -9,6 +9,7 @@ export const style = (myTheme) =>
     headerStyle: {
       width: "100%",
       marginBottom: verticalScale(20),
+      marginTop:verticalScale(10)
     },
     headerInnerStyle: {
       width: "90%",
@@ -45,6 +46,7 @@ export const style = (myTheme) =>
       height: moderateScale(48),
       justifyContent: "center",
       alignItems: "center",
+     
     },
     searchIconStyle: {
       width: "100%",

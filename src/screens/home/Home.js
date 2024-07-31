@@ -13,7 +13,7 @@ import {
   ToastAndroid,
 } from "react-native";
 import React, { useState, useEffect, useRef } from "react";
-import { MyView } from "../../shared/themes/style/common";
+import { FONTS_STYLE, MyView } from "../../shared/themes/style/common";
 import { useTheme, useIsFocused } from "@react-navigation/native";
 import { style } from "./styles";
 import {
@@ -201,17 +201,15 @@ export default function Home() {
     });
   };
   const searchHandler = () => {
-    if (searchText) {
-      if (showCross) {
+ 
+     
         fetchSearchedProducts();
         setShowCross(false);
         setSearchText(null);
         setCategory(null);
-      } else {
-        fetchSearchedProducts();
-        setShowCross(true);
-      }
-    }
+    setShowCross(true);
+     
+
   };
   const fetchSearchedProducts = async () => {
     page.current = 1;
@@ -324,17 +322,14 @@ export default function Home() {
               style={myStyle?.inputStyle}
             />
 
-            <TouchableOpacity
+          { searchText&&  <TouchableOpacity
               style={myStyle?.searchIconViewStyle}
               hitSlop={10}
               onPress={searchHandler}
             >
-              <Image
-                style={myStyle?.searchIconStyle}
-                source={showCross || searchText ? CROSS_ICON : SEARCH_ICON}
-                resizeMode="contain"
-              />
-            </TouchableOpacity>
+             <Text numberOfLines={1} style={[   FONTS_STYLE?.TEXT_BOLD_SMALL,
+      { color: 'black' ,   height:moderateScale(20), width:moderateScale(35), textAlign:'center', textAlignVertical:'center',  backgroundColor:'#19B95C', marginRight:moderateScale(3), borderRadius:4}]}>clear</Text>
+            </TouchableOpacity>}
           </View>
         </View>
       </View>

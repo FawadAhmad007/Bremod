@@ -220,7 +220,7 @@ export default function Detail({ route, navigation }) {
           />
         </TouchableOpacity>
         <Text numberOfLines={1} style={myStyle?.headingTextStyle}>
-          {OUR_PRODUCTS}
+          {PRODUCTS_DETAIL}
         </Text>
         <View style={myStyle?.rightIcon} />
       </View>

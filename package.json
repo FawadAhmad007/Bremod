@@ -25,6 +25,7 @@
 		"buffer": "^6.0.3",
 		"react": "18.2.0",
 		"react-native": "0.73.4",
+		"react-native-element-dropdown": "^2.12.1",
 		"react-native-fs": "^2.20.0",
 		"react-native-modal": "^13.0.1",
 		"react-native-read-more-text": "^1.1.2",
