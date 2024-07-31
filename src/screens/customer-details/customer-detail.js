@@ -27,7 +27,6 @@ import {
   generatePdfFile,
   getListForCities,
 } from "../../shared/services/FetchIntercepter/request";
-import SelectDropdown from "react-native-select-dropdown";
 import { Dropdown } from 'react-native-element-dropdown';
 import { getListForDiscount } from "../../shared/services/FetchIntercepter/request";
 import { isDiscountValid } from "../../shared/utils/index";
@@ -56,21 +55,11 @@ export default function CustomerDetails({ navigation, route }) {
     date: "",
     value: null,
   });
-  const [citiesOfPakistan, setCitiesOfPakistan] = useState(null);
+  const [citiesOfPakistan, setCitiesOfPakistan] = useState([]);
   const [showBar, setShowBar] = useState(false);
   const [errors, setErrors] = useState({});
   const { totalPrice, discountedPrice } = route.params;
 
-  const data = [
-    { label: 'Item 1', value: '1' },
-    { label: 'Item 2', value: '2' },
-    { label: 'Item 3', value: '3' },
-    { label: 'Item 4', value: '4' },
-    { label: 'Item 5', value: '5' },
-    { label: 'Item 6', value: '6' },
-    { label: 'Item 7', value: '7' },
-    { label: 'Item 8', value: '8' },
-  ];
 
   useEffect(() => {
     getDiscount();
@@ -100,18 +89,21 @@ export default function CustomerDetails({ navigation, route }) {
     try {
       const res = await getListForCities();
       if (res?.status === 200) {
-        setCitiesOfPakistan(res?.data?.data);
+        setCitiesOfPakistan(res?.data?.data.map(city => ({
+          label: city?.name,
+          value: city?.id
+        })));
       } else if (res?.message == "Network Error") {
         setLoading(false);
         ToastAndroid.show("Network Error", ToastAndroid.SHORT);
- 
+
       } else {
         ToastAndroid.show(res?.error, ToastAndroid.SHORT);
 
       }
     } catch (error) {
       ToastAndroid.show(error, ToastAndroid.SHORT);
-      
+
     } finally {
       setLoading(false);
     }
@@ -174,7 +166,7 @@ export default function CustomerDetails({ navigation, route }) {
 
   const handleAddToForm = () => {
     const validationErrors = validateForm({ name, email, address, phone });
-    if (Object.keys(validationErrors).length > 0) {
+    if (Object.keys(validationErrors)?.length > 0) {
       setErrors(validationErrors);
       return;
     }
@@ -229,11 +221,11 @@ export default function CustomerDetails({ navigation, route }) {
       } else if (res?.message == "Network Error") {
         setLoading(false);
         ToastAndroid.show("Network Error", ToastAndroid.SHORT);
-   
+
       } else {
         setLoading(false);
         ToastAndroid.show("Failed to insert order products", ToastAndroid.SHORT);
- 
+
       }
     } catch (error) {
       setLoading(false);
@@ -263,11 +255,7 @@ export default function CustomerDetails({ navigation, route }) {
         openWhatsApp(res?.data);
       } else if (res?.message == "Network Error") {
         setLoading(false);
-        Toast.show({
-          type: "error",
-          text1: "Network Error",
-          visibilityTime: 2000,
-        });
+        ToastAndroid.show("Network Error", ToastAndroid.SHORT);
       }
     } catch (error) {
       setLoading(false);
@@ -278,18 +266,18 @@ export default function CustomerDetails({ navigation, route }) {
 
 
   const [value, setValue] = useState(null);
-    const [isFocus, setIsFocus] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
 
-    const renderLabel = () => {
-      if (value || isFocus) {
-        return (
-          <Text style={[myStyle.label, isFocus && { color: 'blue' }]}>
-            Dropdown label
-          </Text>
-        );
-      }
-      return null;
-    };
+  const renderLabel = () => {
+    if (value || isFocus) {
+      return (
+        <Text style={[myStyle.label, isFocus && { color: 'blue' }]}>
+          Dropdown label
+        </Text>
+      );
+    }
+    return null;
+  };
 
   const openWhatsApp = (orderData) => {
     const { order, products } = orderData;
@@ -364,13 +352,14 @@ export default function CustomerDetails({ navigation, route }) {
           >
             <TouchableOpacity
               activeOpacity={0.6}
-              style={{ width: 48, height: 48 }}
+              style={myStyle?.touchableContainerStyle}
               onPress={() => goBack()}
             >
               <Image
                 style={myStyle.leftIcon}
                 source={BACK_ICON}
                 resizeMode="contain"
+                alt="Back icon"
               />
             </TouchableOpacity>
             <Text numberOfLines={1} style={myStyle?.headingTextStyle}>
@@ -418,7 +407,7 @@ export default function CustomerDetails({ navigation, route }) {
                 headerText={"Email"}
                 value={email}
                 placeholder={"Enter Email"}
-              
+
                 keyboardType="email-address"
                 width={"100%"}
                 height={moderateScale(48)}
@@ -434,78 +423,30 @@ export default function CustomerDetails({ navigation, route }) {
             </View>
 
             <View style={myStyle.inputFieldContainer}>
-    
-              {/* SelectDropdown component */}
 
-
-
-
-        <Dropdown
-          style={[myStyle.dropdown, isFocus && { borderColor: 'black' }]}
-          placeholderStyle={myStyle.placeholderStyle}
-          selectedTextStyle={myStyle.selectedTextStyle}
-          inputSearchStyle={myStyle.inputSearchStyle}
-          iconStyle={myStyle.iconStyle}
-          data={data}
-          search
-          maxHeight={300}
-          labelField="label"
-          valueField="value"
-          placeholder={!isFocus ? 'Select item' : '...'}
-          searchPlaceholder="Search..."
-          value={value}
-          onFocus={() => setIsFocus(true)}
-          onBlur={() => setIsFocus(false)}
-          onChange={item => {
-            setValue(item.value);
-            setIsFocus(false);
-          }}
-    
-        />
-
-
-              {/* <SelectDropdown
+              <Text style={myStyle.header}>Select city*</Text>
+              <Dropdown
+                style={[myStyle.dropdown, isFocus && { borderColor: 'black' }]}
+                placeholderStyle={myStyle.placeholderStyle}
+                selectedTextStyle={myStyle.selectedTextStyle}
+                inputSearchStyle={myStyle.inputSearchStyle}
+                itemTextStyle={myStyle.dropdownItemTxtStyle}
+                iconStyle={myStyle.iconStyle}
                 data={citiesOfPakistan}
-                onSelect={(selectedItem, index) => {
-                  setSelectedCity(selectedItem?.name);
-                }}
-                renderButton={(selectedItem, isOpen) => {
-                  return (
-                    <View style={myStyle.dropdownButtonStyle}>
-                      <Text style={myStyle.dropdownButtonTxtStyle}>
-                        {selectedCity || "Select your city"}
-                      </Text>
-                      <Image
-                        style={{
-                          width: moderateScale(14),
-                          height: moderateScale(14),
-                          transform: [{ rotateX: isOpen ? "180deg" : "0deg" }],
-                        }}
-                        source={DOWN_ICON}
-                        resizeMode="contain"
-                      />
-                    </View>
-                  );
-                }}
-                renderItem={(item, index, isSelected) => {
-                  return (
-                    <View
-                      style={{
-                        ...myStyle.dropdownItemStyle,
-                        ...(isSelected && { backgroundColor: "#D2D9DF" }),
-                      }}
-                    >
-                      <Text style={myStyle.dropdownItemTxtStyle}>
-                        {item?.name}
-                      </Text>
-                    </View>
-                  );
-                }}
-                showsVerticalScrollIndicator={false}
-                dropdownStyle={myStyle.dropdownMenuStyle}
-                rowStyle={myStyle.dropdownItemStyle}
-                rowTextStyle={myStyle.dropdownItemTxtStyle}
-              /> */}
+                search
+                maxHeight={300}
+                labelField="label"
+                valueField="value"
+                placeholder={'Select item'}
+                searchPlaceholder="Search..."
+                value={selectedCity || value}
+                onFocus={() => setIsFocus(true)}
+                onBlur={() => setIsFocus(false)}
+                onChange={item => {
+                  setValue(item.value);
+                  setSelectedCity(item?.value);
+                  setIsFocus(false);
+                }} />
               {errors.city && (
                 <Text style={myStyle.errorText}>{errors.city}</Text>
               )}
@@ -539,7 +480,7 @@ export default function CustomerDetails({ navigation, route }) {
                 style={[
                   myStyle.checkoutButton,
                   (!name || !phone || !address || !selectedCity || loading) &&
-                    myStyle.disablecheckoutButton,
+                  myStyle.disablecheckoutButton,
                 ]}
                 disabled={
                   !name || !phone || !address || !selectedCity || loading
@@ -570,6 +511,7 @@ export default function CustomerDetails({ navigation, route }) {
                       ]}
                       source={WHATSAPP_ICON}
                       resizeMode="contain"
+                      alt="Whatsapp icon"
                     />
                     <Text style={myStyle.checkoutButtonText}>Place Order</Text>
                   </View>

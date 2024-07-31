@@ -9,8 +9,12 @@ const GROCERY_CART_ICON = require("./grocery.png");
 const BREMOD_ICON = require("./breemod.png");
 const WHATSAPP_ICON = require("./whatsApp.png");
 const DOWN_ICON = require("./downArrow.png");
+const MINUS_ICON = require("./minus.png");
+const PLUS_ICON = require("./plus.png");
 
 export {
+  MINUS_ICON,
+  PLUS_ICON,
   WHATSAPP_ICON,
   SEARCH_ICON,
   DOWN_ICON,

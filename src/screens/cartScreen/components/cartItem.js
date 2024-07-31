@@ -5,7 +5,11 @@ import React, { useState } from "react";
 import { useTheme } from "@react-navigation/native";
 import { style } from "../styles";
 import { PLACEHOLDER_IMAGE } from "../../../assets";
-import { CROSS_ICON } from "../../../assets/icons";
+import {
+  CROSS_ICON,
+  MINUS_ICON,
+  PLUS_ICON,
+} from "../../../assets/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { UPDATE_CARD } from "../../../shared/redux/reducers/index";
 const CartItem = ({ item, removeItem, index }) => {
@@ -47,6 +51,7 @@ const CartItem = ({ item, removeItem, index }) => {
           <Image
             source={item?.image ? { uri: item?.image } : PLACEHOLDER_IMAGE}
             style={myStyle.productImage}
+            alt={item?.name}
           />
           <View style={myStyle.productDetails}>
             <Text style={myStyle.productName}>{item?.name}</Text>
@@ -68,7 +73,7 @@ const CartItem = ({ item, removeItem, index }) => {
           }}
           onPress={() => removeItem(item, index)}
         >
-          <Image source={CROSS_ICON} style={myStyle.crossImage} />
+          <Image source={CROSS_ICON} style={myStyle.crossImage} alt="Cancel icon"/>
         </TouchableOpacity>
       </View>
 
@@ -93,20 +98,27 @@ const CartItem = ({ item, removeItem, index }) => {
 
               ]}
             >
-              <Text
-                style={[
-                  myStyle.counterButtonText,
-                ]}
-              >
-                -
-              </Text>
+              <View style={myStyle?.counterButtonText}>
+              <Image
+                source={MINUS_ICON}
+                alt={item?.name + 'decrement'}
+                  style={myStyle?.counterButtonImage}
+                  resizeMode='contain' 
+                  />
+              </View>
             </TouchableOpacity>
             <Text style={myStyle.counterText}>{item?.quantity}</Text>
             <TouchableOpacity
               onPress={incrementCount}
               style={myStyle.counterButton}
             >
-              <Text style={myStyle.counterButtonText}>+</Text>
+              <View style={myStyle?.counterButtonText}>
+                <Image
+                  source={PLUS_ICON}
+                  alt={item?.name + 'increment'}
+                  style={myStyle?.counterButtonImage}
+                  resizeMode='contain'/>
+              </View>
             </TouchableOpacity>
           </View>
         </View>
@@ -114,8 +126,7 @@ const CartItem = ({ item, removeItem, index }) => {
         <Text style={myStyle.productPrice}>
           {item?.price != null ? (
             <>
-              {item?.price * item?.quantity}
-              <Text style={myStyle?.itemTextStyle}>.00 Rs</Text>
+              {item?.price * item?.quantity +'.00 Rs'}
             </>
           ) : (
             ""

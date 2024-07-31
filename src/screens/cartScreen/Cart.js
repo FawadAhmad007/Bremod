@@ -138,6 +138,7 @@ export default function Cart() {
             style={myStyle.leftIcon}
             source={BACK_ICON}
             resizeMode="contain"
+            alt="Back icon"
           />
         </TouchableOpacity>
         <Text numberOfLines={1} style={myStyle?.headingTextStyle}>

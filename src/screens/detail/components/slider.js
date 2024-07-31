@@ -79,6 +79,7 @@ const Carousel = ({ images }) => {
 									images?.length != 0 ? { uri: imageSource } : PLACEHOLDER_IMAGE
 								}
 								resizeMode='cover'
+								alt='Cover image'
 							/>
 						</View>
 					))
@@ -87,7 +88,8 @@ const Carousel = ({ images }) => {
 						<Image
 							style={myStyle.image}
 							source={PLACEHOLDER_IMAGE}
-							resizeMode='cover'
+								resizeMode='cover'
+								alt='PlaceHolder image'
 						/>
 					</View>
 				)}

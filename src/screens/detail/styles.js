@@ -162,16 +162,18 @@ export const style = (myTheme) =>
       alignItems: "center",
       justifyContent: "center",
     },
-    counterButtonText: {
-      fontSize: 18,
-      fontWeight: "bold",
+   counterButtonText: {
       backgroundColor:'black',
       width:moderateScale(35),
       height:moderateScale(22),
-      textAlign:'center',
-      textAlignVertical:'center',
-      borderRadius:4,
-      color: "white",
+      borderRadius: 4,
+      alignContent: 'center',
+      justifyContent: 'center',
+      alignItems:'center'
+    },
+    counterButtonImage: {
+      width: moderateScale(12),
+      height: moderateScale(12),
     },
 
     loaderContainer: {

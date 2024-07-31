@@ -24,7 +24,11 @@ import {
   HOME_ENUM,
   PRODUCTS_DETAIL,
 } from "../../shared/constants";
-import { BACK_ICON, CART_ICON } from "../../assets";
+import {
+  BACK_ICON, CART_ICON,
+  MINUS_ICON,
+  PLUS_ICON,
+} from "../../assets";
 import DetailItem from "./components/DetailItem";
 import Carousel from "./components/slider";
 import ReadMore from "react-native-read-more-text";
@@ -217,6 +221,7 @@ export default function Detail({ route, navigation }) {
             style={myStyle.leftIcon}
             source={BACK_ICON}
             resizeMode="contain"
+            alt="Back icon"
           />
         </TouchableOpacity>
         <Text numberOfLines={1} style={myStyle?.headingTextStyle}>
@@ -280,15 +285,14 @@ fontWeight:'700',
                   myStyle.counterButton,
                 
                 ]}
-              >
-                <Text
-                  style={[
-                    myStyle.counterButtonText,
-      
-                  ]}
-                >
-                  -
-                </Text>
+              ><View style={myStyle?.counterButtonText}>
+                  <Image
+                    source={MINUS_ICON}
+                    alt={'decrement'}
+                    style={myStyle?.counterButtonImage}
+                    resizeMode='contain'
+                  />
+                </View>
               </TouchableOpacity>
           
               <Text style={myStyle.counterText}>{count}</Text>
@@ -296,7 +300,14 @@ fontWeight:'700',
                 onPress={incrementCount}
                 style={myStyle.counterButton}
               >
-                <Text style={myStyle.counterButtonText}>+</Text>
+                <View style={myStyle?.counterButtonText}>
+                  <Image
+                    source={PLUS_ICON}
+                    alt={'increment'}
+                    style={myStyle?.counterButtonImage}
+                    resizeMode='contain'
+                  />
+                </View>
               </TouchableOpacity>
             </View>
           </View>
@@ -318,6 +329,7 @@ fontWeight:'700',
           style={myStyle?.categoryIconStyle}
           source={CART_ICON}
           resizeMode="contain"
+          alt="Cart icon"
         />
         <Text numberOfLines={1} style={myStyle?.buttonTextStyle}>
           {ADD_CART}

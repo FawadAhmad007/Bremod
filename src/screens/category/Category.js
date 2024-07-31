@@ -119,6 +119,7 @@ export default function Category({ route }) {
 						style={myStyle.leftIcon}
 						source={BACK_ICON}
 						resizeMode='contain'
+						alt='Pack Icon'
 					/>
 				</TouchableOpacity>
 				<Text

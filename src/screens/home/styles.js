@@ -54,15 +54,20 @@ export const style = (myTheme) =>
       alignSelf: "center",
       tintColor: myTheme?.colors?.secondary,
     },
+    buttonContainer: {
+      includeFontPadding: false,
+      position: "absolute",
+      bottom: verticalScale(30),
+      right: scale(30),
+      width: moderateScale(108),
+      height:moderateScale(48)
+    },
     buttonStyle: {
       backgroundColor: myTheme?.colors?.secondary,
       borderRadius: moderateScale(8),
       alignItems: "center",
       justifyContent: "center",
       includeFontPadding: false,
-      position: "absolute",
-      bottom: verticalScale(30),
-      right: scale(30),
       flexDirection: "row",
       paddingHorizontal: moderateScale(12),
       paddingVertical: moderateScale(16),
@@ -156,8 +161,7 @@ export const style = (myTheme) =>
     itemTextStyle: [
       FONTS_STYLE.TEXT_XXSMALL,
       {
-        color: myTheme?.colors?.gray,
-        includeFontPadding: false,
+        color: myTheme?.colors?.black,
         textAlign: "center",
       },
     ],

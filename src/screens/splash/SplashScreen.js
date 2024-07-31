@@ -24,6 +24,7 @@ if(isFocused)
    style={{flex:1,width:'100%'}}
    source={SPLASH_IMAGE}
    resizeMode='cover'
+   alt='Splash image'
    />
    </>
   )

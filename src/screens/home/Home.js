@@ -285,6 +285,7 @@ export default function Home() {
           style={myStyle?.logoStyle}
           source={BREMOD_ICON}
           resizeMode="contain"
+          alt="Bremod"
           
         />
         <TouchableOpacity
@@ -300,6 +301,7 @@ export default function Home() {
             style={myStyle?.cartStyle}
             source={GROCERY_CART_ICON}
             resizeMode="contain"
+            alt="Grocery cart icon"
           />
           <View style={myStyle.badge}>
             <Text style={myStyle?.cartTextStyle}>{cart?.length}</Text>
@@ -327,8 +329,8 @@ export default function Home() {
               hitSlop={10}
               onPress={searchHandler}
             >
-             <Text numberOfLines={1} style={[   FONTS_STYLE?.TEXT_BOLD_SMALL,
-      { color: 'black' ,   height:moderateScale(20), width:moderateScale(35), textAlign:'center', textAlignVertical:'center',  backgroundColor:'#19B95C', marginRight:moderateScale(3), borderRadius:4}]}>clear</Text>
+             {/* <Text numberOfLines={1} style={[   FONTS_STYLE?.TEXT_BOLD_SMALL,
+      { color: 'black' ,   height:moderateScale(20), width:moderateScale(35), textAlign:'center', textAlignVertical:'center',  backgroundColor:'#19B95C', marginRight:moderateScale(3), borderRadius:4}]}>clear</Text> */}
             </TouchableOpacity>}
           </View>
         </View>
@@ -414,15 +416,19 @@ export default function Home() {
           )
         }
       />
-      <TouchableOpacity style={myStyle?.buttonStyle} onPress={navigateHandler}>
+      <TouchableOpacity style={myStyle?.buttonContainer} onPress={navigateHandler}>
+        <View style={myStyle?.buttonStyle}>
+
         <Image
           style={myStyle?.categoryIconStyle}
           source={CATEGORY_ICON}
           resizeMode="contain"
+          alt="Category icon"
         />
         <Text numberOfLines={1} style={myStyle?.buttonTextStyle}>
           {CATEGORY}
         </Text>
+       </View>
       </TouchableOpacity>
       {loading && (
         <View style={myStyle.loaderContainer}>

@@ -21,6 +21,7 @@ const Items = ({ data, onPress }) => {
 						: PLACEHOLDER_IMAGE
 				}
 				resizeMode='cover'
+				alt={data?.name}
 			/>
 			<Text
 				numberOfLines={2}

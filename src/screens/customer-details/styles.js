@@ -13,9 +13,15 @@ export const style = (myTheme) =>
     // },
 
     inputFieldContainer: {
-      marginBottom: moderateScale(5), // Gap between fields
-    },
-
+      marginBottom: moderateScale(5)},
+    header: [
+      {
+        marginBottom: moderateScale(6),
+        color: myTheme?.colors?.black,
+        textAlign: "left",
+      },
+      FONTS_STYLE?.TEXT_SMALL,
+    ],
     headerContainer: {
       alignSelf: "center",
       justifyContent: "space-between",
@@ -25,8 +31,6 @@ export const style = (myTheme) =>
     },
 
     leftIcon: {
-      marginTop: moderateScale(5),
-
       width: moderateScale(20),
       height: moderateScale(20),
     },
@@ -163,10 +167,11 @@ export const style = (myTheme) =>
     },
     dropdown: {
       height: 50,
-      borderColor: 'black',
-      borderWidth: 0.5,
-      borderRadius: 8,
+      borderColor: myTheme?.colors?.gray,
+      borderWidth: 1,
+      borderRadius: 5,
       paddingHorizontal: 8,
+      
     },
     icon: {
       marginRight: 5,
@@ -182,9 +187,13 @@ export const style = (myTheme) =>
     },
     placeholderStyle: {
       fontSize: 16,
+      color: myTheme?.colors?.black,
+
     },
     selectedTextStyle: {
       fontSize: 16,
+      color: myTheme?.colors?.black,
+
     },
     iconStyle: {
       width: 20,
@@ -193,5 +202,18 @@ export const style = (myTheme) =>
     inputSearchStyle: {
       height: 40,
       fontSize: 16,
+      color: myTheme?.colors?.black,
     },
+    touchableContainerStyle: {
+      marginTop: moderateScale(5),
+      height: moderateScale(24),
+      width: moderateScale(48),
+    },
+    backButtonText: [
+      FONTS_STYLE.HEADING_MEDIUM,
+      {
+        marginStart: moderateScale(7),
+        color: myTheme?.colors?.black,
+      },
+    ]
   });

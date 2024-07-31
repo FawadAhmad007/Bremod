@@ -85,6 +85,7 @@ const Carousel = ({ images }) => {
                   : { uri: imageSource?.image }
               }
               resizeMode="cover"
+              alt="Cover image"
             />
           </View>
         ))}
