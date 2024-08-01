@@ -30,7 +30,6 @@ export const style = (myTheme) =>
       alignItems: "center",
       justifyContent: "center",
       height: moderateScale(30),
-      marginTop: moderateScale(5),
     },
     message: {
       color: myTheme?.colors?.black,

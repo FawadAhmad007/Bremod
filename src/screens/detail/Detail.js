@@ -234,7 +234,7 @@ export default function Detail({ route, navigation }) {
           images={data?.product_image_urls ? data?.product_image_urls : []}
         />
 
-        <FlatList
+{data?.product_colors&& <FlatList
           data={data?.product_colors}
           renderItem={({ item }) => (
             <ColorCircle
@@ -249,7 +249,7 @@ export default function Detail({ route, navigation }) {
           contentContaine
           
           rStyle={myStyle.listContainer}
-        />
+        />}
      <Text numberOfLines={1} style={[
       FONTS_STYLE.HEADING_BOLD_MEDIUM,
       {
