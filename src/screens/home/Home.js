@@ -329,8 +329,16 @@ export default function Home() {
               hitSlop={10}
               onPress={searchHandler}
             >
-             {/* <Text numberOfLines={1} style={[   FONTS_STYLE?.TEXT_BOLD_SMALL,
-      { color: 'black' ,   height:moderateScale(20), width:moderateScale(35), textAlign:'center', textAlignVertical:'center',  backgroundColor:'#19B95C', marginRight:moderateScale(3), borderRadius:4}]}>clear</Text> */}
+              <Image
+                style={{
+                  width:moderateScale(20),
+                  height: moderateScale(20),
+                  tintColor: myTheme?.colors?.black
+                }}
+                source={CROSS_ICON}
+                resizeMode="contain"
+                alt="Category icon"
+              />
             </TouchableOpacity>}
           </View>
         </View>

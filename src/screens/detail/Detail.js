@@ -146,7 +146,7 @@ export default function Detail({ route, navigation }) {
   };
 
   const toggleSelectColor = (item) => {
-    setSelectedId(item === selectedId ? null : item);
+    setSelectedId(item);
   };
   const renderTruncatedFooter = (handlePress) => {
     return (
@@ -246,9 +246,7 @@ export default function Detail({ route, navigation }) {
           keyExtractor={(item) => item}
           horizontal={false}
           numColumns={numColumns}
-          contentContaine
-          
-          rStyle={myStyle.listContainer}
+          contentContainerStyle={myStyle.listContainer}
         />
      <Text numberOfLines={1} style={[
       FONTS_STYLE.HEADING_BOLD_MEDIUM,
@@ -258,7 +256,7 @@ export default function Detail({ route, navigation }) {
         color: myTheme?.colors?.black,
         marginTop: verticalScale(10),
         fontSize:16,
-fontWeight:'700',
+        fontWeight:'700',
         includeFontPadding: false,
       },
     ]}>
