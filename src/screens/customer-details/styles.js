@@ -186,12 +186,12 @@ export const style = (myTheme) =>
       fontSize: 14,
     },
     placeholderStyle: {
-      fontSize: 16,
-      color: myTheme?.colors?.black,
+      fontSize: 12,
 
     },
     selectedTextStyle: {
-      fontSize: 16,
+      fontSize: 12,
+      marginLeft:7,
       color: myTheme?.colors?.black,
 
     },

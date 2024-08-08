@@ -41,7 +41,6 @@ const InputField = ({
           mainColor={myTheme?.colors?.black}
           placeholder={placeholder || headerText}
           value={value}
-          placeholderTextColor={myTheme?.colors?.black}
           style={{ height: moderateScale(48) }}
           secureTextEntry={secureTextEntry}
           onFocus={onFocus}

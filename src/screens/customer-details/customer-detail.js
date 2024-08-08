@@ -1,3 +1,4 @@
+
 /** @format */
 
 import {
@@ -8,6 +9,8 @@ import {
   TouchableOpacity,
   Linking,
   ScrollView,
+  ToastAndroid,
+  KeyboardAvoidingView,
 } from "react-native";
 import React, { useState, useEffect } from "react";
 import { MyView } from "../../shared/themes/style/common";
@@ -55,11 +58,15 @@ export default function CustomerDetails({ navigation, route }) {
     date: "",
     value: null,
   });
+
+  console.log('userData------>', JSON.stringify(userData, null,4));
+  
   const [citiesOfPakistan, setCitiesOfPakistan] = useState([]);
   const [showBar, setShowBar] = useState(false);
   const [errors, setErrors] = useState({});
   const { totalPrice, discountedPrice } = route.params;
 
+console.log('city: ' , selectedCity);
 
   useEffect(() => {
     getDiscount();
@@ -72,6 +79,7 @@ export default function CustomerDetails({ navigation, route }) {
       setAddress(userData?.customer_address);
       setPhone(userData?.customer_number);
       setSelectedCity(userData?.city_name);
+      setValue(userData?.city_value)
     }
   }, [userData]);
 
@@ -127,9 +135,9 @@ export default function CustomerDetails({ navigation, route }) {
 
       } else {
         // Toast.show({
-        // 	type: 'error',
-        // 	text1: res?.error,
-        // 	visibilityTime: 2000,
+        //  type: 'error',
+        //  text1: res?.error,
+        //  visibilityTime: 2000,
         // });
       }
 
@@ -166,6 +174,8 @@ export default function CustomerDetails({ navigation, route }) {
 
   const handleAddToForm = () => {
     const validationErrors = validateForm({ name, email, address, phone });
+    console.log('validationErrors---->',validationErrors);
+    
     if (Object.keys(validationErrors)?.length > 0) {
       setErrors(validationErrors);
       return;
@@ -198,7 +208,7 @@ export default function CustomerDetails({ navigation, route }) {
       responseData.customer_email = email;
     }
     submitUser(responseData);
-    dispatch(ADD_USERDATA(responseData));
+    dispatch(ADD_USERDATA({...responseData,  city_value:value}));
   };
 
   const validateEmail = (email) => {
@@ -212,8 +222,13 @@ export default function CustomerDetails({ navigation, route }) {
   };
 
   const submitUser = async (responseData) => {
+    
+    console.log('responseData---->', responseData);
+    
     try {
       const res = await submitUserData(responseData);
+      console.log('error',JSON.stringify(res, null,4));
+      
       if (res?.status === 200) {
         dispatch(ADD_PDFID(res?.data?.order_id));
         setAllowGeneratePdf(true);
@@ -265,7 +280,7 @@ export default function CustomerDetails({ navigation, route }) {
   };
 
 
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(userData?.city_value??null);
   const [isFocus, setIsFocus] = useState(false);
 
   const renderLabel = () => {
@@ -337,9 +352,9 @@ export default function CustomerDetails({ navigation, route }) {
   };
 
   return (
-    <MyView>
+    <KeyboardAvoidingView keyboardShouldPersistTaps="handled">
       {showBar && <DiscountBar message={discountDetails?.message} />}
-      <ScrollView>
+      <ScrollView keyboardShouldPersistTaps="handled">
         <View>
           <View
             style={[
@@ -437,14 +452,14 @@ export default function CustomerDetails({ navigation, route }) {
                 maxHeight={300}
                 labelField="label"
                 valueField="value"
-                placeholder={'Select item'}
+                placeholder={'Select city'}
                 searchPlaceholder="Search..."
-                value={selectedCity || value}
+                value={ value}
                 onFocus={() => setIsFocus(true)}
                 onBlur={() => setIsFocus(false)}
                 onChange={item => {
-                  setValue(item.value);
-                  setSelectedCity(item?.value);
+                  setValue(item.value);                  
+                  setSelectedCity(item?.label);
                   setIsFocus(false);
                 }} />
               {errors.city && (
@@ -521,11 +536,6 @@ export default function CustomerDetails({ navigation, route }) {
           </View>
         </View>
       </ScrollView>
-      {loading && (
-        <View style={myStyle.loaderContainer}>
-          <ActivityIndicator size="large" color="#19B95C" />
-        </View>
-      )}
-    </MyView>
+    </KeyboardAvoidingView>
   );
 }

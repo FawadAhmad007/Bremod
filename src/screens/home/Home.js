@@ -316,7 +316,6 @@ export default function Home() {
               placeholder={SEARCH}
               value={searchText}
               keyboardType="default"
-              placeholderTextColor={myTheme?.colors?.black}
               onChangeText={(e) => {
                 setCategory(null);
                 setSearchText(e);

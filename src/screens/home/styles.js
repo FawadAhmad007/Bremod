@@ -154,15 +154,13 @@ export const style = (myTheme) =>
         color: myTheme?.colors?.black,
         includeFontPadding: false,
         marginTop: verticalScale(8),
-        textAlign: "center",
       },
     ],
 
     itemTextStyle: [
-      FONTS_STYLE.TEXT_XXSMALL,
+      FONTS_STYLE.TEXT_XSMALL,
       {
-        color: myTheme?.colors?.black,
-        textAlign: "center",
+        color: myTheme?.colors?.gray,
       },
     ],
     flatListStyle: {
