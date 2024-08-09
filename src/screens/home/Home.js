@@ -414,11 +414,7 @@ export default function Home() {
                       : verticalScale(15),
                   },
                 ]}
-              >
-                <Text style={myStyle?.ListFooterComponentText}>
-                  {"No More Products"}
-                </Text>
-              </View>
+              />
             )
           )
         }
