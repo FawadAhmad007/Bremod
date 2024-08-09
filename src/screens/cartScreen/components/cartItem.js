@@ -12,15 +12,15 @@ import {
 } from "../../../assets/icons";
 import { useSelector, useDispatch } from "react-redux";
 import { UPDATE_CARD } from "../../../shared/redux/reducers/index";
-const CartItem = ({ item, removeItem, index }) => {
+const CartItem = ({ item, removeItem, itemIndex }) => {
   const myTheme = useTheme();
   const myStyle = style(myTheme);
   const dispatch = useDispatch();
   const cart = useSelector((state) => state?.root?.bremod?.card);
 
   const incrementCount = () => {
-    const updatedData = cart.map((cartItem) => {
-      if (cartItem.id === item?.id) {
+    const updatedData = cart.map((cartItem, index) => {
+      if (index === itemIndex) {
         return {
           ...cartItem,
           quantity: cartItem?.quantity + 1,
@@ -32,8 +32,8 @@ const CartItem = ({ item, removeItem, index }) => {
     dispatch(UPDATE_CARD(updatedData));
   };
   const decrementCount = () => {
-    const updatedData = cart.map((cartItem) => {
-      if (cartItem.id === item?.id) {
+    const updatedData = cart.map((cartItem,index) => {
+      if (index === itemIndex) {
         return {
           ...cartItem,
           quantity: cartItem?.quantity - 1,
@@ -71,7 +71,7 @@ const CartItem = ({ item, removeItem, index }) => {
             alignItems: "center",
             justifyContent: "center",
           }}
-          onPress={() => removeItem(item, index)}
+          onPress={() => removeItem(item, itemIndex)}
         >
           <Image source={CROSS_ICON} style={myStyle.crossImage} alt="Cancel icon"/>
         </TouchableOpacity>

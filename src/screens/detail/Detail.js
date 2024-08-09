@@ -234,7 +234,7 @@ export default function Detail({ route, navigation }) {
           images={data?.product_image_urls ? data?.product_image_urls : []}
         />
 
-{data?.product_colors&& <FlatList
+        {data?.product_colors&& <FlatList
           data={data?.product_colors}
           renderItem={({ item }) => (
             <ColorCircle

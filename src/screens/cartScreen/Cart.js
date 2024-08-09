@@ -42,7 +42,7 @@ export default function Cart() {
   const renderItem = ({ item, index }) => {
     return (
       <>
-        <CartItem item={item} index={index} removeItem={handleRemoveItem} />
+        <CartItem item={item} itemIndex={index} removeItem={handleRemoveItem} />
         <View
           style={{
             backgroundColor: "gray",

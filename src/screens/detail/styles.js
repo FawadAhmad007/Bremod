@@ -151,9 +151,8 @@ export const style = (myTheme) =>
     },
     counterRow: {
       flexDirection: "row",
-      gap: moderateScale(10),
-      marginBottom: 5,
-      alignItems:'baseline'
+      justifyContent: 'space-between',
+      alignItems:'center'
     },
     counterButton: {
       height:moderateScale(48),
@@ -183,10 +182,12 @@ export const style = (myTheme) =>
       backgroundColor: myTheme?.colors?.primary, // Semi-transparent black background
     },
 
-    counterText: {
-      fontSize: 16,
+    counterText:[ {
       color: myTheme?.colors?.black,
+      marginHorizontal:moderateScale(5)
     },
+      FONTS_STYLE.TEXT_MEDIUM,
+    ],
     counterButtonTextDisabled: {
       opacity: 0.5,
       pointerEvents: "none",

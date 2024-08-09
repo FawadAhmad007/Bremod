@@ -59,15 +59,11 @@ export default function CustomerDetails({ navigation, route }) {
     value: null,
   });
 
-  console.log('userData------>', JSON.stringify(userData, null,4));
   
   const [citiesOfPakistan, setCitiesOfPakistan] = useState([]);
   const [showBar, setShowBar] = useState(false);
   const [errors, setErrors] = useState({});
   const { totalPrice, discountedPrice } = route.params;
-
-console.log('city: ' , selectedCity);
-
   useEffect(() => {
     getDiscount();
   }, []);
@@ -174,7 +170,6 @@ console.log('city: ' , selectedCity);
 
   const handleAddToForm = () => {
     const validationErrors = validateForm({ name, email, address, phone });
-    console.log('validationErrors---->',validationErrors);
     
     if (Object.keys(validationErrors)?.length > 0) {
       setErrors(validationErrors);
@@ -221,10 +216,7 @@ console.log('city: ' , selectedCity);
     return phoneRegex.test(phone);
   };
 
-  const submitUser = async (responseData) => {
-    
-    console.log('responseData---->', responseData);
-    
+  const submitUser = async (responseData) => {    
     try {
       const res = await submitUserData(responseData);
       console.log('error',JSON.stringify(res, null,4));
@@ -252,10 +244,10 @@ console.log('city: ' , selectedCity);
     setAllowGeneratePdf(false);
     let payload = {
       id: pdfId,
-      customer_name: name,
+      customer_name: name.trim(),
       customer_number: phone,
-      customer_email: email,
-      customer_address: address,
+      customer_email: email.trim(),
+      customer_address: address.trim(),
       city_name: selectedCity,
       order_price: totalPrice ? totalPrice : 0,
       discount_price: discountedPrice ? discountedPrice : 0,
@@ -265,9 +257,10 @@ console.log('city: ' , selectedCity);
       if (res?.status === 200) {
         setLoading(false);
 
-        dispatch(REMOVE_CARD());
-        navigation.dispatch(StackActions.popToTop());
-        openWhatsApp(res?.data);
+        // dispatch(REMOVE_CARD());
+        console.log('generatePdfFile', JSON.stringify(res?.data,null,4))
+        // navigation.dispatch(StackActions.popToTop());
+        // openWhatsApp(res?.data);
       } else if (res?.message == "Network Error") {
         setLoading(false);
         ToastAndroid.show("Network Error", ToastAndroid.SHORT);
@@ -282,18 +275,6 @@ console.log('city: ' , selectedCity);
 
   const [value, setValue] = useState(userData?.city_value??null);
   const [isFocus, setIsFocus] = useState(false);
-
-  const renderLabel = () => {
-    if (value || isFocus) {
-      return (
-        <Text style={[myStyle.label, isFocus && { color: 'blue' }]}>
-          Dropdown label
-        </Text>
-      );
-    }
-    return null;
-  };
-
   const openWhatsApp = (orderData) => {
     const { order, products } = orderData;
 
